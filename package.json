@@ -1,0 +1,18 @@
+{
+  "name": "2y2c-user-bot",
+  "version": "1.0.0",
+  "description": "Stats of user on 2Y2C discord...",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0",
+    "minecraft-protocol": "^1.23.3",
+    "script.db": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
