@@ -15,6 +15,10 @@ client.login(config.token).catch((e) => { console.log(e)})
 client.on("error", (e) => { console.error(e) });
 var prefix = "!";
 
+client.on('ready', () => {
+	console.log("Bot online!")
+	client.user.setPresence({ game: { name: "!help để xem lệnh" }})
+})
 client.on("message", message => {
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
 	const command = args.shift().toLowerCase();
@@ -163,6 +167,12 @@ client.on("message", message => {
 		}, 3 * 1000);
 	}
 
+	if(command == "help") {
+		message.author.send("**Moon 2Y2C Comamnds**\nMoon Bot Discord: https://discord.gg/yrNvvkqp6w\n\n**Comamnds:**\n!help - Xem command bot\n!stats hoặc !kd - Xem kd người chơi. ( kills: 15/01, deaths: 13/01 )\n!joindate hoặc !jd - Xem người chơi lần đầu tham gia server. ( 28/01 )\n!seen - Xem lần cuối nhìn thấy người chơi. ( 02/02 )\n!playtime hoặc !pt - Xem thời gian đã chơi của người chơi. ( 25/02 ) \n!lastmessages - Xem tin nhắn mới nhất của người chơi. ( 14/03 )\n\n!queue, !que hoặc !q - Xem hàng chờ và ưu tiên.\n!normalqueue hoặc !nq - Xem hàng chờ.\n!prio hoặc !prioqueue - Xem hàng chờ ưu tiên.\n!online - Xem người chơi đang online.\n!status - Xem hàng chờ, ưu tiên, online.").catch((e) => {
+			message.channel.send("Bật direct message để xem các lệnh.")
+		});
+	}
+
 	mc.ping({ "host": config.ip }, (err, result) => {
 		if (result) {
 			try {
@@ -184,7 +194,7 @@ client.on("message", message => {
 			var queue = old.toString().replace("§6Bình thường: §l", "");
 
 			var prio = players2.toString().replace("2y2c §6Queue Size,§6Ưu Tiên: §l", "");
-			var status = "Queue: " + queue + " - Prio: " + prio + " - Trực tuyến: " + result.players.online;
+			var status = "Hàng chờ: " + queue + " - Ưu tiên: " + prio + " - Trực tuyến: " + result.players.online;
 
 			// Queue command
 			if (command === "queue" || command === "q" || command === "que" || command === "normalqueue") {
