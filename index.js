@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 var Scriptdb = require("Script.db")
-const mc = require("minecraft-protocol");
 
 require('dotenv').config();
 
@@ -15,10 +14,22 @@ client.login(config.token).catch((e) => { console.log(e)})
 client.on("error", (e) => { console.error(e) });
 var prefix = "!";
 
+var newAPI = require(config.disk.split("/data")[0] + '/api');
+var api = new newAPI()
+
 client.on('ready', () => {
 	console.log("Bot online!")
-	client.user.setPresence({ game: { name: "!help để xem lệnh" }})
+	client.user.setPresence({
+		status: "idle",
+		game: {
+		  name: "!help",
+		  type: "LISTENING"
+		}
+	});
+
+	client.channels.get('625715711481741324').send("Đây là bot, dùng !help để xem. ( bot on ready )")
 })
+
 client.on("message", message => {
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
 	const command = args.shift().toLowerCase();
@@ -27,16 +38,34 @@ client.on("message", message => {
 
 	var userNotFound = "Không tìm thấy người chơi.";
 
-	if(command == "lastmessages") {
+	if(command == "lastwords") {
 		if (!args[0]) return message.channel.send(userNotFound)
 
-		let lastmessages = new Scriptdb(config.disk + `/lastmessages/${args[0]}.json`);
-		var messages = lastmessages.get('messages');
-		var times = lastmessages.get('times');
+		let quote = new Scriptdb(`${config.disk}/quotes/${args[0]}.json`)
+		let msgs = quote.get('messages')
+		let times = quote.get('times')
 
-		if (lastmessages === undefined) return message.channel.send(userNotFound);
+		if (msgs === undefined || times == undefined) return message.channel.send(userNotFound);
 
-		message.channel.send(times + "<" + args[0] + "> " + messages)
+		var data = msgs.split(" | ")[1];
+		var time = times.split(" | ")[times.split(" | ").length - 1];
+
+		setTimeout(() => { message.channel.send(`**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`) }, 1 * 1000);
+	}
+
+	if(command == "firstwords") {
+		if (!args[0]) return message.channel.send(userNotFound)
+
+		let quote = new Scriptdb(`${config.disk}/quotes/${args[0]}.json`)
+		let msgs = quote.get('messages')
+		let times = quote.get('times')
+		
+		if (msgs === undefined || times == undefined) return message.channel.send(userNotFound);
+
+		var data = msgs.split(" | ")[msgs.split(" | ").length - 1];
+		var time = times.split(" | ")[0];
+
+		setTimeout(() => { message.channel.send(`**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`) }, 1 * 1000);
 	}
 
 	if (command === "stats" || command === "kd") {
@@ -54,7 +83,6 @@ client.on("message", message => {
 			deads = 0;
 		}
 
-		// alex, steve
 		var ratio = kills / deads;
 		var ratioFixed = ratio.toFixed(2);
 
@@ -67,6 +95,19 @@ client.on("message", message => {
 		}, 1 * 1000);
 	}
 
+	if(command == "status" || command == "queue" || command == "que" || command == "prioqueue" || command == "pq" || command == "uptime" || command == "tps") {
+        var dataa = new client.Scriptdb(disk + `/data.json`).get('tab-content').toString();
+		var uptime = dataa.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
+		var tps = dataa.split(' ')[1];
+		var players = dataa.split(' ')[4];
+		var ping = dataa.split(" - ")[2].split(" ping")[0];
+		var timepassed  = dataa.split(" | ")[1];
+
+		setTimeout(() => {
+			message.channel.send(`Server uptime: ${uptime} \nBot uptime: ${api.uptimeCalc()} \nTPS: ${tps} \nOnline: ${players} players \nBot ping: ${ping} \nQueue: ${api.getQueue()} - Prio queue: ${api.getPrio()} \n\nĐả cập nhật thông số của server từ *${api.ageCalc(timepassed)}* trước.`)
+		}, 1 * 1000);
+	}
+
 	if (command === "playtime" || command === "pt") {
 		if (!args[0]) return message.channel.send(userNotFound)
 
@@ -75,39 +116,7 @@ client.on("message", message => {
 		
 		setTimeout(() => {
 			if (playtime === undefined) return message.channel.send(userNotFound);
-
-			var correct = +playtime / 3;
-			var temp = correct / 1000;
-			var day = 0, hour = 0, minutes = 0;
-			day = parseInt(temp / 86400)
-			hour = parseInt(((temp - day * 86400) / 3600))
-			minutes = parseInt(((temp - day * 86400 - hour * 3600)) / 60)
-
-			var string;
-
-			if( day == 0 ) {
-				if(minutes > 0 && hour > 0 ) {
-					string = hour + " giờ " + minutes + " phút";		
-				}
-				if(minutes == 0 && hour > 0) {
-					string = hour + " giờ";
-				}
-				if(minutes > 0 && hour == 0) {
-					string = minutes + " phút";
-				}
-			} else {
-				if(minutes > 0 && hour > 0 ) {
-					string = day + " ngày " + hour + " giờ " + minutes + " phút";		
-				}
-				if(minutes == 0 && hour > 0) {
-					string = day + " ngày " + hour + " giờ";
-				}
-				if(minutes > 0 && hour == 0) {
-					string = day + " ngày " + minutes + " phút";
-				}
-
-			}
-			message.channel.send(args[0] + ": " + string);
+			message.channel.send(args[0] + ": " + api.playtimeCalc(playtime));
 		}, 1 * 1000);
 	}
 
@@ -120,35 +129,10 @@ client.on("message", message => {
 		var d = new Date();
 		var time = d.getTime();
 
-		var temp = (time - +lastseen) / 1000;
-
 		setTimeout(() => {
 			if (lastseen === undefined) return message.channel.send(userNotFound);
-			
+			var age = api.ageCalc(lastseen);
 
-			var year = 0, month = 0, day = 0, hour = 0, minutes = 0;
-			day = parseInt(temp / 86400)
-			month = parseInt(day / 30)
-			year = parseInt(month / 12)
-			hour = parseInt(((temp - day * 86400) / 3600))
-			minutes = parseInt(((temp - day * 86400 - hour * 3600)) / 60)
-
-			var age;
-			if(month > 0) {
-				age = `${month} tháng`
-				if(month > 12) {
-					age = `${year} năm`   
-				}
-			} else {
-				if (day > 0) {
-					age = `${day} ngày`;
-				} else if (day == 0) {
-					age = `${hour} giờ ${minutes} phút`;
-					if (hour == 0) {
-						age = `${minutes} phút`;
-					}
-				}
-			}
 			message.channel.send(`${args[0]} hoạt động từ ${age} trước.`)
 		}, 1 * 1000);
 
@@ -163,64 +147,65 @@ client.on("message", message => {
 		setTimeout(() => {
 			if (firstjoin === undefined) return message.channel.send(userNotFound)
 
-			message.channel.send(`Lần đầu thấy ${args[0]} vào ${firstjoin}.`);
+			message.channel.send(`Bot đã thấy ${args[0]} lần đầu vào ${firstjoin}.`);
 		}, 3 * 1000);
 	}
 
-	if(command == "help") {
-		message.author.send("**Moon 2Y2C Comamnds**\nMoon Bot Discord: https://discord.gg/yrNvvkqp6w\n\n**Comamnds:**\n!help - Xem command bot\n!stats hoặc !kd - Xem kd người chơi. ( kills: 15/01, deaths: 13/01 )\n!joindate hoặc !jd - Xem người chơi lần đầu tham gia server. ( 28/01 )\n!seen - Xem lần cuối nhìn thấy người chơi. ( 02/02 )\n!playtime hoặc !pt - Xem thời gian đã chơi của người chơi. ( 25/02 ) \n!lastmessages - Xem tin nhắn mới nhất của người chơi. ( 14/03 )\n\n!queue, !que hoặc !q - Xem hàng chờ và ưu tiên.\n!normalqueue hoặc !nq - Xem hàng chờ.\n!prio hoặc !prioqueue - Xem hàng chờ ưu tiên.\n!online - Xem người chơi đang online.\n!status - Xem hàng chờ, ưu tiên, online.").catch((e) => {
-			message.channel.send("Bật direct message để xem các lệnh.")
-		});
+	if(command == "messages") {
+		if (!args[0]) return message.channel.send(userNotFound);
+
+		let quotes = new Scriptdb(`${config.disk}/quotes/${args[0]}.json`)
+		let messages = quotes.get('messages')
+		let times = quotes.get('times')
+
+		if(times == undefined || messages == undefined) return message.channel.send(userNotFound)
+
+		var msg0 = messages.split(" | ")[1]
+		var msg1 = messages.split(" | ")[2]
+		var msg2 = messages.split(" | ")[3]	
+		var msg3 = messages.split(" | ")[4]
+		var msg4 = messages.split(" | ")[5]
+
+		var time0 = times.split(" | ")[times.split(" | ").length - 1]
+		var time1 = times.split(" | ")[times.split(" | ").length - 2]
+		var time2 = times.split(" | ")[times.split(" | ").length - 3]
+		var time3 = times.split(" | ")[times.split(" | ").length - 4]
+		var time4 = times.split(" | ")[times.split(" | ").length - 5]
+		
+		var data = `***${api.ageCalc(time0)} trước***: ${msg0}\n***${api.ageCalc(time0)} trước***: ${msg1}\n***${api.ageCalc(time2)} trước***: ${msg2}\n***${api.ageCalc(time3)} trước***: ${msg3}\n***${api.ageCalc(time4)} trước***: ${msg4}\n`;
+		if(time0 == undefined || msg0 == undefined) {
+			data = `***${api.ageCalc(time0)} trước***: ${msg0}\n***${api.ageCalc(time0)} trước***: ${msg1}\n***${api.ageCalc(time2)} trước***: ${msg2}\n***${api.ageCalc(time3)} trước***: ${msg3}\n***${api.ageCalc(time4)} trước***: ${msg4}\n`
+		}
+		if(time1 == undefined || msg1 == undefined) {
+			data = `***${api.ageCalc(time0)} trước***: ${msg1}\n***${api.ageCalc(time2)} trước***: ${msg2}\n***${api.ageCalc(time3)} trước***: ${msg3}\n***${api.ageCalc(time4)} trước***: ${msg4}\n`
+		}
+		if(time2 == undefined || msg2 == undefined) {
+			data = `***${api.ageCalc(time2)} trước***: ${msg2}\n***${api.ageCalc(time3)} trước***: ${msg3}\n***${api.ageCalc(time4)} trước***: ${msg4}\n`
+		}
+		if(time3 == undefined || msg3 == undefined) {
+			data = `***${api.ageCalc(time3)} trước***: ${msg3} \n***${api.ageCalc(time4)} trước***: ${msg4}\n`
+		}
+		if(time4 == undefined || msg4 == undefined) {
+			data = `***${api.ageCalc(time4)} trước***: ${msg4}\n`
+		}
+		if (messages === undefined || times == undefined) return message.channel.send(userNotFound);
+
+		setTimeout(() => { message.channel.send(`**${args[0]}'s messages**\n*Tổng tin nhắn đã gửi: ${messages.split(" | ").length}*\n\n*5 tin nhắn gần đây*\n${data}`) }, 1 * 1000)
 	}
 
-	mc.ping({ "host": config.ip }, (err, result) => {
-		if (result) {
-			try {
-				var players = [];
-				for (i = 0; result.players.sample.length > i; i++) {
-					players.push(result.players.sample[i].name);
-				}
-				var players2 = players.splice(0, Math.ceil(players.length / 2));
-				if (players == []) {
-					players.push(players2);
-					players2 = ".";
-				}
-			} catch {
-				var players = 'unknown';
-				var players2 = 'unknown';
-			}
-
-			var old = players.toString().replace(",§6Cựu binh: §l0", "");
-			var queue = old.toString().replace("§6Bình thường: §l", "");
-
-			var prio = players2.toString().replace("2y2c §6Queue Size,§6Ưu Tiên: §l", "");
-			var status = "Hàng chờ: " + queue + " - Ưu tiên: " + prio + " - Trực tuyến: " + result.players.online;
-
-			// Queue command
-			if (command === "queue" || command === "q" || command === "que" || command === "normalqueue") {
-				message.channel.send(`Hàng chờ: ${queue} - Ưu tiên: ${prio}`).then(message => {
-					message.delete(10000);
-				});
-			}
-
-			if (command === "prio" || command === "p" || command === "prioqueue") {
-				message.channel.send("Ưu tiên: " + prio).then(message => {
-					message.delete(10000);
-				});
-			}
-
-			if (command === "status" || command === "stt") {
-				message.channel.send(status).then(message => {
-					message.delete(10000);
-				});
-			}
-
-			// online command
-			if (command === "onl" || command === "online" || command === "o") {
-				message.channel.send("Trực tuyến: " + result.players.online).then(message => {
-					message.delete(10000);
-				});
-			}
-		}
-	});
+	if(command == "help") {
+		var embed = new Discord.RichEmbed()
+						.setTitle("Moon 2Y2C")
+						.setDescription(
+							"\nMoon Bot Discord: https://discord.gg/yrNvvkqp6w\n\n**Comamnds:**" +
+							"\n!help - Xem command bot\n!stats hoặc !kd - Xem kd người chơi. ( kills: 15/01, deaths: 13/01 )\n!joindate hoặc !jd - Xem người chơi lần đầu tham gia server. ( 28/01 )\n!seen - Xem lần cuối nhìn thấy người chơi. ( 02/02 )\n!playtime hoặc !pt - Xem thời gian đã chơi của người chơi. ( 24/03 ) \n!lastwords - Xem tin nhắn mới nhất của người chơi. ( 14/03 )\n!firstwords - Xem tin nhắn đầu tiên.\n!messages - Xem 5 tin nhắn mới nhất.\n" + 
+							"!queue, !que hoặc !q - Xem hàng chờ và ưu tiên.\n!normalqueue hoặc !nq - Xem hàng chờ.\n!prio hoặc !prioqueue - Xem thông số bao gồm hàng chờ. ưu tiên, trực tuyến.\n!online - Xem người chơi đang hoạt động.\n!status - Xem hàng chờ, ưu tiên, online."
+						)
+						.setColor('RANDOM')
+						.setTimestamp()
+						.setFooter("Moon 2Y2C");
+		message.author.send(embed).catch(() => {
+			message.reply("bật **direct message** để xem các lệnh.")
+		});
+	}
 });
