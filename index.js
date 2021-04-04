@@ -27,7 +27,7 @@ client.on('ready', () => {
 		}
 	});
 
-	client.channels.get('625715711481741324').send("Đây là bot, dùng !help để xem. ( bot on ready )")
+	// client.channels.get('625715711481741324').send("Đây là bot, dùng !help để xem. ( bot on ready )")
 })
 
 client.on("message", message => {
@@ -41,7 +41,7 @@ client.on("message", message => {
 	if(command == "lastwords") {
 		if (!args[0]) return message.channel.send(userNotFound)
 
-		let quote = new Scriptdb(`${config.disk}/quotes/${args[0]}.json`)
+		let quote = new Scriptdb(`${config.disk}/data/quotes/${args[0]}.json`)
 		let msgs = quote.get('messages')
 		let times = quote.get('times')
 
@@ -56,7 +56,7 @@ client.on("message", message => {
 	if(command == "firstwords") {
 		if (!args[0]) return message.channel.send(userNotFound)
 
-		let quote = new Scriptdb(`${config.disk}/quotes/${args[0]}.json`)
+		let quote = new Scriptdb(`${config.disk}/data/quotes/${args[0]}.json`)
 		let msgs = quote.get('messages')
 		let times = quote.get('times')
 		
@@ -71,7 +71,7 @@ client.on("message", message => {
 	if (command === "stats" || command === "kd") {
 		if (!args[0]) return message.channel.send(userNotFound)
 
-		const kd = new Scriptdb(config.disk + `/kd/${args[0]}.json`);
+		const kd = new Scriptdb(config.disk + `/data/kd/${args[0]}.json`);
 		let deads = kd.get('deaths');
 		let kills = kd.get('kills');
 
@@ -96,7 +96,8 @@ client.on("message", message => {
 	}
 
 	if(command == "status" || command == "queue" || command == "que" || command == "prioqueue" || command == "pq" || command == "uptime" || command == "tps") {
-        var dataa = new client.Scriptdb(disk + `/data.json`).get('tab-content').toString();
+        var d = new Scriptdb(config.disk + `/data.json`);
+		var dataa = d.get('tab-content');
 		var uptime = dataa.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
 		var tps = dataa.split(' ')[1];
 		var players = dataa.split(' ')[4];
