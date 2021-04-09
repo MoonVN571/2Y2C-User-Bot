@@ -1,2 +1,2 @@
-# 2Y2C-User-Bot
- Stats of user on 2Y2C discord...
+# 2Y2C Discord Server Github Source Code
+Đơn giản thì đây là source code cho bot tại discord 2y2c.
