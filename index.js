@@ -14,18 +14,12 @@ client.login(config.token).catch((e) => { console.log(e)})
 client.on("error", (e) => { console.error(e) });
 var prefix = "!";
 
-var newAPI = require(config.disk.split("/data")[0] + '/api');
+var newAPI = require('./api');
 var api = new newAPI()
 
 client.on('ready', () => {
 	console.log("Bot online!")
-	client.user.setPresence({
-		status: "idle",
-		game: {
-		  name: "!help",
-		  type: "LISTENING"
-		}
-	});
+	client.user.setPresence({ game: { name: "!help" }})
 
 	// client.channels.get('625715711481741324').send("Đây là bot, dùng !help để xem. ( bot on ready )")
 })
@@ -96,8 +90,7 @@ client.on("message", message => {
 	}
 
 	if(command == "status" || command == "queue" || command == "que" || command == "prioqueue" || command == "pq" || command == "uptime" || command == "tps") {
-        var d = new Scriptdb(config.disk + `/data.json`);
-		var dataa = d.get('tab-content');
+        var dataa = new Scriptdb(config.disk + `/data.json`).get('tab-content');
 		var uptime = dataa.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
 		var tps = dataa.split(' ')[1];
 		var players = dataa.split(' ')[4];
@@ -105,14 +98,20 @@ client.on("message", message => {
 		var timepassed  = dataa.split(" | ")[1];
 
 		setTimeout(() => {
-			message.channel.send(`Server uptime: ${uptime} \nBot uptime: ${api.uptimeCalc()} \nTPS: ${tps} \nOnline: ${players} players \nBot ping: ${ping} \nQueue: ${api.getQueue()} - Prio queue: ${api.getPrio()} \n\nĐả cập nhật thông số của server từ *${api.ageCalc(timepassed)}* trước.`)
+			message.channel.send(`Server uptime: ${uptime} \nBot uptime: ${api.uptimeCalc()} \n` +
+			`TPS: ${tps}\n` +
+			`Online: ${players} players\n` + 
+			`Bot ping: ${ping}ms\n\n` + 
+			`Hàng chờ: ${api.getQueue()}\n` + 
+			`Hàng chờ ưu tiên: ${api.getPrio()}\n\n` +
+			`Đã cập nhật thông số của server từ *${api.ageCalc(timepassed)}* trước.`)
 		}, 1 * 1000);
 	}
 
 	if (command === "playtime" || command === "pt") {
 		if (!args[0]) return message.channel.send(userNotFound)
 
-		let pt = new Scriptdb(config.disk + `/playtime/${args[0]}.json`);
+		let pt = new Scriptdb(config.disk + `/data/playtime/${args[0]}.json`);
 		let playtime = pt.get('time')
 		
 		setTimeout(() => {
@@ -122,7 +121,7 @@ client.on("message", message => {
 	}
 
 	if (command === "seen") {
-		let ls = new Scriptdb(config.disk + `/seen/${args[0]}.json`);
+		let ls = new Scriptdb(config.disk + `/data/seen/${args[0]}.json`);
 		let lastseen = ls.get('seen')
 
 		if (!args[0]) return message.channel.send(userNotFound)
@@ -140,7 +139,7 @@ client.on("message", message => {
 	}
 
 	if (command === "joindate" || command === "jd") {
-		let fj = new Scriptdb(config.disk + `/joindate/${args[0]}.json`)
+		let fj = new Scriptdb(config.disk + `/data/joindate/${args[0]}.json`)
 		let firstjoin = fj.get('date')
 
 		if (!args[0]) return message.channel.send(userNotFound)
