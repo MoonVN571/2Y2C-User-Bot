@@ -98,13 +98,14 @@ client.on("message", message => {
 		var timepassed  = dataa.split(" | ")[1];
 
 		setTimeout(() => {
-			message.channel.send(`Server uptime: ${uptime} \nBot uptime: ${api.uptimeCalc()} \n` +
-			`TPS: ${tps}\n` +
-			`Online: ${players} players\n` + 
-			`Bot ping: ${ping}ms\n\n` + 
-			`Hàng chờ: ${api.getQueue()}\n` + 
-			`Hàng chờ ưu tiên: ${api.getPrio()}\n\n` +
-			`Đã cập nhật thông số của server từ *${api.ageCalc(timepassed)}* trước.`)
+			message.channel.send(`Server uptime: ${uptime}\n` +
+			`**Bot Uptime**: ${api.uptimeCalc()} \n` +
+			`**TPS**: ${tps}\n` +
+			`**Online**: ${players} players\n` + 
+			`**Ping**: ${ping}ms\n\n` + 
+			`**Chờ**: ${api.getQueue()}\n` + 
+			`**Ưu Tiên**: ${api.getPrio()}\n\n` +
+			`*Cập nhật ${api.ageCalc(timepassed)}* trước.`)
 		}, 1 * 1000);
 	}
 
