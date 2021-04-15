@@ -1,6 +1,6 @@
 {
   "name": "2y2c-discordserver-bot",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Stats of user on 2Y2C discord...",
   "main": "index.js",
   "dependencies": {

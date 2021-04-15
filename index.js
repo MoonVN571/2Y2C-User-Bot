@@ -173,21 +173,21 @@ client.on("message", message => {
 		var time3 = times.split(" | ")[times.split(" | ").length - 4]
 		var time4 = times.split(" | ")[times.split(" | ").length - 5]
 		
-		var data = `***${api.ageCalc(time0)} trước***: ${msg0}\n***${api.ageCalc(time0)} trước***: ${msg1}\n***${api.ageCalc(time2)} trước***: ${msg2}\n***${api.ageCalc(time3)} trước***: ${msg3}\n***${api.ageCalc(time4)} trước***: ${msg4}\n`;
+		var data = `***${api.ageCalc(time0)}***: ${msg0}\n***${api.ageCalc(time0)}***: ${msg1}\n***${api.ageCalc(time2)}***: ${msg2}\n***${api.ageCalc(time3)}***: ${msg3}\n***${api.ageCalc(time4)}***: ${msg4}\n`;
 		if(time0 == undefined || msg0 == undefined) {
-			data = `***${api.ageCalc(time0)} trước***: ${msg0}\n***${api.ageCalc(time0)} trước***: ${msg1}\n***${api.ageCalc(time2)} trước***: ${msg2}\n***${api.ageCalc(time3)} trước***: ${msg3}\n***${api.ageCalc(time4)} trước***: ${msg4}\n`
+			data = `***${api.ageCalc(time0)}***: ${msg0}\n***${api.ageCalc(time0)}***: ${msg1}\n***${api.ageCalc(time2)}***: ${msg2}\n***${api.ageCalc(time3)}***: ${msg3}\n***${api.ageCalc(time4)}***: ${msg4}\n`
 		}
 		if(time1 == undefined || msg1 == undefined) {
-			data = `***${api.ageCalc(time0)} trước***: ${msg1}\n***${api.ageCalc(time2)} trước***: ${msg2}\n***${api.ageCalc(time3)} trước***: ${msg3}\n***${api.ageCalc(time4)} trước***: ${msg4}\n`
+			data = `***${api.ageCalc(time0)}***: ${msg1}\n***${api.ageCalc(time2)}***: ${msg2}\n***${api.ageCalc(time3)}***: ${msg3}\n***${api.ageCalc(time4)}***: ${msg4}\n`
 		}
 		if(time2 == undefined || msg2 == undefined) {
-			data = `***${api.ageCalc(time2)} trước***: ${msg2}\n***${api.ageCalc(time3)} trước***: ${msg3}\n***${api.ageCalc(time4)} trước***: ${msg4}\n`
+			data = `***${api.ageCalc(time2)}***: ${msg2}\n***${api.ageCalc(time3)}***: ${msg3}\n***${api.ageCalc(time4)}***: ${msg4}\n`
 		}
 		if(time3 == undefined || msg3 == undefined) {
-			data = `***${api.ageCalc(time3)} trước***: ${msg3} \n***${api.ageCalc(time4)} trước***: ${msg4}\n`
+			data = `***${api.ageCalc(time3)}***: ${msg3} \n***${api.ageCalc(time4)}***: ${msg4}\n`
 		}
 		if(time4 == undefined || msg4 == undefined) {
-			data = `***${api.ageCalc(time4)} trước***: ${msg4}\n`
+			data = `***${api.ageCalc(time4)}***: ${msg4}\n`
 		}
 		if (messages === undefined || times == undefined) return message.channel.send(userNotFound);
 
