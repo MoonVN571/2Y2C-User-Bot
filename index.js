@@ -155,7 +155,7 @@ client.on("message", message => {
 	if(command == "messages") {
 		if (!args[0]) return message.channel.send(userNotFound);
 
-		let quotes = new Scriptdb(`${config.disk}/quotes/${args[0]}.json`)
+		let quotes = new Scriptdb(`${config.disk}/data/quotes/${args[0]}.json`)
 		let messages = quotes.get('messages')
 		let times = quotes.get('times')
 
