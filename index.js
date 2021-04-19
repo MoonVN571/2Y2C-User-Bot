@@ -41,7 +41,7 @@ client.on("message", message => {
 
 		if (msgs === undefined || times == undefined) return message.channel.send(userNotFound);
 
-		var data = msgs.split(" | ")[1];
+		var data = msgs.split(" | ")[msgs.split(" | ").length - 1];
 		var time = times.split(" | ")[times.split(" | ").length - 1];
 
 		setTimeout(() => { message.channel.send(`**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`) }, 1 * 1000);
@@ -56,7 +56,7 @@ client.on("message", message => {
 		
 		if (msgs === undefined || times == undefined) return message.channel.send(userNotFound);
 
-		var data = msgs.split(" | ")[msgs.split(" | ").length - 1];
+		var data = msgs.split(" | ")[0];
 		var time = times.split(" | ")[0];
 
 		setTimeout(() => { message.channel.send(`**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`) }, 1 * 1000);
@@ -100,7 +100,7 @@ client.on("message", message => {
 		setTimeout(() => {
 			message.channel.send(
 				`**Server Uptime**: ${uptime}\n` +
-				`**Bot Uptime**: ${api.uptimeCalc()} \n` +
+				`**Bot Uptime**: ${api.uptimeCalc()}\n` +
 				`**TPS**: ${tps}\n` +
 				`**Online**: ${players} players\n` + 
 				`**Ping**: ${ping}ms\n\n` + 
@@ -168,11 +168,11 @@ client.on("message", message => {
 		var msg3 = messages.split(" | ")[4]
 		var msg4 = messages.split(" | ")[5]
 
-		var time0 = times.split(" | ")[times.split(" | ").length - 1]
-		var time1 = times.split(" | ")[times.split(" | ").length - 2]
-		var time2 = times.split(" | ")[times.split(" | ").length - 3]
-		var time3 = times.split(" | ")[times.split(" | ").length - 4]
-		var time4 = times.split(" | ")[times.split(" | ").length - 5]
+		var time0 = times.split(" | ")[1]
+		var time1 = times.split(" | ")[2]
+		var time2 = times.split(" | ")[3]
+		var time3 = times.split(" | ")[4]
+		var time4 = times.split(" | ")[5]
 		
 		var data = `***${api.ageCalc(time0)}***: ${msg0}\n***${api.ageCalc(time0)}***: ${msg1}\n***${api.ageCalc(time2)}***: ${msg2}\n***${api.ageCalc(time3)}***: ${msg3}\n***${api.ageCalc(time4)}***: ${msg4}\n`;
 		if(time0 == undefined || msg0 == undefined) {
@@ -203,9 +203,10 @@ client.on("message", message => {
 							"\n!help - Xem command bot\n!stats hoặc !kd - Xem kd người chơi. ( kills: 15/01, deaths: 13/01 )\n!joindate hoặc !jd - Xem người chơi lần đầu tham gia server. ( 28/01 )\n!seen - Xem lần cuối nhìn thấy người chơi. ( 02/02 )\n!playtime hoặc !pt - Xem thời gian đã chơi của người chơi. ( 24/03 ) \n!lastwords - Xem tin nhắn mới nhất của người chơi. ( 14/03 )\n!firstwords - Xem tin nhắn đầu tiên.\n!messages - Xem 5 tin nhắn mới nhất.\n" + 
 							"!queue, !que hoặc !q - Xem hàng chờ và ưu tiên.\n!normalqueue hoặc !nq - Xem hàng chờ.\n!prio hoặc !prioqueue - Xem thông số bao gồm hàng chờ. ưu tiên, trực tuyến.\n!online - Xem người chơi đang hoạt động.\n!status - Xem hàng chờ, ưu tiên, online."
 						)
-						.setColor('RANDOM')
+						.setColor('0x2EA711')
 						.setTimestamp()
 						.setFooter("Moon 2Y2C");
+
 		message.author.send(embed).catch(() => {
 			message.reply("bật **direct message** để xem các lệnh.")
 		});
