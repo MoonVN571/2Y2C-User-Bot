@@ -91,23 +91,27 @@ client.on("message", message => {
 
 	if(command == "status" || command == "queue" || command == "que" || command == "prioqueue" || command == "pq" || command == "uptime" || command == "tps") {
         var dataa = new Scriptdb(config.disk + `/data.json`).get('tab-content');
-		var uptime = dataa.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
-		var tps = dataa.split(' ')[1];
-		var players = dataa.split(' ')[4];
-		var ping = dataa.split(" - ")[2].split(" ping")[0];
-		var timepassed  = dataa.split(" | ")[1];
+		if(dataa !== undefined) {
+			var uptime = dataa.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
+			var tps = dataa.split(' ')[1];
+			var players = dataa.split(' ')[4];
+			var ping = dataa.split(" - ")[2].split(" ping")[0];
+			var timepassed  = dataa.split(" | ")[1];
 
-		setTimeout(() => {
-			message.channel.send(
-				`**Server Uptime**: ${uptime}\n` +
-				`**Bot Uptime**: ${api.uptimeCalc()}\n` +
-				`**TPS**: ${tps}\n` +
-				`**Online**: ${players} players\n` + 
-				`**Ping**: ${ping}ms\n\n` + 
-				`**Chờ**: ${api.getQueue()}\n` + 
-				`**Ưu Tiên**: ${api.getPrio()}\n\n` +
-				`*Cập nhật ${api.ageCalc(timepassed)} trước*.`)
-		}, 1 * 1000);
+			setTimeout(() => {
+				message.channel.send(
+					`**Server Uptime**: ${uptime}\n` +
+					`**Bot Uptime**: ${api.uptimeCalc()}\n` +
+					`**TPS**: ${tps}\n` +
+					`**Online**: ${players} players\n` + 
+					`**Ping**: ${ping}ms\n\n` + 
+					`**Chờ**: ${api.getQueue()}\n` + 
+					`**Ưu Tiên**: ${api.getPrio()}\n\n` +
+					`*Cập nhật ${api.ageCalc(timepassed)} trước*.`)
+			}, 1 * 1000);
+		} else {
+			message.channel.send("Bot không hoạt động hoặc không đọc dữ liệu trong server.")
+		}
 	}
 
 	if (command === "playtime" || command === "pt") {
