@@ -10,6 +10,10 @@ var config = {
 	disk: process.env.disk
 }
 
+setTimeout(() => {
+	process.exit();
+}, 5 * 60 * 1000)
+
 client.login(config.token).catch((e) => { console.log(e)})
 client.on("error", (e) => { console.error(e) });
 var prefix = "!";
@@ -32,6 +36,10 @@ client.on("message", message => {
 
 	var userNotFound = "Không tìm thấy người chơi.";
 
+	var user = client.users.find(user => user.id === "425599739837284362");
+
+	var authorID = user.username + "#" + user.discriminator;
+
 	if(command == "lastwords") {
 		if (!args[0]) return message.channel.send(userNotFound)
 
@@ -44,7 +52,9 @@ client.on("message", message => {
 		var data = msgs.split(" | ")[msgs.split(" | ").length - 1];
 		var time = times.split(" | ")[times.split(" | ").length - 1];
 
-		setTimeout(() => { message.channel.send(`**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`) }, 1 * 1000);
+		setTimeout(() => { 
+			message.channel.send(`**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
+	 	}, 1 * 1000);
 	}
 
 	if(command == "firstwords") {
@@ -59,7 +69,9 @@ client.on("message", message => {
 		var data = msgs.split(" | ")[0];
 		var time = times.split(" | ")[0];
 
-		setTimeout(() => { message.channel.send(`**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`) }, 1 * 1000);
+		setTimeout(() => { 
+			message.channel.send(`**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
+	 	}, 1 * 1000);
 	}
 
 	if (command === "stats" || command === "kd") {
@@ -85,33 +97,30 @@ client.on("message", message => {
 		}
 
 		setTimeout(() => {
-			message.channel.send("**" + args[0] + "**: [K: " + kills + " - D: " + deads + " - K/D: " + ratioFixed + "]")
+			message.channel.send("**" + args[0] + "**: [K: " + kills + " - D: " + deads + " - K/D: " + ratioFixed + "]").catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
 		}, 1 * 1000);
 	}
 
 	if(command == "status" || command == "queue" || command == "que" || command == "prioqueue" || command == "pq" || command == "uptime" || command == "tps") {
         var dataa = new Scriptdb(config.disk + `/data.json`).get('tab-content');
-		if(dataa !== undefined) {
-			var uptime = dataa.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
-			var tps = dataa.split(' ')[1];
-			var players = dataa.split(' ')[4];
-			var ping = dataa.split(" - ")[2].split(" ping")[0];
-			var timepassed  = dataa.split(" | ")[1];
+		if(dataa == undefined) return message.channel.send("Bot chưa kết nối vào server hoặc server không hoạt động.");
+		var uptime = dataa.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
+		var tps = dataa.split(' ')[1];
+		var players = dataa.split(' ')[4];
+		var ping = dataa.split(" - ")[2].split(" ping")[0];
+		var timepassed  = dataa.split(" | ")[1];
 
-			setTimeout(() => {
-				message.channel.send(
-					`**Server Uptime**: ${uptime}\n` +
-					`**Bot Uptime**: ${api.uptimeCalc()}\n` +
-					`**TPS**: ${tps}\n` +
-					`**Online**: ${players} players\n` + 
-					`**Ping**: ${ping}ms\n\n` + 
-					`**Chờ**: ${api.getQueue()}\n` + 
-					`**Ưu Tiên**: ${api.getPrio()}\n\n` +
-					`*Cập nhật ${api.ageCalc(timepassed)} trước*.`)
-			}, 1 * 1000);
-		} else {
-			message.channel.send("Bot không hoạt động hoặc không đọc dữ liệu trong server.")
-		}
+		setTimeout(() => {
+			message.channel.send(
+				`**Server Uptime**: ${uptime}\n` +
+				`**Bot Uptime**: ${api.uptimeCalc()}\n` +
+				`**TPS**: ${tps}\n` +
+				`**Online**: ${players} players\n` + 
+				`**Ping**: ${ping}ms\n\n` + 
+				`**Chờ**: ${api.getQueue()}\n` + 
+				`**Ưu Tiên**: ${api.getPrio()}\n\n` +
+				`*Cập nhật ${api.ageCalc(timepassed)} trước*.`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
+		}, 1 * 1000);
 	}
 
 	if (command === "playtime" || command === "pt") {
@@ -122,7 +131,7 @@ client.on("message", message => {
 		
 		setTimeout(() => {
 			if (playtime === undefined) return message.channel.send(userNotFound);
-			message.channel.send(args[0] + ": " + api.playtimeCalc(playtime));
+			message.channel.send(args[0] + ": " + api.playtimeCalc(playtime)).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
 		}, 1 * 1000);
 	}
 
@@ -136,10 +145,10 @@ client.on("message", message => {
 		var time = d.getTime();
 
 		setTimeout(() => {
-			if (lastseen === undefined) return message.channel.send(userNotFound);
+			if (lastseen === undefined) return message.channel.send(userNotFound).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
 			var age = api.ageCalc(lastseen);
 
-			message.channel.send(`${args[0]} hoạt động từ ${age} trước.`)
+			message.channel.send(`${args[0]} hoạt động từ ${age} trước.`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
 		}, 1 * 1000);
 
 	}
@@ -151,9 +160,9 @@ client.on("message", message => {
 		if (!args[0]) return message.channel.send(userNotFound)
 
 		setTimeout(() => {
-			if (firstjoin === undefined) return message.channel.send(userNotFound)
+			if (firstjoin === undefined) return message.channel.send(userNotFound).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
 
-			message.channel.send(`Bot đã thấy ${args[0]} lần đầu vào ${firstjoin}.`);
+			message.channel.send(`Bot đã thấy ${args[0]} lần đầu vào ${firstjoin}.`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
 		}, 3 * 1000);
 	}
 
@@ -164,7 +173,7 @@ client.on("message", message => {
 		let messages = quotes.get('messages')
 		let times = quotes.get('times')
 
-		if(times == undefined || messages == undefined) return message.channel.send(userNotFound)
+		if(times == undefined || messages == undefined) return message.channel.send(userNotFound).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
 
 		var msg0 = messages.split(" | ")[1]
 		var msg1 = messages.split(" | ")[2]
@@ -178,34 +187,46 @@ client.on("message", message => {
 		var time3 = times.split(" | ")[4]
 		var time4 = times.split(" | ")[5]
 		
-		var data = `***${api.ageCalc(time0)}***: ${msg0}\n***${api.ageCalc(time0)}***: ${msg1}\n***${api.ageCalc(time2)}***: ${msg2}\n***${api.ageCalc(time3)}***: ${msg3}\n***${api.ageCalc(time4)}***: ${msg4}\n`;
+		var data = `***${api.ageCalc(time0)}trước***: ${msg0}\n***${api.ageCalc(time0)}trước***: ${msg1}\n***${api.ageCalc(time2)}trước***: ${msg2}\n***${api.ageCalc(time3)}trước***: ${msg3}\n***${api.ageCalc(time4)}trước***: ${msg4}\n`;
 		if(time0 == undefined || msg0 == undefined) {
-			data = `***${api.ageCalc(time0)}***: ${msg0}\n***${api.ageCalc(time0)}***: ${msg1}\n***${api.ageCalc(time2)}***: ${msg2}\n***${api.ageCalc(time3)}***: ${msg3}\n***${api.ageCalc(time4)}***: ${msg4}\n`
+			data = `***${api.ageCalc(time0)}trước***: ${msg0}\n***${api.ageCalc(time0)}trước***: ${msg1}\n***${api.ageCalc(time2)}trước***: ${msg2}\n***${api.ageCalc(time3)}trước***: ${msg3}\n***${api.ageCalc(time4)}trước***: ${msg4}\n`
 		}
 		if(time1 == undefined || msg1 == undefined) {
-			data = `***${api.ageCalc(time0)}***: ${msg1}\n***${api.ageCalc(time2)}***: ${msg2}\n***${api.ageCalc(time3)}***: ${msg3}\n***${api.ageCalc(time4)}***: ${msg4}\n`
+			data = `***${api.ageCalc(time0)}trước***: ${msg1}\n***${api.ageCalc(time2)}trước***: ${msg2}\n***${api.ageCalc(time3)}trước***: ${msg3}\n***${api.ageCalc(time4)}trước***: ${msg4}\n`
 		}
 		if(time2 == undefined || msg2 == undefined) {
-			data = `***${api.ageCalc(time2)}***: ${msg2}\n***${api.ageCalc(time3)}***: ${msg3}\n***${api.ageCalc(time4)}***: ${msg4}\n`
+			data = `***${api.ageCalc(time2)}trước***: ${msg2}\n***${api.ageCalc(time3)}trước***: ${msg3}\n***${api.ageCalc(time4)}trước***: ${msg4}\n`
 		}
 		if(time3 == undefined || msg3 == undefined) {
-			data = `***${api.ageCalc(time3)}***: ${msg3} \n***${api.ageCalc(time4)}***: ${msg4}\n`
+			data = `***${api.ageCalc(time3)}trước***: ${msg3} \n***${api.ageCalc(time4)}trước***: ${msg4}\n`
 		}
 		if(time4 == undefined || msg4 == undefined) {
-			data = `***${api.ageCalc(time4)}***: ${msg4}\n`
+			data = `***${api.ageCalc(time4)} trước***: ${msg4}\n`
 		}
 		if (messages === undefined || times == undefined) return message.channel.send(userNotFound);
 
-		setTimeout(() => { message.channel.send(`**${args[0]}'s messages**\n*Tổng tin nhắn đã gửi: ${messages.split(" | ").length}*\n\n*5 tin nhắn gần đây*\n${data}`) }, 1 * 1000)
+		setTimeout(() => { message.author.send(`**${args[0]}'s messages**\n*Tổng tin nhắn đã gửi: ${messages.split(" | ").length}*\n\n*5 tin nhắn gần đây*\n${data}`) }, 1 * 1000)
 	}
 
 	if(command == "help") {
 		var embed = new Discord.RichEmbed()
 						.setTitle("Moon 2Y2C")
 						.setDescription(
-							"\nMoon Bot Discord: https://discord.gg/yrNvvkqp6w\n\n**Comamnds:**" +
-							"\n!help - Xem command bot\n!stats hoặc !kd - Xem kd người chơi. ( kills: 15/01, deaths: 13/01 )\n!joindate hoặc !jd - Xem người chơi lần đầu tham gia server. ( 28/01 )\n!seen - Xem lần cuối nhìn thấy người chơi. ( 02/02 )\n!playtime hoặc !pt - Xem thời gian đã chơi của người chơi. ( 24/03 ) \n!lastwords - Xem tin nhắn mới nhất của người chơi. ( 14/03 )\n!firstwords - Xem tin nhắn đầu tiên.\n!messages - Xem 5 tin nhắn mới nhất.\n" + 
-							"!queue, !que hoặc !q - Xem hàng chờ và ưu tiên.\n!normalqueue hoặc !nq - Xem hàng chờ.\n!prio hoặc !prioqueue - Xem thông số bao gồm hàng chờ. ưu tiên, trực tuyến.\n!online - Xem người chơi đang hoạt động.\n!status - Xem hàng chờ, ưu tiên, online."
+							"\nMoon Bot Discord: https://discord.gg/yrNvvkqp6w\n\n" +
+							"**Comamnds:**" +
+							"\n!help - Xem command bot\n" +
+							"!stats hoặc !kd - Xem kd người chơi. ( kills: 15/01, deaths: 13/01 )\n" + 
+							"!joindate hoặc !jd - Xem người chơi lần đầu tham gia server. ( 28/01 )\n" + 
+							"!seen - Xem lần cuối nhìn thấy người chơi. ( 02/02 )\n" +
+							"!playtime hoặc !pt - Xem thời gian đã chơi của người chơi. ( 24/03 )\n" +
+							"!lastwords - Xem tin nhắn mới nhất của người chơi. ( 14/03 )\n" +
+							"!firstwords - Xem tin nhắn đầu tiên.\n" +
+							"!messages - Xem 5 tin nhắn mới nhất.\n" + 
+							"!queue, !que hoặc !q - Xem hàng chờ và ưu tiên.\n" +
+							"!normalqueue hoặc !nq - Xem hàng chờ.\n" +
+							"!prio hoặc !prioqueue - Xem thông số bao gồm hàng chờ. ưu tiên, trực tuyến.\n" +
+							"!online - Xem người chơi đang hoạt động.\n"+ 
+							"!status - Xem hàng chờ, ưu tiên, online."
 						)
 						.setColor('0x2EA711')
 						.setTimestamp()
