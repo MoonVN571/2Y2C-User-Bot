@@ -23,7 +23,7 @@ var api = new newAPI()
 
 client.on('ready', () => {
 	console.log("Bot online!")
-	client.user.setPresence({ game: { name: "!help" }})
+	client.user.setPresence({ game: { name: "!help xem lệnh" }})
 })
 
 client.on("message", message => {
