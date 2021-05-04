@@ -24,8 +24,6 @@ var api = new newAPI()
 client.on('ready', () => {
 	console.log("Bot online!")
 	client.user.setPresence({ game: { name: "!help" }})
-
-	// client.channels.get('625715711481741324').send("Đây là bot, dùng !help để xem. ( bot on ready )")
 })
 
 client.on("message", message => {
@@ -102,13 +100,26 @@ client.on("message", message => {
 	}
 
 	if(command == "status" || command == "queue" || command == "que" || command == "prioqueue" || command == "pq" || command == "uptime" || command == "tps") {
-        var dataa = new Scriptdb(config.disk + `/data.json`).get('tab-content');
+        var data = new Scriptdb(config.disk + `/data.json`);
+
+		var tab = data.get('tab-content');
 		if(dataa == undefined) return message.channel.send("Bot chưa kết nối vào server hoặc server không hoạt động.");
-		var uptime = dataa.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
-		var tps = dataa.split(' ')[1];
-		var players = dataa.split(' ')[4];
-		var ping = dataa.split(" - ")[2].split(" ping")[0];
-		var timepassed  = dataa.split(" | ")[1];
+		var uptime = tab.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
+		var tps = tab.split(' ')[1];
+		var players = tab.split(' ')[4];
+		var ping = tab.split(" - ")[2].split(" ping")[0];
+		var timepassed  = tab.split(" | ")[1];
+
+		var queue = data.get('queue');
+		var prio = data.get('prio');
+
+		if(queue == undefined) {
+			queue = null;
+		}
+
+		if(prio == undefined) {
+			prio = null;
+		}
 
 		setTimeout(() => {
 			message.channel.send(
@@ -116,10 +127,9 @@ client.on("message", message => {
 				`**Bot Uptime**: ${api.uptimeCalc()}\n` +
 				`**TPS**: ${tps}\n` +
 				`**Online**: ${players} players\n` + 
-				`**Ping**: ${ping}ms\n\n` + 
-				`**Chờ**: ${api.getQueue()}\n` + 
-				`**Ưu Tiên**: ${api.getPrio()}\n\n` +
-				`*Cập nhật ${api.ageCalc(timepassed)} trước*.`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
+				`**Ping**: ${ping}ms\n` + 
+				`**Hàng chờ**: ${queue} - Ưu tiên: ${prio}\n\n` +
+				`*${api.ageCalc(timepassed)} trước*.`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
 		}, 1 * 1000);
 	}
 
