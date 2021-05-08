@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-var Scriptdb = require("Script.db")
+var Scriptdb = require("Script.db");
+var superagent = require('superagent');
 
 require('dotenv').config();
 
@@ -37,6 +38,66 @@ client.on("message", message => {
 	var user = client.users.find(user => user.id === "425599739837284362");
 
 	var authorID = user.username + "#" + user.discriminator;
+
+	if(command == "2bseen") {
+		if (!args[0]) return message.channel.send(client.userNotFound);
+
+        superagent.get("https://api.2b2t.dev/seen?username=" + args[0]).end((err, data) => {
+            if(data.body[0] == undefined) return message.channel.send(client.userNotFound)
+
+            let seen = data.body[0].seen
+
+            var toTime = new Date(seen);
+
+            var age = api.ageCalc(toTime);
+
+            message.channel.send(`2B2T: Đã thấy ${args[0]} từ ${age} trước.`);
+		});
+	}
+
+	if(command == "2bstats") {
+		if (!args[0]) return message.channel.send(client.userNotFound);
+
+        superagent.get("https://api.2b2t.dev/stats?username=" + args[0]).end((err, data) => {
+            if(data.body[0] == undefined) return message.channel.send(client.userNotFound)
+
+            let joins = data.body[0].joins
+            let leaves = data.body[0].leaves
+            let deads = data.body[0].deaths
+            let kills = data.body[0].kills
+
+            if (kills === undefined) { kills = 0 }
+
+            if (deads === undefined) { deads = 0 }
+
+            var ratio = kills / deads;
+            var ratioFixed = ratio.toFixed(2);
+
+            if (ratioFixed === "NaN" || ratioFixed === "Infinity") {
+                ratioFixed = "0.00";
+            }
+
+			message.channel.send("2B2T: " + args[0] + " | K: " + kills + " - D: " + deads + " - K/D: " + ratioFixed + " - Joins: " + joins + " - Leaves: " + leaves).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + authorID); });
+		})
+	}
+
+	if(command == "2bqueue" || command == "2bq") {
+		superagent.get("https://2b2t.io/api/queue?last=true").end((err, data) => {
+			let queuequeue = data.body[0][1];
+			if(err) {
+				queuequeue = "Lỗi";
+			}
+			
+            superagent.get("https://api.2b2t.dev/prioq").end((err, dataq) => {
+				let prio = dataq.body[1];
+				if(err) {
+					prio = "Lỗi";
+				}
+
+				message.channel.send("2B2T | Hàng chờ: " + queuequeue + " - Ưu tiên: " + prio);
+			});
+		});
+	}
 
 	if(command == "lastwords") {
 		if (!args[0]) return message.channel.send(userNotFound)
