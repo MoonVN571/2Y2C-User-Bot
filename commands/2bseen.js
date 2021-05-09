@@ -1,22 +1,23 @@
-var superagent = require('superagent');
+var request = require('request');
 
 module.exports = {
     name: "2bseen",
-    aliases: [''],
-    
+    aliases: ['2bsee'],
+
     async execute(client, message, args) {
-		if (!args[0]) return message.channel.send(client.userNotFound);
+        if (!args[0]) return message.channel.send(client.userNotFound);
 
-        superagent.get("https://api.2b2t.dev/seen?username=" + args[0]).end((err, data) => {
-            if(data.body[0] == undefined) return message.channel.send(client.userNotFound)
+        request('https://api.2b2t.dev/seen?username=' + args[0], function (error, response, body) {
+            var data = JSON.parse(body)[0];
 
-            let seen = data.body[0].seen
+            if(data.seen == undefined) return message.channel.send(client.userNotFound)
 
+            let seen = data.seen;
             var toTime = new Date(seen);
 
             var age = api.ageCalc(toTime);
 
             message.channel.send(`2B2T: Đã thấy ${args[0]} từ ${age} trước.`);
-		});
+        });
     }
 }

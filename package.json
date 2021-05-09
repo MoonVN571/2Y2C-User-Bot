@@ -7,8 +7,8 @@
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
     "minecraft-protocol": "^1.23.3",
-    "script.db": "^3.0.0",
-    "superagent": "^6.1.0"
+    "request": "^2.88.2",
+    "script.db": "^3.0.0"
   },
   "devDependencies": {},
   "scripts": {

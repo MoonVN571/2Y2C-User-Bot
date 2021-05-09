@@ -1,4 +1,4 @@
-var superagent = require('superagent');
+var request = require('request');
 
 module.exports = {
     name: "2bstats",
@@ -7,13 +7,14 @@ module.exports = {
     async execute(client, message, args) {
 		if (!args[0]) return message.channel.send(client.userNotFound);
 
-        superagent.get("https://api.2b2t.dev/stats?username=" + args[0]).end((err, data) => {
-            if(data.body[0] == undefined) return message.channel.send(client.userNotFound)
+        request("https://api.2b2t.dev/stats?username=" + args[0], function (error, response, body) {
+            var data = JSON.parse(body)[0];
+            if(data == undefined) return message.channel.send(client.userNotFound)
 
-            let joins = data.body[0].joins
-            let leaves = data.body[0].leaves
-            let deads = data.body[0].deaths
-            let kills = data.body[0].kills
+            let joins = data.joins
+            let leaves = data.leaves
+            let deads = data.deaths
+            let kills = data.kills
 
             if (kills === undefined) { kills = 0 }
 

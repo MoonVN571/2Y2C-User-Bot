@@ -1,23 +1,23 @@
-var superagent = require('superagent');
+const request = require('request');
 
 module.exports = {
     name: "2bqueue",
-    aliases: ['2bque', '2bq'],
+    aliases: ['2bq', '2bque'],
     
     async execute(client, message, args) {
-		superagent.get("https://2b2t.io/api/queue?last=true").end((err, data) => {
-			let queuequeue = data.body[0][1];
-			if(err) {
-				queuequeue = "Lỗi";
+		request('https://api.2b2t.dev/prioq', function (error, response, body) {
+			let datap = JSON.parse(body)[1];
+			if(error) {
+				datap = "Lỗi";
 			}
 			
-            superagent.get("https://api.2b2t.dev/prioq").end((err, dataq) => {
-				let prio = dataq.body[1];
-				if(err) {
-					prio = "Lỗi";
+			request('https://2b2t.io/api/queue?last=true', function (error, response, body) {
+				let dataq = JSON.parse(body)[0][1];
+				if(error) {
+					dataq = "Lỗi";
 				}
 
-				message.channel.send("2B2T | Hàng chờ: " + queuequeue + " - Ưu tiên: " + prio);
+				message.channel.send("2B2T | Hàng chờ: " + dataq + " - Ưu tiên: " + datap);
 			});
 		});
     }
