@@ -11,7 +11,7 @@ module.exports = {
         var data = new Scriptdb(`${client.config.disk}/data.json`);
 
 		var tab = data.get('tab-content');
-		if(dataa == undefined) return message.channel.send("Bot chưa kết nối vào server hoặc server không hoạt động.");
+		if(tab == undefined) return message.channel.send("Bot chưa kết nối vào server hoặc server không hoạt động.");
 		var uptime = tab.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
 		var tps = tab.split(' ')[1];
 		var players = tab.split(' ')[4];
