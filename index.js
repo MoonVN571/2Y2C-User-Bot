@@ -27,8 +27,6 @@ client.on('ready', () => {
 
 client.on("message", async message => {
 	if(message.author.bot|| !message.content.startsWith(prefix) || message.author == client.user || message.channel.type == "dm") return;
-
-	if(dev && message.guild.id !== "794912016237985802") return message.channel.send("Lệnh đã bị tắt tại nhóm này.");
 	
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();
