@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-var Scriptdb = require("Script.db");
-var superagent = require('superagent');
+var fs = require('fs');
 
 require('dotenv').config();
 
@@ -24,6 +23,14 @@ client.on('ready', () => {
 	client.user.setPresence({ game: { name: "!help xem lệnh" }})
 })
 
+client.commands = new Discord.Collection();
+
+const cmds = fs.readdirSync(`./commands`).filter(file => file.endsWith('.js'));
+for (const file of cmds) {
+	const cmd = require(`./commands/${file}`);
+
+	client.commands.set(cmd.name, cmd);
+}
 
 client.on("message", async message => {
 	if(message.author.bot|| !message.content.startsWith(prefix) || message.author == client.user || message.channel.type == "dm") return;
@@ -31,8 +38,8 @@ client.on("message", async message => {
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();
 
-    const cmd = client.commandss.get(cmdName)
-        || client.commandss.find(cmd => cmd.aliases && cmd.aliases.includes(cmdName));
+    const cmd = client.commands.get(cmdName)
+        || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(cmdName));
 
 	if(cmdName == "reload") {
 		if(message.author.id !== "425599739837284362")
@@ -50,11 +57,13 @@ client.on("message", async message => {
 
     if(!cmd) return;
 	
-	client.userNotFound = new Discord.MessageEmbed()
+	client.userNotFound = new Discord.RichEmbed()
 					.setDescription('Không tìm thấy người chơi.')
 					.setColor('0xC51515');
 	
 	client.prefix = prefix;
+
+	client.config = config;
 
 	client.userNotFound = "Không tìm thấy người chơi.";
 	

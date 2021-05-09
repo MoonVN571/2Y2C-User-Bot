@@ -1,6 +1,6 @@
 var Scriptdb = require('script.db');
 
-var newAPI = require('./api');
+var newAPI = require('../api');
 var api = new newAPI()
 
 module.exports = {

@@ -5,10 +5,10 @@ module.exports = {
     aliases: ['jd'],
     
     async execute(client, message, args) {
+        if (!args[0]) return message.channel.send(client.userNotFound)
+
 		let fj = new Scriptdb(`${client.config.disk}/data/joindate/${args[0]}.json`)
 		let firstjoin = fj.get('date')
-
-		if (!args[0]) return message.channel.send(client.userNotFound)
 
         if (firstjoin === undefined) return message.channel.send(userNotFound).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
 

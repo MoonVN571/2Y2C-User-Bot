@@ -1,5 +1,8 @@
 var Scriptdb = require('script.db');
 
+var newAPI = require('../api');
+var api = new newAPI()
+
 module.exports = {
     name: "status",
     aliases: ['queue', 'q', 'prioqueue', 'prio', 'ping', 'tps', 'que', 'uptime'],
