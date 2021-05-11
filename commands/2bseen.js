@@ -1,5 +1,8 @@
 var request = require('request');
 
+var ab = require('../api');
+var api = new ab();
+
 module.exports = {
     name: "2bseen",
     aliases: ['2bsee'],
