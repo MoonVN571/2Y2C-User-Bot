@@ -22,11 +22,11 @@ module.exports = {
 		var prio = data.get('prio');
 
 		if(queue == undefined) {
-			queue = null;
+			queue = 0;
 		}
 
 		if(prio == undefined) {
-			prio = null;
+			prio = 0;
 		}
 
         message.channel.send(
@@ -35,7 +35,7 @@ module.exports = {
             `**TPS**: ${tps}\n` +
             `**Online**: ${players} players\n` + 
             `**Ping**: ${ping}ms\n` + 
-            `**Hàng chờ**: ${queue} - Ưu tiên: ${prio}\n\n` +
+            `**Hàng chờ**: ${queue.split(" | ")[0]} - Ưu tiên: ${prio.split(" | ")[0]}\n\n` +
             `*${api.ageCalc(timepassed)} trước*.`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
     }
 }
