@@ -36,6 +36,6 @@ module.exports = {
             `**Online**: ${players} players\n` + 
             `**Ping**: ${ping}ms\n` + 
             `**Hàng chờ**: ${queue.split(" | ")[0]} - Ưu tiên: ${prio.split(" | ")[0]}\n\n` +
-            `*${api.ageCalc(timepassed)} trước*.`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
+            `Đã cập nhất từ *${api.ageCalc(timepassed)}* trước.`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
     }
 }
