@@ -13,7 +13,7 @@ module.exports = {
         request('https://api.2b2t.dev/seen?username=' + args[0], function (error, response, body) {
             var data = JSON.parse(body)[0];
 
-            if(data.seen == undefined) return message.channel.send(client.userNotFound)
+            if(data == undefined) return message.channel.send(client.userNotFound)
 
             let seen = data.seen;
             var toTime = new Date(seen);
