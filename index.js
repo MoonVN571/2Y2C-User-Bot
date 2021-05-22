@@ -12,11 +12,12 @@ var config = {
 
 setTimeout(() => {
 	process.exit();
-}, 5 * 60 * 1000)
+}, 5 * 60 * 1000);
 
 client.login(config.token).catch((e) => { console.log(e)})
 client.on("error", (e) => { console.error(e) });
 var prefix = "!";
+var color = "";
 
 client.on('ready', () => {
 	console.log("Bot online!")
@@ -43,9 +44,7 @@ client.on("message", async message => {
 
 	if(cmdName == "reload") {
 		if(message.author.id !== "425599739837284362")
-			return message.channel.send("Bạn phải là nhà phát triển để sử dụng lệnh này.").then(msg => {
-				msg.delete({ timeout: 10000 });
-			});
+			return message.channel.send("Bạn phải là nhà phát triển để sử dụng lệnh này.");
 
 			delete require.cache[require.resolve(`./commands/${args[0]}.js`)];
 
@@ -56,11 +55,13 @@ client.on("message", async message => {
 	}
 
     if(!cmd) return;
-	
+	client.ping = client.ws.ping;
+
 	client.userNotFound = new Discord.RichEmbed()
 					.setDescription('Không tìm thấy người chơi.')
-					.setColor('0xC51515');
+					.setColor(message.member.displayHexColor);
 	
+	client.color = color;
 	client.prefix = prefix;
 
 	client.config = config;

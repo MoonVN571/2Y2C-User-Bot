@@ -28,8 +28,8 @@ module.exports = {
 						.setTimestamp()
 						.setFooter("Moon 2Y2C");
 
-		message.author.send(embed).catch(() => {
-			message.reply("bật DM để xem các lệnh.")
+		message.channel.send(embed).catch(e => { 
+			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
 		});
     }
 }

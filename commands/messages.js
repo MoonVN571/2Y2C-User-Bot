@@ -44,7 +44,12 @@ module.exports = {
 		if(time4 == undefined || msg4 == undefined) {
 			data = `***${api.ageCalc(time4)} trước***: ${msg4}\n`
 		}
-
-		message.author.send(`**${args[0]}'s messages**\n*Tổng tin nhắn đã gửi: ${messages.split(" | ").length}*\n\n*5 tin nhắn gần đây*\n${data}`);
-    }
+	
+		message.channel.send({ embed: {
+			color: 0x2EA711,
+			description: `**${args[0]}'s messages**\n*Tổng tin nhắn đã gửi: ${messages.split(" | ").length}*\n\n*5 tin nhắn gần đây*\n${data}`
+		}}).catch(e => { 
+			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
+		});
+	}
 }

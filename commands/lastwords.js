@@ -18,7 +18,12 @@ module.exports = {
 
 		var data = msgs.split(" | ")[msgs.split(" | ").length - 1];
 		var time = times.split(" | ")[times.split(" | ").length - 1];
-
-        message.channel.send(`**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
-    }
+    
+		message.channel.send({ embed: {
+			color: 0x2EA711,
+			description: `**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`
+		}}).catch(e => { 
+			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
+		});
+	}
 }

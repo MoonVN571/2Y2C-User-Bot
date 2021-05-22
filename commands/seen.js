@@ -16,7 +16,12 @@ module.exports = {
         if (lastseen === undefined) return message.channel.send(client.userNotFound).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
         
         var age = api.ageCalc(lastseen);
-
-        message.channel.send(`${args[0]} hoạt động từ ${age} trước.`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
+    
+		message.channel.send({ embed: {
+			color: 0x2EA711,
+			description: `${args[0]} hoạt động từ ${age} trước.`
+		}}).catch(e => {
+			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
+		});
     }
 }

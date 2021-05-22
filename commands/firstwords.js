@@ -19,8 +19,11 @@ module.exports = {
 		var data = msgs.split(" | ")[0];
 		var time = times.split(" | ")[0];
 
-		setTimeout(() => { 
-			message.channel.send(`**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
-	 	}, 1 * 1000);
-    }
+		message.channel.send({ embed: {
+			color: 0x2EA711,
+			description: `**${api.ageCalc(time)} trước**: <${args[0]}> ${data}`
+		}}).catch(e => { 
+			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
+		});
+	}
 }

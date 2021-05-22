@@ -14,6 +14,12 @@ module.exports = {
 		let playtime = pt.get('time')
 		
 		if (playtime === undefined) return message.channel.send(client.userNotFound);
-		message.channel.send(args[0] + ": " + api.playtimeCalc(playtime)).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
+    
+		message.channel.send({ embed: {
+			color: 0x2EA711,
+			description: args[0] + ": " + api.playtimeCalc(playtime)
+		}}).catch(e => { 
+			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
+		});
     }
 }

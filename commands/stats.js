@@ -1,23 +1,21 @@
 var Scriptdb = require('script.db');
+var Discord = require('discord.js');
 
 module.exports = {
     name: "stats",
-    aliases: ['kd'],
+    description: "stats command.",
+    aliases: ['kd', 'stats'],
     
     async execute(client, message, args) {
-		if (!args[0]) return message.channel.send(client.userNotFound)
+        if (!args[0]) return message.channel.send(client.userNotFound);
 
-		const kd = new Scriptdb(config.disk + `/data/kd/${args[0]}.json`);
+		const kd = new Scriptdb(`${client.config.disK}/data/kd/${args[0]}.json`);
 		let deads = kd.get('deaths');
 		let kills = kd.get('kills');
 
-		if (kills === undefined) {
-			kills = 0;
-		}
+		if (kills === undefined) { kills = 0 }
 
-		if (deads === undefined) {
-			deads = 0;
-		}
+		if (deads === undefined) { deads = 0 }
 
 		var ratio = kills / deads;
 		var ratioFixed = ratio.toFixed(2);
@@ -26,6 +24,16 @@ module.exports = {
 			ratioFixed = "0.00";
 		}
 
-        message.channel.send("**" + args[0] + "**: [K: " + kills + " - D: " + deads + " - K/D: " + ratioFixed + "]").catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
+        var embed = new Discord.RichEmbed()
+                        .setAuthor(`${args[0]}'s statistics`, `https://minotar.net/helm/${args[0]}`, `https://namemc.com/` + args[0])
+                        .addField(`Kills`, `${kills}`, true)
+                        .addField(`Deaths`, `${deads}`, true )
+                        .addField(`K/D Ratio`, `${ratioFixed}`, true )
+                        .setThumbnail(`https://minotar.net/helm/${args[0]}`)
+                        .setColor(0x2EA711)
+                        .setFooter(client.footer, 'https://cdn.discordapp.com/avatars/768448728125407242/aa2ce1d9374de6fc0dd28d349ca135af.webp?size=1024')
+                        .setTimestamp();
+
+        message.channel.send(embed);
     }
 }

@@ -11,7 +11,12 @@ module.exports = {
 		let firstjoin = fj.get('date')
 
         if (firstjoin === undefined) return message.channel.send(userNotFound).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
-
-        message.channel.send(`Bot đã thấy ${args[0]} lần đầu vào ${firstjoin}.`).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
+    
+		message.channel.send({ embed: {
+			color: 0x2EA711,
+			description: `Bot đã thấy ${args[0]} lần đầu vào ${firstjoin}.`
+		}}).catch(e => { 
+			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
+		});
     }
 }
