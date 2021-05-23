@@ -10,7 +10,7 @@ module.exports = {
 		let fj = new Scriptdb(`${client.config.disk}/data/joindate/${args[0]}.json`)
 		let firstjoin = fj.get('date')
 
-        if (firstjoin === undefined) return message.channel.send(userNotFound).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
+        if (firstjoin === undefined) return message.channel.send(client.userNotFound).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
     
 		message.channel.send({ embed: {
 			color: 0x2EA711,
