@@ -34,7 +34,7 @@ for (const file of cmds) {
 }
 
 client.on("message", async message => {
-	if(message.author.id == "689378259833716781" || message.author.bot|| !message.content.startsWith(prefix) || message.author == client.user || message.channel.type == "dm") return;
+	if(message.author.id == "689378259833716781" || message.author.bot|| !message.content.startsWith(prefix) || message.channel.type == "dm") return;
 
 	const args = message.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();

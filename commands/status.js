@@ -37,7 +37,7 @@ module.exports = {
 				.addField('Players', players + " players", true)
 				.addField('Ping', ping + "ms", true)
 				.addField('Hàng chờ', "Bình thường: " + queue.split(" | ")[0] + " - Ưu tiên: " + prio.split(" | ")[0], true)
-                .setFooter(api.ageCalc(timepassed) + " trước.")
+                .setFooter('Trạng thái server được cập nhật từ ' + api.ageCalc(timepassed) + " trước.", 'https://cdn.discordapp.com/avatars/768448728125407242/f18ec971961b23db96e6cf0f3f79ec1c.png?size=256')
                 .setColor(0x000DFF)
                 .setTimestamp();
 
