@@ -67,8 +67,6 @@ client.on("message", async message => {
 
 	client.config = config;
 
-	client.userNotFound = "Không tìm thấy người chơi.";
-	
 	var user = client.users.find(user => user.id === "425599739837284362");
 	client.authorID = user.username + "#" + user.discriminator;
 
