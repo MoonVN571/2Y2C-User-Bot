@@ -1,5 +1,8 @@
 var Scriptdb = require('script.db');
 
+var ap = require('../api');
+var api = new ap();
+
 module.exports = {
     name: "joindate",
     aliases: ['jd'],
@@ -12,9 +15,22 @@ module.exports = {
 
         if (firstjoin === undefined) return message.channel.send(client.userNotFound).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
     
+        var t = firstjoin.split(" ")[1];
+
+        var date = firstjoin.replace('/', '-').replace(".", "-").replace('.2', '-202').replace("/2", '-202')
+
+        var day = date.split("-")[0]
+        var month = date.split("-")[1]
+        var year = date.split("-")[2].split(" ")[0];
+
+
+        var datee = year + '-' + month + '-' + day + "T" + t.replace(" ", "T") + ":55.506Z";
+
+        var tick = new Date(datee).getTime();
+
 		message.channel.send({ embed: {
 			color: 0x2EA711,
-			description: `Bot đã thấy ${args[0]} lần đầu vào ${firstjoin}.`
+			description: `${args[0]}: ${firstjoin} (${api.ageCalc(tick)} trước)`
 		}}).catch(e => { 
 			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
 		});
