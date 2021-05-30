@@ -4,7 +4,7 @@ module.exports = {
     
     async execute(client, message, args) {
         message.channel.send('Checking...').then(msg => {
-            msg.edit(`${msg.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`)
+            msg.edit(`Ping: ${msg.createdTimestamp - message.createdTimestamp}ms. \nAPI: ${Math.round(client.ping)}ms`)
         })
     }
 }

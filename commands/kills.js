@@ -5,17 +5,17 @@ var abc = require("../api")
 var api = new abc();
 
 module.exports = {
-    name: "messages",
-    aliases: ['msgs'],
+    name: "kills",
+    aliases: [''],
     
     async execute(client, message, args) {
         if (!args[0]) return message.channel.send(client.userNotFound)
 
-		let quotes = new Scriptdb(`${client.config.disk}/data/quotes/${args[0]}.json`)
-		let messages = quotes.get('messages')
+		let quotes = new Scriptdb(`./data/kills/${args[0]}.json`)
+		let deaths = quotes.get('deaths')
 		let times = quotes.get('times')
 
-		if(times == undefined || messages == undefined) return message.channel.send(client.userNotFound)
+		if(times == undefined || deaths == undefined) return message.channel.send(client.userNotFound)
 
 		var msg0 = undefined;
 		var msg1 = undefined;
@@ -28,8 +28,8 @@ module.exports = {
 		var time2 = undefined;
 		var time3 = undefined;
 		var time4 = undefined;
-		 
-		if(times.toString().includes(" | ")) {
+		
+		if(times.split(" | ")) {
 			if(times.split(" | ").length <= 5) {
 				time0 = times.split(" | ")[0]
 				time1 = times.split(" | ")[1]
@@ -37,11 +37,11 @@ module.exports = {
 				time3 = times.split(" | ")[3]
 				time4 = times.split(" | ")[4]
 				
-				msg0 = messages.split(" | ")[0]
-				msg1 = messages.split(" | ")[1]
-				msg2 = messages.split(" | ")[2]
-				msg3 = messages.split(" | ")[3]
-				msg4 = messages.split(" | ")[4]
+				msg0 = deaths.split(" | ")[0]
+				msg1 = deaths.split(" | ")[1]
+				msg2 = deaths.split(" | ")[2]
+				msg3 = deaths.split(" | ")[3]
+				msg4 = deaths.split(" | ")[4]
 			} else {
 				time0 = times.split(" | ")[times.split(" | ").length - 1]
 				time1 = times.split(" | ")[times.split(" | ").length - 2]
@@ -49,13 +49,13 @@ module.exports = {
 				time3 = times.split(" | ")[times.split(" | ").length - 4]
 				time4 = times.split(" | ")[times.split(" | ").length - 5]
 
-				msg0 = messages.split(" | ")[messages.split(" | ").length - 1]
-				msg1 = messages.split(" | ")[messages.split(" | ").length - 2]
-				msg2 = messages.split(" | ")[messages.split(" | ").length - 3]
-				msg3 = messages.split(" | ")[messages.split(" | ").length - 4]
-				msg4 = messages.split(" | ")[messages.split(" | ").length - 5]
+				msg0 = deaths.split(" | ")[deaths.split(" | ").length - 1]
+				msg1 = deaths.split(" | ")[deaths.split(" | ").length - 2]
+				msg2 = deaths.split(" | ")[deaths.split(" | ").length - 3]
+				msg3 = deaths.split(" | ")[deaths.split(" | ").length - 4]
+				msg4 = deaths.split(" | ")[deaths.split(" | ").length - 5]
 			}
-			
+
 			var data = `***${api.ageCalc(time0)} trước***: ${msg0}\n`
 			+ `***${api.ageCalc(time1)} trước***: ${msg1}\n`
 			+ `***${api.ageCalc(time2)} trước***: ${msg2}\n`
@@ -85,9 +85,9 @@ module.exports = {
 			}
 
 			var embed = new RichEmbed()
-									.setTitle(`Tin nhắn ${args[0]}`)
-									.setDescription(`*Tổng tin nhắn đã gửi: ${messages.split(" | ").length}*\n`)
-									.addField('*5 tin nhắn gần đây*', data)
+									.setTitle(`Báo cáo của ${args[0]}`)
+									.setDescription(`*Tổng số ghi nhận người này: ${deaths.split(" | ").length}*\n`)
+									.addField('*5 lần chết gần đây*', data + "\n")
 									.setFooter(client.footer)
 									.setTimestamp()
 									.setColor(0x2EA711);
@@ -95,9 +95,9 @@ module.exports = {
 			message.channel.send(embed);
 		} else {
 			var embed = new RichEmbed()
-									.setTitle(`Tin nhắn ${args[0]}`)
-									.setDescription(`*Tổng tin nhắn đã gửi: ${messages.split(" | ").length}*\n`)
-									.addField('*5 tin nhắn gần đây*', `***${api.ageCalc(times)} trước:*** ${messages}`)
+									.setTitle(`Báo cáo của ${args[0]}`)
+									.setDescription(`*Tổng số ghi nhận người này: 1\n`)
+									.addField('*5 lần chết gần đây*', deaths + "\n")
 									.setFooter(client.footer)
 									.setTimestamp()
 									.setColor(0x2EA711);
