@@ -23,15 +23,15 @@ module.exports = {
         try {
             data = msgs.split(" | ")[msgs.split(" | ").length - 1];
         } catch(e) {
-            data = msgs;
+            data = mgs;
         }
 
         try {
-            time = times.split(" | ")[times.split(" | ").length - 1];
+            time = times.split(" | ")[0];
         } catch(e) {
             time = times;
         }
-
+        
         var embed = new RichEmbed()
                             .setDescription("**" + args[0] + "** [" + api.ageCalc(time) + " trước]: " + data)
                             .setColor(0x2EA711)
