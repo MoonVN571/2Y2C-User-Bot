@@ -9,7 +9,7 @@ module.exports = {
     async execute(client, message, args) {
         if (!args[0]) return message.channel.send(client.userNotFound);
 
-		const kd = new Scriptdb(`${client.config.disK}/data/kd/${args[0]}.json`);
+		const kd = new Scriptdb(`${client.config.disk}/data/kd/${args[0]}.json`);
 		let deads = kd.get('deaths');
 		let kills = kd.get('kills');
 
