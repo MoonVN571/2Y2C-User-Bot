@@ -24,7 +24,7 @@ module.exports = {
 		var ping = tab.split(" - ")[2].split(" ping")[0];
 		var timepassed  = tab.split(" | ")[1];
 
-        var user = client.users.cache.find(user => user.id === "425599739837284362");
+        var user = client.users.find(user => user.id === "425599739837284362");
 
         if(tps == "tps" || ping == "ping"|| players == "players")
                     return message.channel.send(`Lỗi, thử lại sau! Hãy báo cáo lỗi này với **${user.username}#${user.discriminator}`)
@@ -32,39 +32,13 @@ module.exports = {
         if(queue == undefined || prio == undefined) return message.channel.send("Không tìm thấy dữ liệu.");
         
 		var embed = new RichEmbed()
-                .setAuthor('2Y2C','https://cdn.discordapp.com/attachments/795842485133246514/821669964673974282/communityIcon_14otnpwidot51.png')
-                .addFields(
-                    {
-                        name: 'Server Uptime',
-                        value: uptime,
-                        inline: true
-                    },
-                    {
-                        name: 'Bot Uptime',
-                        value: api.uptimeCalc(),
-                        inline: true
-                    },
-                    {
-                        name: 'TPS',
-                        value: tps,
-                        inline: true
-                    },
-                    {
-                        name: 'Players',
-                        value: players + " players",
-                        inline: true
-                    },
-                    {
-                        name: 'Bot Ping',
-                        value: ping + " ms",
-                        inline: true
-                    },
-                    {
-                        name: 'Hàng chờ',
-                        value: "Bình thường: " + queue.split(" | ")[0] + " - Ưu tiên: " + prio.split(" | ")[0],
-                        inline: true
-                    }
-                    )
+                .setAuthor('2Y2C','https://cdn.discordapp.com/attachments/795842485133246514/821669964673974282/communityIcon_14otnpwidot51.png', 'https://minecraft-mp.com/server-s271071')
+                .addField('Server Uptime',uptime, true)
+				.addField('Bot Uptime', api.uptimeCalc(), true)
+				.addField('TPS', tps, true)
+				.addField('Players', players + " players", true)
+				.addField('Ping', ping + "ms", true)
+				.addField('Hàng chờ', "Bình thường: " + queue.split(" | ")[0] + " - Ưu tiên: " + prio.split(" | ")[0], true)
                 .setFooter('Update ' + api.ageCalc(timepassed) + " trước.", 'https://cdn.discordapp.com/avatars/768448728125407242/f18ec971961b23db96e6cf0f3f79ec1c.png?size=256')
                 .setColor(0x000DFF)
                 .setTimestamp();
