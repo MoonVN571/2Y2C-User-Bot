@@ -11,7 +11,7 @@ module.exports = {
     async execute(client, message, args) {
         if (!args[0]) return message.channel.send(client.userNotFound)
 
-		let quotes = new Scriptdb(`./data/kills/${args[0]}.json`)
+		let quotes = new Scriptdb(`${client.config.disk}/data/kills/${args[0]}.json`)
 		let deaths = quotes.get('deaths')
 		let times = quotes.get('times')
 
@@ -29,7 +29,7 @@ module.exports = {
 		var time3 = undefined;
 		var time4 = undefined;
 		
-		if(times.split(" | ")) {
+		if(times.toString().includes(" | ")) {
 			if(times.split(" | ").length <= 5) {
 				time0 = times.split(" | ")[0]
 				time1 = times.split(" | ")[1]
