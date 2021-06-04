@@ -13,10 +13,8 @@ module.exports = {
 		let deads = kd.get('deaths');
 		let kills = kd.get('kills');
 
-		if (kills === undefined) { kills = 0 }
-
-		if (deads === undefined) { deads = 0 }
-
+		if (kills === undefined && deads == undefined) return message.channel.send(client.userNotFound);
+        
 		var ratio = kills / deads;
 		var ratioFixed = ratio.toFixed(2);
 
