@@ -15,6 +15,9 @@ module.exports = {
 
 		if (kills === undefined && deads == undefined) return message.channel.send(client.userNotFound);
         
+        if(kills == undefined) kills = 0;
+        if(deads == undefined) deads = 0;
+        
 		var ratio = kills / deads;
 		var ratioFixed = ratio.toFixed(2);
 
