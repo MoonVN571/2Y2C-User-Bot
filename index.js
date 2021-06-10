@@ -34,7 +34,10 @@ for (const file of cmds) {
 }
 
 client.on("message", async message => {
-	if(message.author.id == "689378259833716781" || message.author.bot|| !message.content.startsWith(prefix) || message.channel.type == "dm") return;
+	if(message.author.bot|| !message.content.startsWith(prefix) || message.channel.type == "dm") return;
+
+	// ăn ở thôi :)
+	if(message.author.id == "689378259833716781" || message.author.id == "843475162085982225" || message.author.id == "725226093128187916") return;
 
 	const args = message.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();
@@ -58,7 +61,7 @@ client.on("message", async message => {
 
 	client.userNotFound = new Discord.RichEmbed()
 					.setDescription('Không tìm thấy người chơi.')
-					.setColor(message.member.displayHexColor);
+					.setColor(0xC51515);
 	
 	client.color = color;
 	client.prefix = prefix;
