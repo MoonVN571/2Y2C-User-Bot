@@ -1,5 +1,5 @@
 var Scriptdb = require('script.db');
-var Discord = require('discord.js');
+var { RichEmbed } = require('discord.js');
 
 module.exports = {
     name: "stats",
@@ -25,7 +25,7 @@ module.exports = {
 			ratioFixed = "0.00";
 		}
 
-        var embed = new Discord.RichEmbed()
+        var embed = new RichEmbed()
                         .setAuthor(`${args[0]}'s statistics`, `https://minotar.net/helm/${args[0]}`, `https://namemc.com/` + args[0])
                         .addField(`Kills`, `${kills}`, true)
                         .addField(`Deaths`, `${deads}`, true )

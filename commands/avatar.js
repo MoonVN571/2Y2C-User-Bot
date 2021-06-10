@@ -3,10 +3,14 @@ module.exports = {
     aliases: ['avt', 'av'],
     
     async execute(client, message, args) {
-        const user = message.mentions.users.first() || message.author;
+        var user = message.mentions.users.first() || message.author;
 
-        if(user.id == "425599739837284362") return message.channel.send("Huỷ yêu cầu avtar!");
+        if(user == null) return message.channel.send("Không tìm thấy user");
 
+        if(user.id == "425599739837284362") return message.channel.send("Huỷ yêu cầu avatar");
+
+        if(user.avatar == null) return message.channel.send("Không có avatar");
+        
         message.channel.send(`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`)
     }
 }

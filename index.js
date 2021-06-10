@@ -38,7 +38,6 @@ client.on("message", async message => {
 
 	const args = message.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();
-
     const cmd = client.commands.get(cmdName)
         || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(cmdName));
 
@@ -70,9 +69,14 @@ client.on("message", async message => {
 	var user = client.users.find(user => user.id === "425599739837284362");
 	client.authorID = user.username + "#" + user.discriminator;
 
-    try{
-        cmd.execute(client, message, args);
-    }catch(err) {
-        console.log(err);
-    }
+	message.channel.startTyping();
+
+	setTimeout(() => {
+		try{
+			cmd.execute(client, message, args);
+			message.channel.stopTyping();
+		}catch(err) {
+			console.log(err);
+		}
+	}, 1 * 1000)
 });

@@ -5,33 +5,37 @@ module.exports = {
     aliases: [''],
     
     async execute(client, message, args) {
+		var prefix = "!";
+
 		var embed = new Discord.RichEmbed()
 						.setTitle("Moon 2Y2C")
 						.setDescription(
-							"\nMoon Bot Discord: https://discord.gg/yrNvvkqp6w\n\n" +
+							"\n[Moon Bot Discord](https://discord.gg/yrNvvkqp6w)\n\n" +
 							"**Comamnds:**" +
-							"\n!help - Xem command bot\n" +
-							"!stats hoặc !kd - Xem kd người chơi. ( kills: 15/01, deaths: 13/01 )\n" + 
-							"!joindate hoặc !jd - Xem người chơi lần đầu tham gia server. ( 28/01 )\n" + 
-							"!seen - Xem lần cuối nhìn thấy người chơi. ( 02/02 )\n" +
-							"!playtime hoặc !pt - Xem thời gian đã chơi của người chơi. ( 24/03 )\n" +
-							"!lastwords - Xem tin nhắn mới nhất của người chơi. ( 14/03 )\n" +
-							"!firstwords - Xem tin nhắn đầu tiên.\n" +
-							"!messages - Xem 5 tin nhắn mới nhất.\n" + 
-							"!queue, !que hoặc !q - Xem hàng chờ và ưu tiên.\n" +
-							"!normalqueue hoặc !nq - Xem hàng chờ.\n" +
-							"!prio hoặc !prioqueue - Xem thông số bao gồm hàng chờ. ưu tiên, trực tuyến.\n" +
-							"!online - Xem người chơi đang hoạt động.\n"+ 
-							"!status - Xem hàng chờ, ưu tiên, online.\n" +
-							"!avatar - Xem avatar.\n"
-							+ "!sudo - Cho bot chat nội dung yêu cầu. ( chỉ dev )"
+							"\n!help - ``Xem các lệnh bot``\n" +
+                            prefix + 'kd - ``Xem chỉ số K/D.\n``'
+                            + prefix + 'joindate - ``Xem ngày người chơi lần đầu tham gia server.`` \n'
+                            + prefix + 'playtime - ``Xem thời người chơi đã chơi.`` \n'
+                            + prefix + 'seen - ``Xem lần hoạt động gần nhất của người chơi.``\n'
+                            + prefix + 'playerlist - ``Xem người chơi đang online.``\n'
+                            + prefix + 'deaths - ``Xem các lần chết gần đây.``\n'
+                            + prefix + 'kills - ``Xem các lần giết người gần đây.``\n'
+                            + prefix + 'messages - ``Xem các tin nhắn gần đây.``\n'
+                            + prefix + 'firstword - ``Xem tin nhắn đã gửi đầu tiên.``\n'
+                            + prefix + 'lastword - ``Xem tin nhắn đã gửi cuối cùng.``\n'
+                            + prefix + 'firstdeaths - ``Xem lần chết đầu tiên.``\n'
+                            + prefix + 'lastdeaths - ``Xem số lần chết gần nhất.``\n'
+                            + prefix + 'firstkills - ``Xem tin nhắn giết người đầu tiên.``\n'
+                            + prefix + 'lastkills - ``Xem tin nhắn giết người gần đây.``\n'
+                            + prefix + '2bstats - ``Xem K/D người chơi 2b2t.``\n'
+                            + prefix + '2bseen - ``Xem lần cuối hoạt động người chơi 2b2t.\n``'
+							+ "!avatar - ``Xem avatar``.\n"
+							+ "!sudo - ``Cho bot chat nội dung yêu cầu. (dev)``"
 						)
 						.setColor('0x2EA711')
 						.setTimestamp()
 						.setFooter("Moon 2Y2C");
 
-		message.channel.send(embed).catch(e => { 
-			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
-		});
+		message.channel.send(embed).then(msg => msg.delete(60000))
     }
 }

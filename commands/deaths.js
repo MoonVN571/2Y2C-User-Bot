@@ -1,5 +1,5 @@
 var Scriptdb = require('script.db');
-var Discord = require('discord.js');
+var { RichEmbed } = require('discord.js');
 
 var abc = require("../api")
 var api = new abc();
@@ -84,7 +84,7 @@ module.exports = {
 				data = `***${api.ageCalc(time0)} trước***: ${msg0}`
 			}
 
-			var embed = new Discord.MessageEmbed()
+			var embed = new RichEmbed()
 									.setTitle(`Báo cáo của ${args[0]}`)
 									.setDescription(`*Tổng số ghi nhận người này: ${deaths.split(" | ").length}*\n`)
 									.addField('*5 lần chết gần đây*', data + "\n")
@@ -94,7 +94,7 @@ module.exports = {
 
 			message.channel.send(embed);
 		} else {
-			var embed = new Discord.MessageEmbed()
+			var embed = new RichEmbed()
 									.setTitle(`Báo cáo của ${args[0]}`)
 									.setDescription(`*Tổng số ghi nhận người này: 1*\n`)
 									.addField('*5 lần chết gần đây*', deaths + "\n")
