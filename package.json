@@ -4,6 +4,7 @@
   "description": "Stats of user on 2Y2C discord...",
   "main": "index.js",
   "dependencies": {
+    "covid19-stats": "^1.1.1",
     "discord.js": "^11.6.4",
     "dotenv": "^8.6.0",
     "minecraft-protocol": "^1.25.0",
