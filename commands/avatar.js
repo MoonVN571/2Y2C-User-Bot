@@ -7,7 +7,7 @@ module.exports = {
 
         if(user == null) return message.channel.send("Không tìm thấy user");
 
-        if(user.id == "425599739837284362") return message.channel.send("Huỷ yêu cầu avatar");
+        if(user.id == "425599739837284362" || user.id == "817029429401616414") return message.channel.send("Huỷ yêu cầu avatar");
 
         if(user.avatar == null) return message.channel.send("Không có avatar");
         
