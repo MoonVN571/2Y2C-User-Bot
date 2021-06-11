@@ -38,7 +38,7 @@ module.exports = {
 				.addField('TPS', tps, true)
 				.addField('Players', players + " players", true)
 				.addField('Ping', ping + "ms", true)
-				.addField('Hàng chờ', "Bình thường: " + queue.split(" | ")[0] + " - Ưu tiên: " + prio.split(" | ")[0], true)
+				.addField('Hàng chờ', "Bình thường: " + queue + " - Ưu tiên: " + prio, true)
                 .setFooter('Update ' + api.ageCalc(timepassed) + " trước.", 'https://cdn.discordapp.com/avatars/768448728125407242/f18ec971961b23db96e6cf0f3f79ec1c.png?size=256')
                 .setColor(0x000DFF)
                 .setTimestamp();
