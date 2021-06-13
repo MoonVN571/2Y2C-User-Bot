@@ -92,7 +92,7 @@ module.exports = {
 									.setTimestamp()
 									.setColor(0x2EA711);
 
-			message.channel.send(embed);
+			message.channel.send(embed).then(msg => msg.delete(60000));
 		} else {
 			var embed = new RichEmbed()
 									.setTitle(`Báo cáo của ${args[0]}`)
@@ -102,7 +102,7 @@ module.exports = {
 									.setTimestamp()
 									.setColor(0x2EA711);
 
-			message.channel.send(embed);
+			message.channel.send(embed).then(msg => msg.delete(60000));
 		}
 	}
 }

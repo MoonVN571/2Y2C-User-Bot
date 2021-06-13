@@ -11,6 +11,6 @@ module.exports = {
 
         if(user.avatar == null) return message.channel.send("Không có avatar");
         
-        message.channel.send(`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`)
+        message.channel.send(`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`).then(msg => msg.delete(60000))
     }
 }

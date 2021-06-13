@@ -33,6 +33,6 @@ module.exports = {
 			description: `${args[0]}: ${firstjoin} (${api.ageCalc(tick)} trước)`
 		}}).catch(e => { 
 			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
-		});
+		}).then(msg => msg.delete(60000));
     }
 }

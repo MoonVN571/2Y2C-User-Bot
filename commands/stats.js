@@ -35,6 +35,6 @@ module.exports = {
                         .setFooter(client.footer, 'https://cdn.discordapp.com/avatars/768448728125407242/f18ec971961b23db96e6cf0f3f79ec1c.png?size=256')
                         .setTimestamp();
 
-        message.channel.send(embed);
+        message.channel.send(embed).then(msg => msg.delete(60000));
     }
 }

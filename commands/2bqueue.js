@@ -24,7 +24,7 @@ module.exports = {
 
 				message.channel.send(queue).catch(e => { 
 					message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
-				});
+				}).then(msg => msg.delete(60000));
 			});
 		});
     }

@@ -16,6 +16,6 @@ module.exports = {
             title: '| COVID-19 |',
             description: "**Việt Nam**\n\n**Số ca**: " + totalCase + "\n**Số ca mới**: " + newCase + "\n**Số ca tử vong**: " + totalCaseDeaths + "\n**Số ca tử vong mới**: " + newDeaths
             ,color: 0x2EA711
-        }});
+        }}).then(msg => msg.delete(60000));
     }
 }

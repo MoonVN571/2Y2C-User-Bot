@@ -1,5 +1,5 @@
 var request = require('request');
-var Discord = require('discord.js');
+var { RichEmbed } = require('discord.js');
 
 module.exports = {
     name: "2bstats",
@@ -28,7 +28,7 @@ module.exports = {
                 ratioFixed = "0.00";
             }
 
-            var embed = new Discord.RichEmbed()
+            var embed = new RichEmbed()
                             .setAuthor(`${args[0]}'s statistics`, `https://minotar.net/helm/${args[0]}`, `https://namemc.com/${args[0]}`)
                             .addField(`Kills`, `${kills}`, true)
                             .addField(`Deaths`, `${deads}`, true)
@@ -42,7 +42,7 @@ module.exports = {
 
             message.channel.send(embed).catch(e => { 
                 message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
-            });
+            }).then(msg => msg.delete(60000));
         })
     }
 }

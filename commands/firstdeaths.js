@@ -36,6 +36,6 @@ module.exports = {
                             .setDescription("**" +api.ageCalc(time) + " trước**: " + data)
                             .setColor(0x2EA711)
 
-        message.channel.send(embed);
+        message.channel.send(embed).then(msg => msg.delete(60000));
     }
 }

@@ -1,5 +1,5 @@
 const request = require('request');
-var Discord = require('discord.js');
+var { RichEmbed } = require('discord.js');
 
 var apiNew = require('../api');
 var api = new apiNew();
@@ -22,13 +22,13 @@ module.exports = {
 
             var age = api.ageCalc(toTime);
 
-		    var embed = new Discord.RichEmbed()
+		    var embed = new RichEmbed()
                         .setDescription(`2B2T: Đã thấy ${args[0]} từ ${age} trước.`)
                         .setColor(0x2EA711);
 
             message.channel.send(embed).catch(e => { 
                 message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
-            });
+            }).then(msg => msg.delete(60000));
         })
     }
 }
