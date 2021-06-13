@@ -9,7 +9,7 @@ module.exports = {
     aliases: ['lk'],
     
     async execute(client, message, args) {
-		if (!args[0]) return message.channel.send(client.userNotFound)
+		if (!args[0]) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
 		let quote = new Scriptdb(`${client.config.disk}/data/kills/${args[0]}.json`)
 		let msgs = quote.get('deaths')

@@ -7,7 +7,7 @@ module.exports = {
     aliases: ['kd', 'stats'],
     
     async execute(client, message, args) {
-        if (!args[0]) return message.channel.send(client.userNotFound);
+        if (!args[0]) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
 		const kd = new Scriptdb(`${client.config.disk}/data/kd/${args[0]}.json`);
 		let deads = kd.get('deaths');

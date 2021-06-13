@@ -1,4 +1,4 @@
-var Discord = require('discord.js');
+var { RichEmbed } = require('discord.js');
 
 module.exports = {
     name: "help",
@@ -7,7 +7,7 @@ module.exports = {
     async execute(client, message, args) {
 		var prefix = "!";
 
-		var embed = new Discord.RichEmbed()
+		var embed = new RichEmbed()
 						.setTitle("Moon 2Y2C")
 						.setDescription(
 							"\n[Moon Bot Discord](https://discord.gg/yrNvvkqp6w)\n\n" +

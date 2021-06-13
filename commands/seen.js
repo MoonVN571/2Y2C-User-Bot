@@ -8,7 +8,7 @@ module.exports = {
     aliases: ['see'],
     
     async execute(client, message, args) {
-        if (!args[0]) return message.channel.send(client.userNotFound)
+        if (!args[0]) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
         let ls = new Scriptdb(client.config.disk + `/data/seen/${args[0]}.json`);
 		let lastseen = ls.get('seen');

@@ -8,12 +8,12 @@ module.exports = {
     aliases: ['pt'],
     
     async execute(client, message, args) {
-        if (!args[0]) return message.channel.send(client.userNotFound);
+        if (!args[0]) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));;
 
 		let pt = new Scriptdb(`${client.config.disk}/data/playtime/${args[0]}.json`);
 		let playtime = pt.get('time')
 		
-		if (playtime === undefined) return message.channel.send(client.userNotFound);
+		if (playtime === undefined) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));;
     
 		message.channel.send({ embed: {
 			color: 0x2EA711,

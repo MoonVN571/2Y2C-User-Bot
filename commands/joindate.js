@@ -8,7 +8,7 @@ module.exports = {
     aliases: ['jd'],
     
     async execute(client, message, args) {
-        if (!args[0]) return message.channel.send(client.userNotFound)
+        if (!args[0]) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
 		let fj = new Scriptdb(`${client.config.disk}/data/joindate/${args[0]}.json`)
 		let firstjoin = fj.get('date')

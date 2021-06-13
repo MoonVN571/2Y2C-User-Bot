@@ -9,13 +9,13 @@ module.exports = {
     aliases: ['fk'],
     
     async execute(client, message, args) {
-		if (!args[0]) return message.channel.send(client.userNotFound)
+		if (!args[0]) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
 		let quote = new Scriptdb(`${client.config.disk}/data/kills/${args[0]}.json`)
 		let msgs = quote.get('deaths')
 		let times = quote.get('times')
 		
-		if (msgs === undefined || times == undefined) return message.channel.send(client.userNotFound);
+		if (msgs === undefined || times == undefined) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
 		var data;
 		var time;

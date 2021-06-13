@@ -6,7 +6,7 @@ module.exports = {
     aliases: ['2bkd'],
     
     async execute(client, message, args) {
-        if (!args[0]) return message.channel.send(client.userNotFound);
+        if (!args[0]) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
         request("https://api.2b2t.dev/stats?username=" + args[0], function (error, response, body) {
             var data = JSON.parse(body)[0];
