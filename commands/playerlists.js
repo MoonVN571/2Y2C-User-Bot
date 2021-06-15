@@ -9,12 +9,13 @@ module.exports = {
 
         var playerArray = db.get('players');
 
-        if(playerArray == undefined) return message.channel.send("Bot chưa kết nối đến server!")
+        if(playerArray == undefined) return message.channel.send("Bot chưa kết nối đến server!");
 
         var count = playerArray.length;
 
         message.channel.send("Đang tính toán...").then(msg => {
             msg.edit("**PLAYER LIST**\n\nTrực tuyến: " + count + "\n\n**Players:** \n" + playerArray.join(', '));
-        }).then(msg => msg.delete(60000));
+            msg.delete(60000);
+	});
     }
 }
