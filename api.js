@@ -1,8 +1,6 @@
-const mc = require("minecraft-protocol");
 require('dotenv');
 
 function API() { // goi cai nay la function sau do import
-    
     this.ageCalc = (time) => {
         const date =  new Date();
         const dateSince = new Date(+time);
