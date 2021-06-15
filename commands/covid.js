@@ -13,7 +13,7 @@ module.exports = {
         var newCase = data.newCases;
         var newDeaths = data.newDeaths;
 
-        let embed = RichEmbed()
+        let embed = new RichEmbed()
                     .setTitle("COVID-19")
                     .addField('**Ca trong nước**', totalCase , true)
                     .addField('**Ca mới', newcase, true)
