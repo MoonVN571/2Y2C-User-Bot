@@ -17,8 +17,8 @@ module.exports = {
 		
 		if (msgs === undefined || times == undefined) return message.channel.send(client.userNotFound);
 
-		var data;
-		var time;
+		let data;
+		let time;
         
         try {
             data = msgs.split(" | ")[0];

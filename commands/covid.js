@@ -1,4 +1,5 @@
 const covid19 = require('covid19-stats');
+const { RichEmbed } = require('discord.js');
 
 module.exports = {
     name: "covid",
@@ -12,10 +13,14 @@ module.exports = {
         var newCase = data.newCases;
         var newDeaths = data.newDeaths;
 
-        message.channel.send({embed: {
-            title: '| COVID-19 |',
-            description: "**Việt Nam**\n\n**Số ca**: " + totalCase + "\n**Số ca mới**: " + newCase + "\n**Số ca tử vong**: " + totalCaseDeaths + "\n**Số ca tử vong mới**: " + newDeaths
-            ,color: 0x2EA711
-        }}).then(msg => msg.delete(60000));
+        let embed = RichEmbed()
+                    .setTitle("COVID-19")
+                    .addField('**Ca trong nước**', totalCase , true)
+                    .addField('**Ca mới', newcase, true)
+                    .addField('**Ca tử vong trong nước', totalCaseDeaths, false)
+                    .addField('**Ca tử vong mới**', newDeaths)
+                    .setColor(0x2EA711)
+
+        message.channel.send(embed).then(msg => msg.delete(60000));
     }
 }

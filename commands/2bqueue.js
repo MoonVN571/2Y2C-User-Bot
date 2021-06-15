@@ -22,9 +22,7 @@ module.exports = {
 									.setDescription("2B2T | Hàng chờ: " + dataq + " - Ưu tiên: " + datap)
 									.setColor(0x2EA711);
 
-				message.channel.send(queue).catch(e => { 
-					message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
-				}).then(msg => msg.delete(60000));
+				message.channel.send(queue).then(msg => msg.delete(60000));
 			});
 		});
     }

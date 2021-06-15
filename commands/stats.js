@@ -29,7 +29,7 @@ module.exports = {
                         .setAuthor(`${args[0]}'s statistics`, `https://minotar.net/helm/${args[0]}`, `https://namemc.com/` + args[0])
                         .addField(`Kills`, `${kills}`, true)
                         .addField(`Deaths`, `${deads}`, true )
-                        .addField(`K/D Ratio`, `${ratioFixed}`, true )
+                        .addField(`K/D`, `${ratioFixed}`, true )
                         .setThumbnail(`https://minotar.net/helm/${args[0]}`)
                         .setColor(0x2EA711)
                         .setFooter(client.footer, 'https://cdn.discordapp.com/avatars/768448728125407242/f18ec971961b23db96e6cf0f3f79ec1c.png?size=256')

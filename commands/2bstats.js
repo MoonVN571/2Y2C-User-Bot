@@ -40,9 +40,7 @@ module.exports = {
                             .setFooter("API by LoLRiTTeR Bot", 'https://images-ext-2.discordapp.net/external/OWsrCus2cCb9txmasSQQ8UqxrkbIxM2f1VotLB8aX14/https/cdn.discordapp.com/avatars/521791765989031957/6e34a1a33d255339aa45c731637a51f8.png')
                             .setTimestamp();
 
-            message.channel.send(embed).catch(e => { 
-                message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
-            }).then(msg => msg.delete(60000));
+            message.channel.send(embed).then(msg => msg.delete(60000));
         })
     }
 }

@@ -73,9 +73,6 @@ client.on("message", async message => {
 
 	client.config = config;
 
-	var user = client.users.find(user => user.id === "425599739837284362");
-	client.authorID = user.username + "#" + user.discriminator;
-
 	message.channel.startTyping();
 
 	setTimeout(() => {

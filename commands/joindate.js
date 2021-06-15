@@ -13,7 +13,7 @@ module.exports = {
 		let fj = new Scriptdb(`${client.config.disk}/data/joindate/${args[0]}.json`)
 		let firstjoin = fj.get('date')
 
-        if (firstjoin === undefined) return message.channel.send(client.userNotFound).catch(e => { message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID); });
+        if (firstjoin === undefined) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
     
         var t = firstjoin.split(" ")[1];
 
@@ -31,8 +31,6 @@ module.exports = {
 		message.channel.send({ embed: {
 			color: 0x2EA711,
 			description: `${args[0]}: ${firstjoin} (${api.ageCalc(tick)} trước)`
-		}}).catch(e => { 
-			message.author.send("**Lỗi:** " + e.toString() + ". Hãy báo cáo cho " + client.authorID + ".") 
-		}).then(msg => msg.delete(60000));
+		}}).then(msg => msg.delete(60000));
     }
 }

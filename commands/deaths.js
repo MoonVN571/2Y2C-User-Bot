@@ -17,17 +17,17 @@ module.exports = {
 
 		if(times == undefined || deaths == undefined) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
-		var msg0 = undefined;
-		var msg1 = undefined;
-		var msg2 = undefined;
-		var msg3 = undefined;
-		var msg4 = undefined;
+		let msg0;
+		let msg1;
+		let msg2;
+		let msg3;
+		let msg4;
 
-		var time0 = undefined;
-		var time1 = undefined;
-		var time2 = undefined;
-		var time3 = undefined;
-		var time4 = undefined;
+		let time0;
+		let time1;
+		let time2;
+		let time3;
+		let time4;
 		
 		if(times.toString().includes(" | ")) {
 			if(times.split(" | ").length <= 5) {
