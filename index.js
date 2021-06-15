@@ -12,7 +12,7 @@ var config = {
 
 setTimeout(() => {
 	process.exit();
-}, 5 * 60 * 1000);
+}, 3 * 60 * 60 * 1000);
 
 client.login(config.token).catch((e) => { console.log(e)})
 client.on("error", (e) => { console.error(e) });
