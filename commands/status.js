@@ -18,9 +18,9 @@ module.exports = {
         var tab = data.get('tab-content');
         if(tab == null) return message.channel.send("Bot chưa vào server.").then(msg => msg.delete(60000));
 
-		var uptime = tab.split(' - ')[3].split(" | ")[0].split("restart từ")[1].split("trước")[0];
-		var tps = tab.split(' ')[1];
-		var players = tab.split(' ')[4];
+		var uptime = tab.split(' - ')[3].split("restart từ")[1].split("trước")[0];
+		var tps = tab.split('  ')[1].split(' tps')[0];
+		var players = tab.split('  ')[1].split(' ')[3];
 		var ping = tab.split(" - ")[2].split(" ping")[0];
 		var timepassed  = tab.split(" | ")[1];
 
