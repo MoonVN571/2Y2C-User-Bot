@@ -24,11 +24,6 @@ module.exports = {
 		var ping = tab.split(" - ")[2].split(" ping")[0];
 		var timepassed  = tab.split(" | ")[1];
 
-        var user = client.users.find(user => user.id === "425599739837284362");
-
-        if(tps == "tps" || ping == "ping"|| players == "players")
-                    return message.channel.send(`Lỗi, thử lại sau! Hãy báo cáo lỗi này với **${user.username}#${user.discriminator}`)
-
         if(queue == undefined || prio == undefined) return message.channel.send("Không tìm thấy dữ liệu.");
         
 		var embed = new RichEmbed()

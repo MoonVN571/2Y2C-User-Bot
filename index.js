@@ -35,8 +35,8 @@ for (const file of cmds) {
 
 client.on("message", async message => {
 	if(message.author.bot) return;
-
-	if(message.guild.id !== "625715711481741322" && message.channel.id == '852725293986873354') return console.log(message.author.username + ": " + message.content);
+ 
+	if(message.guild.id != "625715711481741322") return;
 
 	if(!message.content.startsWith(prefix) || message.channel.type == "dm") return;
 
