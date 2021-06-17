@@ -15,8 +15,8 @@ module.exports = {
 
         let embed = new RichEmbed()
                     .setTitle("COVID-19")
-                    .addField('**Ca trong nước**', totalCase , true)
-                    .addField('**Ca mới**', newCase, true)
+                    .addField('**Ca trong nước**', totalCase , false)
+                    .addField('**Ca mới**', newCase, false)
                     .addField('**Ca tử vong trong nước**', totalCaseDeaths, false)
                     .addField('**Ca tử vong mới**', newDeaths)
                     .setColor(0x2EA711)
