@@ -38,6 +38,6 @@ module.exports = {
                 .setColor(0x000DFF)
                 .setTimestamp();
 
-		message.channel.send(embed).then(msg => msg.delete(60000));
+		message.channel.send(embed).then(msg => msg.delete(120000));
     }
 }
