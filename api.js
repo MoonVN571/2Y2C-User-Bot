@@ -1,49 +1,22 @@
 require('dotenv');
 
-function API() { // goi cai nay la function sau do import
+function API() {
     this.ageCalc = (time) => {
-        const date =  new Date();
-        const dateSince = new Date(+time);
-        
-        var dateYear = date.getFullYear();
-        var dateMonth = date.getMonth() + 1;
-        var dateDay = date.getDate();
-        var dateHour = date.getHours();
-        var dateMin = date.getMinutes();
-        
-        var sinceYear = dateSince.getFullYear();
-        var sinceMonth = dateSince.getMonth() + 1;
-        var sinceDay = dateSince.getDate();
-        var sinceHour = dateSince.getHours();
-        var sinceMin = dateSince.getMinutes();
-
         var year = 0, month = 0, day = 0, hour = 0, minute = 0;
 
-        year = dateYear - sinceYear;
+        var d = new Date(new Date().getTime() - +time).toLocaleString();
+        var y =(+d.split("/")[2] - 1970);
+        
+        var dt = d.split(d.substr(d.length - 5))[0] + "/"+ y;
 
-        if(dateMonth > sinceMonth) {
-            month = dateMonth - sinceMonth;
-        } else {
-            month = sinceMonth - dateMonth;
-        }
+        year = parseInt(dt.split("/")[2]);
+        month = parseInt(dt.split("/")[1] - 1);
+        day = parseInt(dt.split("/")[0].split(" ")[1] - 1);
 
-        if(dateDay > sinceDay) {
-            day = dateDay - sinceDay;
-        } else {
-            day = sinceDay - dateDay;
-        }
-
-        if(dateHour > sinceHour) {
-            hour = dateHour - sinceHour;
-        } else {
-            hour = sinceHour - dateHour;
-        }
-
-        if(dateMin > sinceMin) {
-            minute = dateMin - sinceMin;
-        } else {
-            minute = sinceMin - dateMin;
-        }
+        hour = parseInt(dt.split(":")[0]);
+        minute = parseInt(dt.split(":")[1]);
+        
+        log(`${year} ${month} ${day} ${hour} ${minute}`)
 
         var age;
         if(year > 0) {
