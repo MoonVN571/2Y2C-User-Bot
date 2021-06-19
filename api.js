@@ -15,8 +15,6 @@ function API() {
 
         hour = parseInt(dt.split(":")[0]);
         minute = parseInt(dt.split(":")[1]);
-        
-        log(`${year} ${month} ${day} ${hour} ${minute}`)
 
         var age;
         if(year > 0) {
