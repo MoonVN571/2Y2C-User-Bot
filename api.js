@@ -3,7 +3,7 @@ require('dotenv');
 function API() {
     this.ageCalc = (time) => {
         let log = (str) => {};
-        
+
         log(new Date(+time).toLocaleString());
         log(new Date().toLocaleString());
 
@@ -19,6 +19,10 @@ function API() {
         var dstr = d.split("/")[1];
         var mstr = d.split("/")[0];
         var ystr = d.split("/")[2];
+
+        if(dstr >= 1) dstr--;
+        if(mstr >= 1) mstr--;
+        if(ystr == 1970) ystr = ystr - 1970;
         
         var hstr = parseInt(t.split(":")[0]);
         var minstr = parseInt(t.split(":")[1]);
@@ -27,9 +31,9 @@ function API() {
 
         log(dstr, mstr, ystr, hstr, minstr);
 
-        var year = ystr - 1970;
-        var month = mstr--;
-        var day = dstr--;
+        var year = ystr;
+        var month = mstr;
+        var day = dstr;
         var hour = hstr;
         var minute = minstr;
 
