@@ -2,19 +2,40 @@ require('dotenv');
 
 function API() {
     this.ageCalc = (time) => {
+        let log = (str) => {};
+
+        log(new Date(+time).toLocaleString());
+        log(new Date().toLocaleString());
+
         var year = 0, month = 0, day = 0, hour = 0, minute = 0;
 
-        var d = new Date(new Date().getTime() - +time).toLocaleString();
-        var y =(+d.split("/")[2] - 1970);
+        var up = new Date(new Date().getTime() - +time);
+        var d = up.toLocaleDateString();
+        var t = up.toLocaleTimeString();
+
+        log(t);
+        log(d);
+
+        var dstr = d.split("/")[1];
+        var mstr = d.split("/")[0];
+        var ystr = d.split("/")[2];
+
+        if(dstr >= 1) dstr--;
+        if(mstr >= 1) mstr--;
+        if(ystr == 1970) ystr = ystr - 1970;
         
-        var dt = d.split(d.substr(d.length - 5))[0] + "/"+ y;
+        var hstr = parseInt(t.split(":")[0]);
+        var minstr = parseInt(t.split(":")[1]);
 
-        year = parseInt(dt.split("/")[2]);
-        month = parseInt(dt.split("/")[1] - 1);
-        day = parseInt(dt.split("/")[0].split(" ")[1] - 1);
+        if(d.split("/")[0] == 1) hstr = hstr - 8;
 
-        hour = parseInt(dt.split(":")[0]);
-        minute = parseInt(dt.split(":")[1]);
+        log(dstr, mstr, ystr, hstr, minstr);
+
+        var year = ystr;
+        var month = mstr;
+        var day = dstr;
+        var hour = hstr;
+        var minute = minstr;
 
         var age;
         if(year > 0) {

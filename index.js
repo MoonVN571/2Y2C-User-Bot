@@ -41,7 +41,8 @@ client.on("message", async message => {
 	if(!message.content.startsWith(prefix) || message.channel.type == "dm") return;
 
 	// ăn ở thôi :)
-	if(message.author.id == "689378259833716781" || message.author.id == "843475162085982225" || message.author.id == "725226093128187916") return;
+	if(message.author.id == "689378259833716781" || message.author.id == "843475162085982225" || message.author.id == "725226093128187916" || message.author.id == "515550933514715156"
+	|| message.channel.id == "457203947422089218" || message.author.id == "456388114651545600" || message.author.id == "632538377052225537") return message.reply(", blacklisted");
 
 	const args = message.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();
