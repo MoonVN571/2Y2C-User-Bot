@@ -10,10 +10,6 @@ var config = {
 	disk: process.env.disk
 }
 
-setTimeout(() => {
-	process.exit();
-}, 3 * 60 * 60 * 1000);
-
 client.login(config.token).catch((e) => { console.log(e)})
 client.on("error", (e) => { console.error(e) });
 var prefix = "!";
@@ -40,9 +36,6 @@ client.on("message", async message => {
 
 	if(!message.content.startsWith(prefix) || message.channel.type == "dm") return;
 
-	// ăn ở thôi :)
-	if(message.author.id == "689378259833716781" || message.author.id == "843475162085982225" || message.author.id == "725226093128187916" || message.author.id == "515550933514715156"
-	|| message.channel.id == "457203947422089218" || message.author.id == "456388114651545600" || message.author.id == "632538377052225537") return message.reply(", blacklisted");
 
 	const args = message.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();
@@ -76,6 +69,11 @@ client.on("message", async message => {
 
 	message.channel.startTyping();
 
+	const Scriptdb = require('script.db');
+	var data = new Scriptdb('./blacklist.json').get('list');
+
+	if(data.includes(message.author.id)) return message.reply(" bạn có trong danh sách đen!");
+	
 	setTimeout(() => {
 		try{
 			cmd.execute(client, message, args);
@@ -83,5 +81,5 @@ client.on("message", async message => {
 		}catch(err) {
 			console.log(err);
 		}
-	}, 1 * 1000)
+	}, 1 * 1000);
 });

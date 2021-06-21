@@ -20,8 +20,8 @@ function API() {
         var mstr = d.split("/")[0];
         var ystr = d.split("/")[2];
 
-        if(dstr >= 1) dstr--;
-        if(mstr >= 1) mstr--;
+        if(dstr >= 1) dstr = dstr - 1;
+        if(mstr >= 1) mstr = mstr - 1;
         if(ystr == 1970) ystr = ystr - 1970;
         
         var hstr = parseInt(t.split(":")[0]);

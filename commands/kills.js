@@ -29,31 +29,31 @@ module.exports = {
 		let time3;
 		let time4;
 		
-		if(times.toString().includes(" | ")) {
-			if(times.split(" | ").length <= 5) {
-				time0 = times.split(" | ")[0]
-				time1 = times.split(" | ")[1]
-				time2 = times.split(" | ")[2]
-				time3 = times.split(" | ")[3]
-				time4 = times.split(" | ")[4]
+		if(times.toString().toString().includes(" | ")) {
+			if(times.toString().split(" | ").length <= 5) {
+				time0 = times.toString().split(" | ")[0]
+				time1 = times.toString().split(" | ")[1]
+				time2 = times.toString().split(" | ")[2]
+				time3 = times.toString().split(" | ")[3]
+				time4 = times.toString().split(" | ")[4]
 				
-				msg0 = deaths.split(" | ")[0]
-				msg1 = deaths.split(" | ")[1]
-				msg2 = deaths.split(" | ")[2]
-				msg3 = deaths.split(" | ")[3]
-				msg4 = deaths.split(" | ")[4]
+				msg0 = deaths.toString().split(" | ")[0]
+				msg1 = deaths.toString().split(" | ")[1]
+				msg2 = deaths.toString().split(" | ")[2]
+				msg3 = deaths.toString().split(" | ")[3]
+				msg4 = deaths.toString().split(" | ")[4]
 			} else {
-				time0 = times.split(" | ")[times.split(" | ").length - 1]
-				time1 = times.split(" | ")[times.split(" | ").length - 2]
-				time2 = times.split(" | ")[times.split(" | ").length - 3]
-				time3 = times.split(" | ")[times.split(" | ").length - 4]
-				time4 = times.split(" | ")[times.split(" | ").length - 5]
+				time0 = times.toString().split(" | ")[times.toString().split(" | ").length - 1]
+				time1 = times.toString().split(" | ")[times.toString().split(" | ").length - 2]
+				time2 = times.toString().split(" | ")[times.toString().split(" | ").length - 3]
+				time3 = times.toString().split(" | ")[times.toString().split(" | ").length - 4]
+				time4 = times.toString().split(" | ")[times.toString().split(" | ").length - 5]
 
-				msg0 = deaths.split(" | ")[deaths.split(" | ").length - 1]
-				msg1 = deaths.split(" | ")[deaths.split(" | ").length - 2]
-				msg2 = deaths.split(" | ")[deaths.split(" | ").length - 3]
-				msg3 = deaths.split(" | ")[deaths.split(" | ").length - 4]
-				msg4 = deaths.split(" | ")[deaths.split(" | ").length - 5]
+				msg0 = deaths.toString().split(" | ")[deaths.toString().split(" | ").length - 1]
+				msg1 = deaths.toString().split(" | ")[deaths.toString().split(" | ").length - 2]
+				msg2 = deaths.toString().split(" | ")[deaths.toString().split(" | ").length - 3]
+				msg3 = deaths.toString().split(" | ")[deaths.toString().split(" | ").length - 4]
+				msg4 = deaths.toString().split(" | ")[deaths.toString().split(" | ").length - 5]
 			}
 
 			var data = `***${api.ageCalc(time0)} trước***: ${msg0}\n`
@@ -86,7 +86,7 @@ module.exports = {
 
 			var embed = new RichEmbed()
 									.setTitle(`Báo cáo của ${args[0]}`)
-									.setDescription(`*Tổng số ghi nhận người này: ${deaths.split(" | ").length}*\n`)
+									.setDescription(`*Tổng số ghi nhận người này: ${deaths.toString().split(" | ").length}*\n`)
 									.addField('*5 lần chết gần đây*', data + "\n")
 									.setFooter(client.footer)
 									.setTimestamp()
