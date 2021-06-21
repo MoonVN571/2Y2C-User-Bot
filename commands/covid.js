@@ -15,11 +15,12 @@ module.exports = {
 
         let embed = new RichEmbed()
                     .setTitle("COVID-19")
-                    .addField('**Ca trong nước**', totalCase , false)
-                    .addField('**Ca mới**', newCase, false)
+                    .addField('**Ca trong nước**', totalCase , true)
+                    .addField('**Ca nhiễm mới**', newCase, true)
                     .addField('**Ca tử vong trong nước**', totalCaseDeaths, false)
-                    .addField('**Ca tử vong mới**', newDeaths)
+                    .addField('**Ca tử vong mới**', newDeaths, true)
                     .setColor(0x2EA711)
+                    .setThumbnail('https://cdn.discordapp.com/attachments/795842485133246514/856490124871467038/COVID-19-1.png');
 
         message.channel.send(embed).then(msg => msg.delete(60000));
     }
