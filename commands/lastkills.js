@@ -15,7 +15,7 @@ module.exports = {
 		let msgs = quote.get('deaths')
 		let times = quote.get('times')
 		
-		if (msgs === undefined || times == undefined) return message.channel.send(client.userNotFound);
+		if (msgs === undefined || times == undefined) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
 		let data = msgs.split(" | ")[0];
 		let time

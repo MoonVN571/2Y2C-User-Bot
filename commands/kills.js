@@ -96,8 +96,8 @@ module.exports = {
 		} else {
 			var embed = new RichEmbed()
 									.setTitle(`Báo cáo của ${args[0]}`)
-									.setDescription(`*Tổng số ghi nhận người này: 1\n`)
-									.addField('*5 lần chết gần đây*', deaths + "\n")
+									.setDescription(`*Tổng số ghi nhận người này: 1*\n`)
+									.addField('*5 lần giết gần đây*', deaths + "\n")
 									.setFooter(client.footer)
 									.setTimestamp()
 									.setColor(0x2EA711);

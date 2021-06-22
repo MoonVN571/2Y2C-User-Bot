@@ -16,6 +16,6 @@ module.exports = {
         message.channel.send("Đang tính toán...").then(msg => {
             msg.edit("**PLAYER LIST**\n\nTrực tuyến: " + count + "\n\n**Players:** \n" + playerArray.join(', '));
             msg.delete(120000);
-	});
+	    });
     }
 }
