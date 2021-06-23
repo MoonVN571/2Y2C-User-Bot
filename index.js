@@ -32,10 +32,7 @@ for (const file of cmds) {
 client.on("message", async message => {
 	if(message.author.bot) return;
  
-	if(message.guild.id != "625715711481741322") return;
-
 	if(!message.content.startsWith(prefix) || message.channel.type == "dm") return;
-
 
 	const args = message.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();
