@@ -49,11 +49,11 @@ module.exports = {
 				time3 = times.split(" | ")[times.split(" | ").length - 4]
 				time4 = times.split(" | ")[times.split(" | ").length - 5]
 
-				msg0 = messages.split(" | ")[messages.split(" | ").length - 1]
-				msg1 = messages.split(" | ")[messages.split(" | ").length - 2]
-				msg2 = messages.split(" | ")[messages.split(" | ").length - 3]
-				msg3 = messages.split(" | ")[messages.split(" | ").length - 4]
-				msg4 = messages.split(" | ")[messages.split(" | ").length - 5]
+				msg0 = messages.split(" | ")[0]
+				msg1 = messages.split(" | ")[1]
+				msg2 = messages.split(" | ")[2]
+				msg3 = messages.split(" | ")[3]
+				msg4 = messages.split(" | ")[4]
 			}
 			
 			var data = `***${api.ageCalc(time0)} trước***: ${msg0}\n`
