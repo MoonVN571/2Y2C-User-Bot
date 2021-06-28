@@ -29,6 +29,9 @@ module.exports = {
                             + prefix + 'lastkills - ``Xem tin nhắn giết người gần đây.``\n'
                             + prefix + '2bstats - ``Xem K/D người chơi 2b2t.``\n'
                             + prefix + '2bseen - ``Xem lần cuối hoạt động người chơi 2b2t.\n``'
+                            + prefix + '2blastkills - ``Xem lần giết gần nhất người chơi 2b2t.\n``'
+                            + prefix + '2blastdeaths - ``Xem lần cuối chết gần nhất người chơi 2b2t.\n``'
+                            + prefix + '2status - ``Xem trạng thái 2b2t.\n``'
 							+ "!avatar - ``Xem avatar``.\n"
 							+ "!sudo - ``Cho bot chat nội dung yêu cầu. (dev)``"
 						)

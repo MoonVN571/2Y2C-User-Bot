@@ -17,9 +17,9 @@ module.exports = {
             let deads = data.deaths
             let kills = data.kills
 
-            if (kills === undefined) { kills = 0 }
+            if (kills === undefined) kills = 0;
 
-            if (deads === undefined) { deads = 0 }
+            if (deads === undefined) deads = 0;
 
             var ratio = kills / deads;
             var ratioFixed = ratio.toFixed(2);
