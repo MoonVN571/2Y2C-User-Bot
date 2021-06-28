@@ -23,7 +23,7 @@ module.exports = {
 
             request('https://api.2b2t.dev/prioq', function (error, response, body) {
                 let datap = JSON.parse(body)[1];
-                let datat = JSON.parse(body)[3];
+                let datat = JSON.parse(body)[2];
                 let datalc = JSON.parse(body)[0];
 
                 if(error) datap = -1;
