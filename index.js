@@ -36,20 +36,9 @@ client.on("message", async message => {
 
 	const args = message.content.slice(prefix.length).split(/ +/);
     const cmdName = args.shift().toLowerCase();
+	
     const cmd = client.commands.get(cmdName)
         || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(cmdName));
-
-	if(cmdName == "reload") {
-		if(message.author.id !== "425599739837284362")
-			return message.channel.send("Bạn phải là nhà phát triển để sử dụng lệnh này.").then(msg => msg.delete(60000));
-
-			delete require.cache[require.resolve(`./commands/${args[0]}.js`)];
-
-		const cmd = require(`./commands/${args[0]}`);
-		client.commands.set(cmd.name, cmd);
-		
-		message.channel.send(`Đã tải lại command ${args[0]}`).then(msg => msg.delete(60000));
-	}
 
     if(!cmd) return;
 	client.ping = client.ws.ping;

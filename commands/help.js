@@ -3,16 +3,16 @@ var { RichEmbed } = require('discord.js');
 module.exports = {
     name: "help",
     aliases: [''],
-    
-    async execute(client, message, args) {
-		var prefix = "!";
 
-		var embed = new RichEmbed()
-						.setTitle("Moon 2Y2C")
-						.setDescription(
-							"\n[Moon Bot Discord](https://discord.gg/yrNvvkqp6w)\n\n" +
-							"**Comamnds:**" +
-							"\n!help - ``Xem các lệnh bot``\n" +
+    async execute(client, message, args) {
+        var prefix = "!";
+
+        var embed = new RichEmbed()
+                        .setTitle("Moon 2Y2C")
+                        .setDescription(
+                        "\n[Moon Bot Discord](https://discord.gg/yrNvvkqp6w)\n\n" +
+                        "**Comamnds:**" +
+                        "\n!help - ``Xem các lệnh bot``\n" +
                             prefix + 'kd - ``Xem chỉ số K/D.\n``'
                             + prefix + 'joindate - ``Xem ngày người chơi lần đầu tham gia server.`` \n'
                             + prefix + 'playtime - ``Xem thời người chơi đã chơi.`` \n'
@@ -32,13 +32,13 @@ module.exports = {
                             + prefix + '2blastkills - ``Xem lần giết gần nhất người chơi 2b2t.\n``'
                             + prefix + '2blastdeaths - ``Xem lần cuối chết gần nhất người chơi 2b2t.\n``'
                             + prefix + '2status - ``Xem trạng thái 2b2t.\n``'
-							+ "!avatar - ``Xem avatar``.\n"
-							+ "!sudo - ``Cho bot chat nội dung yêu cầu. (dev)``"
-						)
-						.setColor('0x2EA711')
-						.setTimestamp()
-						.setFooter("Moon 2Y2C");
+                            + "!avatar - ``Xem avatar``.\n"
+                            + "!sudo - ``Cho bot chat nội dung yêu cầu. (dev)``"
+                        )
+                        .setColor('0x2EA711')
+                        .setTimestamp()
+                        .setFooter("Moon 2Y2C");
 
-		message.channel.send(embed).then(msg => msg.delete(60000))
+        message.channel.send(embed).then(msg => msg.delete(60000))
     }
 }
