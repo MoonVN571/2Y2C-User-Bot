@@ -63,6 +63,11 @@ client.on("message", async message => {
 	setTimeout(() => {
 		try{
 			cmd.execute(client, message, args);
+			setTimeout(() => {
+				client.once("typingStart", function(channel, user){
+					if(user.id == client.user.id) message.channel.stopTyping();
+				});
+			}, 20000);
 			message.channel.stopTyping();
 		}catch(err) {
 			console.log(err);
