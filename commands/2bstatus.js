@@ -26,6 +26,8 @@ module.exports = {
                 let datat = JSON.parse(body)[2];
                 let datalc = JSON.parse(body)[0];
 
+		if(datat == null) datat = 0;
+
                 if(error) datap = -1;
                 request('https://2b2t.io/api/queue?last=true', function (error, response, body) {
                     let dataq = JSON.parse(body)[0][1];
@@ -38,7 +40,7 @@ module.exports = {
                             .addField('Players', player + " players", true)
                             .addField('Hàng chờ', dataq, true)
                             .addField('Ưu tiên', datap, true)
-                            .addField('Ước tính ưu tiên', datat + " (" + api.ageCalc(+datalc) +" trước)", true)
+                            .addField('Ước tính ưu tiên', datat + " (Check " + api.ageCalc(+datalc) +" trước)", true)
                             .setFooter("API by LoLRiTTeR Bot", 'https://images-ext-2.discordapp.net/external/OWsrCus2cCb9txmasSQQ8UqxrkbIxM2f1VotLB8aX14/https/cdn.discordapp.com/avatars/521791765989031957/6e34a1a33d255339aa45c731637a51f8.png')
                             .setColor(0x000DFF)
                             .setTimestamp();
