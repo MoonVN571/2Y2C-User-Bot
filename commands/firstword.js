@@ -5,29 +5,35 @@ var a = require("../api")
 var api = new a();
 
 module.exports = {
-    name: "lastkills",
-    aliases: ['lk'],
+    name: "firstword",
+    aliases: [''],
     
     async execute(client, message, args) {
 		if (!args[0]) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
-		let quote = new Scriptdb(`${client.config.disk}/data/kills/${args[0]}.json`)
-		let msgs = quote.get('deaths')
+		let quote = new Scriptdb(`${client.config.disk}/data/quotes/${args[0]}.json`)
+		let msgs = quote.get('messages')
 		let times = quote.get('times')
 		
 		if (msgs === undefined || times == undefined) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
-		let data = msgs.split(" | ")[0];
-		let time
+		let data;
+		let time;
+        
+        try {
+            data = msgs.split(" | ")[msgs.split(" | ").length - 1];
+        } catch(e) {
+            data = mgs;
+        }
 
         try {
             time = times.split(" | ")[0];
         } catch(e) {
             time = times;
         }
-
+        
         var embed = new RichEmbed()
-                            .setDescription("**" + api.ageCalc(time) + " trước**: " + data)
+                            .setDescription("**" + args[0] + "** [" + api.ageCalc(time) + " trước]: " + data)
                             .setColor(0x2EA711)
 
         message.channel.send(embed).then(msg => msg.delete(60000));

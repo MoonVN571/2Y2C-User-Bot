@@ -5,8 +5,8 @@ var a = require("../api")
 var api = new a();
 
 module.exports = {
-    name: "firstdeaths",
-    aliases: ['fd'],
+    name: "lastkils",
+    aliases: [''],
     
     async execute(client, message, args) {
 		if (!args[0]) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
@@ -17,23 +17,17 @@ module.exports = {
 		
 		if (msgs === undefined || times == undefined) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
-		let data;
-		let time;
+		let data = msgs.split(" | ")[0];
+		let time
 
         try {
-            data = msgs.split(" | ")[msgs.split(" | ").length - 1];
-        } catch(e) {
-            data = msgs;
-        }
-
-        try {
-            time = times.split(" | ")[times.split(" | ").length - 1]
+            time = times.split(" | ")[0];
         } catch(e) {
             time = times;
         }
 
         var embed = new RichEmbed()
-                            .setDescription("**" +api.ageCalc(time) + " trước**: " + data)
+                            .setDescription("**" + api.ageCalc(time) + " trước**: " + data)
                             .setColor(0x2EA711)
 
         message.channel.send(embed).then(msg => msg.delete(60000));
