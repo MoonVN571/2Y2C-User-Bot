@@ -45,6 +45,8 @@ module.exports = {
             if(tag) user = tag.id;
 
             client.fetchUser(user).then(user => {
+                if(get.includes(user.id)) return message.channel.send(user.tag + " đã có trong blacklist.").then(msg => msg.delete(60 * 1000));
+
                 if(!user) return message.channel.send("không tìm thấy user").then(msg => msg.delete(60 * 1000));
 
                 data.set('list', get + " " + user.id);
@@ -54,6 +56,8 @@ module.exports = {
         }
 
         if(args[0] == "remove") {
+
+            // dạng db: 123 123 123
             var get = data.get('list');
 
             if(!args[1]) return message.channel.send("Nhập id/tag").then(msg => msg.delete(60 * 1000));
@@ -67,6 +71,8 @@ module.exports = {
 
             client.fetchUser(user).then(user => {
                 if(!user) return message.channel.send("không tìm thấy user").then(msg => msg.delete(60 * 1000));
+
+                if(!get.includes(args[1])) return message.channel.send("Không tìm thấy " + user.tag + ".").then(msg => msg.delete(60 * 1000));
 
                 data.set('list', get.replace(user.id, ""));
 
