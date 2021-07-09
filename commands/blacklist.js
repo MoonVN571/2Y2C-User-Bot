@@ -7,6 +7,8 @@ module.exports = {
     
     async execute(client, message, args) {
         if(!args[0]) return  message.channel.send("add, remove or list?").then(msg => msg.delete(60 * 1000));
+        
+        var data = new Scriptdb('./blacklist.json');
 
         if(args[0] == "list") {
             var get = data.get('list');
@@ -29,9 +31,6 @@ module.exports = {
         }
 
         if(message.author.id !== "425599739837284362") return message.channel.send("Lệnh cho dev địt mẹ mày. " + message.author).then(msg => msg.delete(60 * 1000));
-
-        var data = new Scriptdb('./blacklist.json');
-
 
         if(args[0] == "add") {
             var get = data.get('list');

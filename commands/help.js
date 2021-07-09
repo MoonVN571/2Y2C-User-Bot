@@ -34,6 +34,7 @@ module.exports = {
                             + prefix + '2status - ``Xem trạng thái 2b2t.\n``'
                             + prefix + "avatar - ``Xem avatar``.\n"
                             + prefix + "sudo - ``Cho bot chat nội dung yêu cầu. (dev)``"
+                            + prefix + "check - ``Kiểm tra người chơi đang online hay không onl.``"
                         )
                         .setColor('0x2EA711')
                         .setTimestamp()

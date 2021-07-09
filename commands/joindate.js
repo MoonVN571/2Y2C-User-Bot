@@ -8,11 +8,6 @@ module.exports = {
     aliases: ['jd'],
     
     async execute(client, message, args) {
-        return message.channel.send({ embed: {
-			color: 0x2EA711,
-			description: `Lệnh đã bị tắt!`
-		}}).then(msg => msg.delete(60000));
-
         if (!args[0]) return message.channel.send(client.userNotFound).then(msg => msg.delete(60000));
 
 		let fj = new Scriptdb(`${client.config.disk}/data/joindate/${args[0]}.json`)
@@ -35,7 +30,8 @@ module.exports = {
 
 		message.channel.send({ embed: {
 			color: 0x2EA711,
-			description: `${args[0]}: ${firstjoin} (${api.ageCalc(tick)} trước)`
+			description: `${args[0]}: ${firstjoin} (${api.ageCalc(tick)} trước)`,
+            footer: {text: "Bot chỉ lưu data này sau 28/1/2021"}
 		}}).then(msg => msg.delete(60000));
     }
 }
