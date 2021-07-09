@@ -14,7 +14,7 @@ module.exports = {
         var count = playerArray.length;
 
         message.channel.send("Đang tính toán...").then(msg => {
-            msg.edit("**PLAYER LIST**\n\nTrực tuyến: " + count + "\n\n**Players:** \n" + playerArray.join(', '));
+            msg.edit("**PLAYER LIST**\nNhập tên để check người chơi có online hay không. Thí dụ: !check <tên>\n\nTrực tuyến: " + count + "\n\n**Players:** \n" + playerArray.join(', '));
             msg.delete(120000);
 	    });
     }
