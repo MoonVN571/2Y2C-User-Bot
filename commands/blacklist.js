@@ -72,7 +72,7 @@ module.exports = {
             client.fetchUser(user).then(user => {
                 if(!user) return message.channel.send("không tìm thấy user").then(msg => msg.delete(60 * 1000));
 
-                if(!get.includes(args[1])) return message.channel.send("Không tìm thấy " + user.tag + ".").then(msg => msg.delete(60 * 1000));
+                if(!get.includes(user.id)) return message.channel.send("Không tìm thấy " + user.tag + ".").then(msg => msg.delete(60 * 1000));
 
                 data.set('list', get.replace(user.id, ""));
 
