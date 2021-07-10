@@ -18,8 +18,8 @@ function API() {
         log(t +"time");
         log(d +"d");
 
-        var dstr = d.split("/")[0];
-        var mstr = d.split("/")[1];
+        var dstr = d.split("/")[1];
+        var mstr = d.split("/")[0];
         var ystr = d.split("/")[2];
 
         if(dstr >= 1) dstr = dstr - 1;
