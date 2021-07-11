@@ -33,8 +33,10 @@ module.exports = {
                             + prefix + '2blastdeaths - ``Xem lần cuối chết gần nhất người chơi 2b2t.\n``'
                             + prefix + '2status - ``Xem trạng thái 2b2t.\n``'
                             + prefix + "avatar - ``Xem avatar``.\n"
-                            + prefix + "sudo - ``Cho bot chat nội dung yêu cầu. (dev)``"
-                            + prefix + "check - ``Kiểm tra người chơi đang online hay không onl.``"
+                            + prefix + "sudo - ``Cho bot chat nội dung yêu cầu. (dev)\n``"
+                            + prefix + "fix - ``Sửa bot.``\n"
+                            + prefix + "check - ``Kiểm tra người chơi đang online hay không onl.``\n"
+                            + prefix + "blacklist - ``Danh sách đen. (add/remove = dev)``"
                         )
                         .setColor('0x2EA711')
                         .setTimestamp()

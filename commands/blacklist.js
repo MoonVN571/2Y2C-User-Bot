@@ -21,9 +21,8 @@ module.exports = {
 
             // get + "\n\n" + arr.join(", ")
             var embed = new RichEmbed()
-                        .addField('User list', get.split(" ").join(" "))
                         // .addField('\u200B', '\u200B')
-                        .addField('User tag', arr.join(", "))
+                        .addField('Users', arr.join(", "))
                         .setColor('GREEN')
                         .setFooter(client.footer);
 
