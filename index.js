@@ -29,6 +29,14 @@ for (const file of cmds) {
 	client.commands.set(cmd.name, cmd);
 }
 
+const Scriptdb = require('script.db');
+var sniped = new Scriptdb('./snipe.json');
+
+client.on('messageDelete', message => {
+	sniped.set(message.channel.id + ".author", message.author.id);
+	sniped.set(message.channel.id + ".content", message.content);
+})
+
 client.on("message", async message => {
 	if(message.author.bot) return;
 
@@ -51,25 +59,20 @@ client.on("message", async message => {
 	
 	client.color = color;
 	client.prefix = prefix;
-	client.footer = "Moon 2Y2C";
+	client.footer = "Invite: http://mo0nbot.tk/invite";
 
 	client.config = config;
-
-	message.channel.startTyping();
 
 	const Scriptdb = require('script.db');
 	var data = new Scriptdb('./blacklist.json').get('list');
 
 	if(data.includes(message.author.id)) return message.reply(" bạn có trong danh sách đen!");
 	
+	message.channel.startTyping();
+
 	setTimeout(() => {
 		try{
 			cmd.execute(client, message, args);
-			setTimeout(() => {
-				client.once("typingStart", function(channel, user){
-					if(user.id == client.user.id) message.channel.stopTyping();
-				});
-			}, 20000);
 			message.channel.stopTyping();
 		}catch(err) {
 			console.log(err);

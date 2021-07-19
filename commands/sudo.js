@@ -1,6 +1,6 @@
 module.exports = {
     name: "sudo",
-    aliases: ['s'],
+    aliases: ['say'],
     
     async execute(client, message, args) {
         if(message.author.id == "425599739837284362") {
