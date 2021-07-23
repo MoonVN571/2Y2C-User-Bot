@@ -1,21 +1,13 @@
-var Scriptdb = require('script.db');
-
 module.exports = {
     name: "snipe",
     aliases: [''],
     
     async execute(client, message, args) {
-        var data = new Scriptdb('./snipe.json');
 
-        var checkchannel = data.get(message.channel.id + ".content");
+        var sniper = client.snipes.get(message.channel.id);
+        
+        if(!sniper) return message.channel.send("nothing to snipes!").then(msg => msg.delete(60000));
 
-        if(checkchannel) {
-            var sniper = data.get(message.channel.id + ".content");
-            var author = data.get(message.channel.id + ".author");
-            
-            client.fetchUser(author).then(user => {
-                message.channel.send("**" + user.tag + "** " + sniper);
-            })
-        }
+        message.channel.send("**" + sniper.author + "** " + sniper.content + sniper.image).then(msg => msg.delete(60000));
     }
 }

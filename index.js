@@ -29,12 +29,16 @@ for (const file of cmds) {
 	client.commands.set(cmd.name, cmd);
 }
 
-const Scriptdb = require('script.db');
-var sniped = new Scriptdb('./snipe.json');
+client.snipes = new Discord.Collection();
 
 client.on('messageDelete', message => {
-	sniped.set(message.channel.id + ".author", message.author.id);
-	sniped.set(message.channel.id + ".content", message.content);
+	if(message.author.bot) return;
+	client.snipes.set(message.channel.id, {
+		content: message.content,
+		author: message.author.tag,
+		member: message.member,
+		image: message.attachments.first() ? message.attachments.first().proxyURL : ""
+	  })
 })
 
 client.on("message", async message => {
