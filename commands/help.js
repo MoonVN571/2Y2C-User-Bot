@@ -36,7 +36,8 @@ module.exports = {
                             + prefix + "sudo - ``Cho bot chat nội dung yêu cầu. (dev)\n``"
                             + prefix + "fix - ``Sửa bot.``\n"
                             + prefix + "check - ``Kiểm tra người chơi đang online hay không onl.``\n"
-                            + prefix + "blacklist - ``Danh sách đen. (add/remove = dev)``"
+                            + prefix + "blacklist - ``Danh sách đen. (add/remove = dev)``\n"
+                            + prefix + "top - ``Xem top.``"
                         )
                         .setColor('0x2EA711')
                         .setTimestamp()

@@ -51,8 +51,6 @@ client.on('messageDelete', message => {
 
 client.on("message", async message => {
 	if(message.author.bot) return;
-
-	if(message.guild.id == "861571836857024532") return;
  
 	if(!message.content.startsWith(prefix) || message.channel.type == "dm") return;
 
