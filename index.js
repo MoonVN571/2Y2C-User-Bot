@@ -1,3 +1,11 @@
+
+/**
+ *            2Y2C-DiscordServer-Bot
+ *  Yêu cầu giữ credit về source code.
+ * 
+ * 
+ * https://github.com/MoonVN571/2Y2C-DiscordServer-Bot
+ */
 const Discord = require("discord.js");
 const client = new Discord.Client();
 var fs = require('fs');
