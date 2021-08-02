@@ -68,7 +68,7 @@ client.on("message", async message => {
 	client.userNotFound = new Discord.RichEmbed()
 					.setDescription('Không tìm thấy người chơi.')
 					.setColor(0xC51515);
-	
+
 	client.color = color;
 	client.prefix = prefix;
 	client.footer = "Invite: http://mo0nbot.tk/invite";
@@ -79,7 +79,7 @@ client.on("message", async message => {
 	var data = new Scriptdb('./blacklist.json').get('list');
 
 	if(data.includes(message.author.id)) return message.reply(" bạn có trong danh sách đen!");
-	
+
 	message.channel.startTyping();
 
 	setTimeout(() => {
