@@ -116,6 +116,10 @@ function API() {
         return age;
     }
 
+    this.soDep = (value, length) => {
+        return `${value.toString()}`.padStart(length, 0);
+    }
+
     this.playtimeCalc = (time) => {
         var correct = time;
         var temp = correct / 1000;
@@ -148,60 +152,43 @@ function API() {
         return string;
     }
 
-    this.playtimeCalcE = (time) => {
-        var correct = time;
-        var temp = correct / 1000;
-        var day = 0, hour = 0, minutes = 0;
-            day = parseInt(temp / 86400)
-            hour = parseInt(((temp - day * 86400) / 3600))
-            minutes = parseInt(((temp - day * 86400 - hour * 3600)) / 60)
+    this.calculate = time => {
+        var temp = time / 1000;
+        var day = 0, hour = 0, minutes = 0, seconds = 0;
+        days = parseInt(temp / 86400);
+        hours = parseInt(((temp - days * 86400) / 3600))
+        minutes = parseInt(((temp - days * 86400 - hours * 3600)) / 60)
+        seconds = parseInt(temp % 60)
+    
+    
             var string;
             if( day == 0 ) {
                 if(minutes > 0 && hour > 0 ) {
-                    string = hour + " hours " + minutes + " minutes";		
+                    string = hour + " giờ " + minutes + " phút";
+                    if(seconds > 0) string = hour + " giờ " + minutes + " phút " + seconds + " giây";		
                 }
                 if(minutes == 0 && hour > 0) {
-                    string = hour + " hours";
+                    string = hour + " giờ";
+                    if(seconds > 0) string = hour + " giờ " + seconds + " giây"
                 }
                 if(minutes > 0 && hour == 0) {
-                    string = minutes + " minutes";
+                    string = minutes + " phút";
+                    if(seconds > 0) string = minutes + " phút " +  seconds + " giây";
                 }
+    
+                if(minutes == 0 && hours == 0) string = seconds + " giây";
             } else {
                 if(minutes > 0 && hour > 0 ) {
-                    string = day + " days " + hour + " hours " + minutes + " minutes";		
+                    string = day + " ngày " + hour + " giờ " + minutes + " phút";		
                 }
                 if(minutes == 0 && hour > 0) {
-                    string = day + " days " + hour + " hours";
+                    string = day + " ngày " + hour + " giờ";
                 }
                 if(minutes > 0 && hour == 0) {
-                    string = day + " days " + minutes + " minutes";
+                    string = day + " ngày " + minutes + " phút";
                 }
             }
         return string;
-    }
-
-    var Scriptdb = require('script.db')
-    this.uptimeCalc = () => {
-        const u = new Scriptdb(`${process.env.disk}/data.json`);
-        let uptime = u.get('uptime');
-
-        var d = new Date();
-        var timenow = d.getTime();
-        var ticks = timenow - uptime;
-        var temp = ticks / 1000;
-        var day = hours = 0, minutes = 0, seconds = 0;
-        hours = parseInt(((temp - day * 86400) / 3600))
-        minutes = parseInt(((temp - day * 86400 - hours * 3600)) / 60)
-        seconds = parseInt(temp % 60)
-
-        if(hours > 24) return "0h 0m 0s";
-
-        if(uptime === undefined) {
-            hours = 0;
-            minutes = 0;
-            seconds = 0;
-        }
-        return `${hours}h ${minutes}m ${seconds}s`; 
     }
 }
 
