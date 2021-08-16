@@ -1,10 +1,8 @@
 {
-    "ERR_COLOR": "ff2700",
-    "DEF_COLOR": "e54f6e",
-    "PROCCESSING_COLOR": "ffdd00",
+    "ERR_COLOR": "",
+    "DEF_COLOR": "",
+    "PROCCESSING_COLOR": "",
     "PREFIX": "!",
-    "ADMINS": [
-        "425599739837284362"
-    ],
-    "FOOTER": "2.7 update"
+    "ADMINS": [],
+    "FOOTER": ""
 }
