@@ -40,10 +40,7 @@ module.exports = {
                 title: "Ảnh nền của " + user.tag + "'s",
                 description: "so cuteeee",
                 image: { url: banner },
-                color: client.config.DEF_COLOR,
-                image: {
-                    url: user.avatarURL({ format: 'png', dynamic: true, size: 1024 }) 
-                },
+                color: client.config.DEF_COLOR
             }}).then(msg => msg.delete({timeout: 60000}));
         });
 
