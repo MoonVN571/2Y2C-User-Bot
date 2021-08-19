@@ -5,7 +5,11 @@ module.exports = {
 
     async execute(client, message, args) {
         message.channel.send('Checking...').then(msg => {
-            msg.edit(`Ping: ${msg.createdTimestamp - message.createdTimestamp}ms\nAPI: ${Math.round(client.ws.ping)}ms`);
+            msg.edit("", {embed: {
+                description: "Độ trễ: " + (msg.createdTimestamp - message.createdTimestamp) + "ms"
+                + "\n" + "Tốc độ phản hồi từ API: " + client.ws.ping + "ms",
+                color: client.config.DEF_COLOR 
+            }});
             msg.delete({timeout: 60000});
 	    });
     }

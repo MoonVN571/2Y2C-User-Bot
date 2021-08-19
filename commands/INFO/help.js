@@ -34,21 +34,6 @@
                 return;
             }
 
-            /*
-            readdirSync('./commands').forEach(dir => {
-                    readdir(`./commands/${dir}`, (err, files) => {
-                        if(err) throw err;
-                        
-                        if(files.find(f => f.split('.')[0] == cmdReload)) {
-                            delete require.cache[require.resolve(`../../commands/${dir}/${cmdReload.split('.')[0]}`)]
-
-                            const cmd = require(`../../commands/${dir}/${cmdReload.split('.')[0]}`);
-                            client.commands.set(cmd.name, cmd);
-                        }
-                    });
-                }); 
-            })*/
-
             let commandsList = [];
             
             readdirSync('./commands/').forEach(dir => {
@@ -62,10 +47,10 @@
             });
 
             message.lineReplyNoMention({embed: {
-                description: "Gõ " + client.config.PREFIX +'help <lệnh> để xem thông tin lệnh',
+                description: "Gõ " + client.prefix +'help <lệnh> để xem thông tin lệnh',
                 fields: [
                     {
-                        name: "Các lệnh bot",
+                        name: "Các lệnh bot [" + commandsList.length + "]",
                         value: commandsList.join(", "),
                         inline: false,
                     }

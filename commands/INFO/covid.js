@@ -26,9 +26,9 @@ module.exports = {
                     .addField('**Tổng số ca**', Intl.NumberFormat().format(totalCase), true)
                     .addField('**Số ca hôm nay**', Intl.NumberFormat().format(newCase), true)
                     .addField('**Tổng ca tử vong**', Intl.NumberFormat().format(totalCaseDeaths), false)
-                    .addField('**Ca tử vong mới**', Intl.NumberFormat().format(newDeaths), true)
+                    .addField('**Ca tử vong mới**', Intl.NumberFormat().format(newDeaths), false)
                     .setColor(0x2EA711)
-                    .setThumbnail('https://cdn.discordapp.com/attachments/795842485133246514/856490124871467038/COVID-19-1.png');
+                    .setImage('https://cdn.discordapp.com/attachments/795842485133246514/877082037268414544/covid-19.png');
 
 
             message.lineReplyNoMention(embed).then(msg => msg.delete({timeout: 60000}));
@@ -37,7 +37,7 @@ module.exports = {
         async function checkCountry(country, show) {
             let data = await covid19.getCountry(country);
 
-            if(!data) returnmessage.channel.send({embed: {
+            if(!data) return message.channel.send({embed: {
                 description: "Không tìm thấy nước bạn tìm kiếm.",
                 color: client.config.DEF_COLOR
             }}).then(msg => msg.delete({timeout: 60000}));
@@ -53,11 +53,12 @@ module.exports = {
             let embed = new MessageEmbed()
                         .setTitle("COVID-19 - " + show)
                         .addField('**Tổng số ca**', Intl.NumberFormat().format(totalCase) , true)
-                        .addField('**Ca nhiễm mới**', Intl.NumberFormat().format(newCase), true)
-                        .addField('**Ca tử vong trong nước**', Intl.NumberFormat().format(totalCaseDeaths), false)
+                        .addField('**Tổng ca tử vong**', Intl.NumberFormat().format(totalCaseDeaths), true)
+                        .addField('**Ca mắc mới**', Intl.NumberFormat().format(newCase), false)
                         .addField('**Ca tử vong mới**', Intl.NumberFormat().format(newDeaths), true)
+                        .addField('\u200B', "Xem thông tin về Covid chi tiết ở Việt Nam: " + client.prefix + "covid-v2\nBạn có thể gõ ``" + client.prefix + "covid <NƯỚC>`` để xem nước khác", false)
                         .setColor(0x2EA711)
-                        .setThumbnail('https://cdn.discordapp.com/attachments/795842485133246514/856490124871467038/COVID-19-1.png');
+                        .setImage('https://cdn.discordapp.com/attachments/795842485133246514/877082406312620072/covid_banner.png');
 
             message.lineReplyNoMention(embed).then(msg => msg.delete({timeout: 60000}));
         }

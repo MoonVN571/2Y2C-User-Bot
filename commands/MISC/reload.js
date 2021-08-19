@@ -36,6 +36,7 @@ module.exports = {
                             delete require.cache[require.resolve(`../../commands/${dir}/${cmdReload.split('.')[0]}`)]
 
                             const cmd = require(`../../commands/${dir}/${cmdReload.split('.')[0]}`);
+                            
                             client.commands.set(cmd.name, cmd);
                         }
                     });
@@ -54,7 +55,7 @@ module.exports = {
     
         
         message.lineReplyNoMention({embed: {
-            description: "Đã tải lại " + reloaded.join(", "),
+            description: "Đã tải lại các lệnh " + reloaded.join(", ") + " thành công!",
             color: client.config.DEF_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));
     }

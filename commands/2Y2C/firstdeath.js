@@ -4,12 +4,13 @@ var Scriptdb = require('script.db');
 var a = require("../../api");
 var api = new a();
 
+
 module.exports = {
     name: "firstdeath",
     description: "Xem tin nhắn chết lần đầu",
     aliases: ['fd'],
     delay: 10,
-    
+
     async execute(client, message, args) {
 		if (!args[0]) return message.lineReplyNoMention(client.inputUsername).then(msg => msg.delete({timeout: 60000}));
 

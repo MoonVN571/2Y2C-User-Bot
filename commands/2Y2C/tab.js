@@ -159,6 +159,6 @@ module.exports = {
                     .setColor(client.config.DEF_COLOR)
                     .setImage('attachment://tab.png');
 
-        await message.channel.send(embed).then(msg => msg.delete({timeout: 60000}));
+        await message.lineReplyNoMention(embed).then(msg => msg.delete({timeout: 60000}));
     }
 }

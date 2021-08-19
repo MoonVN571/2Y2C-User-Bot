@@ -9,12 +9,18 @@ module.exports = {
     delay: 10,
     
     execute(client, message, args) {
+        
+        if(message.channel.id == "748529588136837191") return message.channel.send({embed: {
+            description: "Kênh này đã bị tắt snipe.",
+            color: client.config.ERR_COLOR
+        }}).then(msg => msg.delete({timeout: 60000}));
+
         let data = new Database({path: "./snipe.json"});
 
         let sniper = data.get(message.channel.id + ".author");
         
         if(!sniper) return message.channel.send({embed: {
-            description: "Không tìm thấy tín nhắn đã xoá nào trong kênh này cả.",
+            description: "Không tìm thấy tin nhắn đã xoá nào trong kênh này cả.",
             color: client.config.ERR_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));
 
@@ -23,13 +29,13 @@ module.exports = {
         
         let time = data.get(message.channel.id + ".time");
 
-        let date = api.soDep(new Date(time).getUTCDate(), 2);
-        let month = api.soDep(new Date(time).getUTCMonth() + 1, 2);
-        let years = api.soDep(new Date(time).getUTCFullYear(), 2);
+        let date = api.soDep(new Date(time).getDate(), 2);
+        let month = api.soDep(new Date(time).getMonth() + 1, 2);
+        let years = api.soDep(new Date(time).getFullYear(), 2);
 
-        let hours = api.soDep(new Date(time).getUTCHours(), 2);
-        let minutes = api.soDep(new Date(time).getUTCMinutes(), 2);
-        let seconds = api.soDep(new Date(time).getUTCSeconds(), 2);
+        let hours = api.soDep(new Date(time).getHours(), 2);
+        let minutes = api.soDep(new Date(time).getMinutes(), 2);
+        let seconds = api.soDep(new Date(time).getSeconds(), 2);
 
         let formatTime = `${date}/${month}/${years} ${hours}:${minutes}:${seconds}`;
         
@@ -48,11 +54,12 @@ module.exports = {
                 },
                 {
                     name: "Thời gian",
-                    value: formatTime,
+                    value: formatTime + " (" + api.ageCalc(time) + " trước)",
                     inline: false
                 }
             ],
             color: client.config.DEF_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));
+
     }
 }

@@ -15,13 +15,28 @@ module.exports = {
     name: "message",
 
     execute(client, message) {
-        if(message.author.bot) return;
+        if(message.author.bot || message.channel.type == "dm") return;
 
-        if(!message.content.startsWith(config.PREFIX) || message.channel.type == "dm") return;
+        let dataPrefix = new Database({path: "./prefix.json"}).get(message.author.id + ".prefix");
+
+        const prefix = dataPrefix || config.PREFIX;
+        
+        if(message.content == "<@" + client.user.id + ">") return message.lineReplyNoMention({embed: {
+            description: "Prefix của bạn là ``" + prefix + "``.",
+            color: client.config.DEF_COLOR
+        }});
+
+        let regex = /[a-z]|[A-Z]/i;
+
+        if(message.content.split(" ")[0].match(regex)) {
+            if(!message.content.toLowerCase().startsWith(prefix) || !message.content.toLowerCase().startsWith(prefix)) return;
+        } else {
+            if(!message.content.startsWith(prefix) || !message.content.startsWith(prefix)) return;
+        }
 
         console.log(`[${new Date().toLocaleString()}] Guild: ${message.guild.name} || Channel: ${message.channel.name} || Usage: ${message.author.tag} - ${message.author.id}\nMessage: ${message.content}`);
 
-        var args = message.content.slice(config.PREFIX.length).split(/ +/);
+        var args = message.content.slice(prefix.length).split(/ +/);
         
         if(args[0] == "") args = args.slice(1);
         if(!args.length) return;
@@ -40,11 +55,11 @@ module.exports = {
                         .setColor(0xC51515);
 
         client.inputUsername = new MessageEmbed()
-                        .setDescription('Bạn phải nhập tên người dùng.')
+                        .setDescription('Bạn phải cung cấp tên người chơi.\n\nCú pháp: ``' + prefix + cmdName + " <USERNAME>``")
                         .setColor(0xC51515);
 
 
-        client.prefix = config.PREFIX;
+        client.prefix = prefix;
         client.disk = process.env.disk;
         client.config = config;
         client.footer = config.FOOTER;
@@ -54,11 +69,12 @@ module.exports = {
         let checkVote = new Database({path: process.env.disk + '/voted.json'}).get('users-' + new Date().getUTCDate() + (new Date().getUTCMonth()+1) + new Date().getUTCFullYear());
 
         let admins = new Database({path: "./config.json"});
-        
-        if(checkVote.split(" ").indexOf(message.author.id) < 0 && admins.get("ADMINS").indexOf(message.author.id) < 0) return message.lineReplyNoMention("Bạn phải vote bot để sử dụng lệnh này.\n\nVote tại: https://top.gg/bot/768448728125407242/vote").then(msg => {
+
+        /*
+        if(!checkVote || checkVote.split(" ").indexOf(message.author.id) < 0 && admins.get("ADMINS").indexOf(message.author.id) == -1) return message.lineReplyNoMention("Bạn phải vote bot để sử dụng lệnh này.\n\nVote tại: https://top.gg/bot/768448728125407242/vote").then(msg => {
             message.channel.stopTyping();
             msg.delete({timeout: 60000});
-        });
+        }); */
 
         if(cmd.delay) {
             let cmdDelay = client.commands.get(cmdName);
@@ -67,7 +83,7 @@ module.exports = {
             if(timeout.get(`${message.author.id}.${cmdDelay.name}`) - Date.now() < 0 || !timeout.get(`${message.author.id}.${cmdDelay.name}`)) timeout.delete(`${message.author.id}.${cmdDelay.name}`); 
 
             let calc = api.calculate(timeout.get(`${message.author.id}${cmdDelay.name}`) - Date.now());
-
+            
             if(timeout.get(`${message.author.id}${cmdDelay.name}`) && calc) return message.lineReplyNoMention({embeds: [{
                 description: `Hãy chờ \`\`${calc}\`\` để tiếp tục dùng lệnh này.`,
                 color: config.ERR_COLOR
@@ -81,8 +97,8 @@ module.exports = {
         }
 
         var blacklistData = new Database({path:'./blacklist.json'}).get('users');
-
-        if(blacklistData.indexOf(message.author.id) > -1 && admins.indexOf(message.author.id) < 0) return message.lineReplyNoMention({embed: {
+ 
+        if(blacklistData.indexOf(message.author.id) == 0 && admins.indexOf(message.author.id) < 0) return message.lineReplyNoMention({embed: {
             description: "Bạn có trong danh sách đen nên không thể dùng bot.", color: config.ERR_COLOR
         }}).then(msg => {
             message.channel.stopTyping();

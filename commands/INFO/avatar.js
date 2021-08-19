@@ -5,11 +5,18 @@ module.exports = {
     
     async execute(client, message, args) {
         var user = args[0];        
-
         var tag = message.mentions.members.first();
         
         if(isNaN(user) && !tag) user = message.author.id; 
         if(tag) user = tag.id;
+
+        let check_name = client.users.cache.find(user => user.username == args.join(" "));
+        if(check_name) user = check_name.id;
+
+        if(!check_name && !tag && isNaN(user)) return message.lineReplyNoMention({embed: {
+            description: "Bạn phải cung cấp ID hoặc tag người dùng.",
+            color: client.config.ERR_COLOR
+        }}).then(msg => msg.delete({timeout: 60000}));
 
         if(!tag && isNaN(user)) return message.lineReplyNoMention({embed: {
             description: "Bạn phải cung cấp ID hoặc tag người dùng.",
@@ -17,7 +24,7 @@ module.exports = {
         }}).then(msg => msg.delete({timeout: 60000}));
 
         client.users.fetch(user).then(user => {
-            if(user == null || user == undefined) return message.lineReplyNoMention({embed: {
+            if(!user) return message.lineReplyNoMention({embed: {
                 description: "Không tìm thấy người này.",
                 color: client.config.ERR_COLOR
             }}).then(msg => msg.delete({timeout: 60000}));

@@ -34,10 +34,10 @@ module.exports = {
 				.addField('Ping', ping + "ms", true)
 				.addField('Queue', queue, true)
                 .addField("Priority", prio, true)
-                .setFooter('Cập nhật ``' + api.ageCalc(timepassed) + "`` trước.", 'https://cdn.discordapp.com/avatars/768448728125407242/f18ec971961b23db96e6cf0f3f79ec1c.png?size=256')
+                .setFooter('Cập nhật ' + api.ageCalc(timepassed) + " trước.", 'https://cdn.discordapp.com/avatars/768448728125407242/f18ec971961b23db96e6cf0f3f79ec1c.png?size=256')
                 .setColor(0x000DFF)
                 .setTimestamp();
 
-		message.channel.send(embed).then(msg => msg.delete(120000));
+		message.lineReplyNoMention(embed).then(msg => msg.delete({timeout: 120000}));
     }
 }

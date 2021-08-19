@@ -116,10 +116,6 @@ function API() {
         return age;
     }
 
-    this.soDep = (value, length) => {
-        return `${value.toString()}`.padStart(length, 0);
-    }
-
     this.playtimeCalc = (time) => {
         var correct = time;
         var temp = correct / 1000;
@@ -152,42 +148,70 @@ function API() {
         return string;
     }
 
-    this.calculate = time => {
-        var temp = time / 1000;
+    this.getDate = (datetime) => {
+        return this.soDep(new Date(datetime).getDate(), 2) + 
+        "/" + this.soDep(new Date(datetime).getMonth() + 1, 2) + 
+        "/" + new Date(datetime).getFullYear();
+    }
+
+    this.getTime = (time) => {
+        return this.soDep(new Date(time).getHours(), 2) + 
+        ":" + this.soDep(new Date(time).getMinutes(), 2) + 
+        ":" + this.soDep(new Date(time).getSeconds(), 2);
+    }
+
+    this.getTimestamp = (datetime) => {
+        return this.soDep(new Date(datetime).getDate(), 2) + 
+        "/" + this.soDep(new Date(datetime).getMonth() + 1, 2) + 
+        "/" + new Date(datetime).getFullYear() + 
+        " " + 
+        this.soDep(new Date(datetime).getHours(), 2) + 
+        ":" + this.soDep(new Date(datetime).getMinutes(), 2) + 
+        ":" + this.soDep(new Date(datetime).getSeconds(), 2);
+    }
+
+    this.soDep = (value, length) => {
+        return `${value}`.padStart(length, 0);
+    }
+    
+    this.random = (min, max) => {
+       return Math.floor(Math.random() * (max - min) + min);
+   }
+
+    this.calculate = temp => {
         var day = 0, hour = 0, minutes = 0, seconds = 0;
         days = parseInt(temp / 86400);
         hours = parseInt(((temp - days * 86400) / 3600))
         minutes = parseInt(((temp - days * 86400 - hours * 3600)) / 60)
         seconds = parseInt(temp % 60)
     
-    
-            var string;
-            if( day == 0 ) {
-                if(minutes > 0 && hour > 0 ) {
-                    string = hour + " giờ " + minutes + " phút";
-                    if(seconds > 0) string = hour + " giờ " + minutes + " phút " + seconds + " giây";		
-                }
-                if(minutes == 0 && hour > 0) {
-                    string = hour + " giờ";
-                    if(seconds > 0) string = hour + " giờ " + seconds + " giây"
-                }
-                if(minutes > 0 && hour == 0) {
-                    string = minutes + " phút";
-                    if(seconds > 0) string = minutes + " phút " +  seconds + " giây";
-                }
-    
-                if(minutes == 0 && hours == 0) string = seconds + " giây";
-            } else {
-                if(minutes > 0 && hour > 0 ) {
-                    string = day + " ngày " + hour + " giờ " + minutes + " phút";		
-                }
-                if(minutes == 0 && hour > 0) {
-                    string = day + " ngày " + hour + " giờ";
-                }
-                if(minutes > 0 && hour == 0) {
-                    string = day + " ngày " + minutes + " phút";
-                }
+        var string;
+        if( day == 0 ) {
+            if(minutes > 0 && hour > 0 ) {
+                string = hour + " giờ " + minutes + " phút";
+                if(seconds > 0) string = hour + " giờ " + minutes + " phút " + seconds + " giây";		
             }
+            if(minutes == 0 && hour > 0) {
+                string = hour + " giờ";
+                if(seconds > 0) string = hour + " giờ " + seconds + " giây"
+            }
+            if(minutes > 0 && hour == 0) {
+                string = minutes + " phút";
+                if(seconds > 0) string = minutes + " phút " +  seconds + " giây";
+            }
+
+            if(minutes == 0 && hours == 0) string = seconds + " giây";
+        } else {
+            if(minutes > 0 && hour > 0 ) {
+                string = day + " ngày " + hour + " giờ " + minutes + " phút";		
+            }
+            if(minutes == 0 && hour > 0) {
+                string = day + " ngày " + hour + " giờ";
+            }
+            if(minutes > 0 && hour == 0) {
+                string = day + " ngày " + minutes + " phút";
+            }
+        }
         return string;
     }
 }

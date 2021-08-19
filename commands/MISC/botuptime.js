@@ -12,6 +12,7 @@ module.exports = {
 
         message.lineReplyNoMention({embed: {
             description: "Thời gian đã hoạt động: **" + api.calculate(temp) + "**.",
-        }}).then(msg => msg.delete({timeout: 10000}));
+            color: client.config.DEF_COLOR
+        }}).then(msg => msg.delete({timeout: 60000}));
     }
 }
