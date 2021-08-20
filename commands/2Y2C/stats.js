@@ -6,6 +6,7 @@ module.exports = {
     description: "Xem thông số người chơi",
     aliases: ['kd', 'stats'],
     delay: 10,
+    vote: true,
     
     execute(client, message, args) {
         if (!args[0]) return message.lineReplyNoMention(client.inputUsername).then(msg => msg.delete({timeout: 60000}));

@@ -39,27 +39,37 @@ module.exports = {
 
         let formatTime = `${date}/${month}/${years} ${hours}:${minutes}:${seconds}`;
         
-
-        message.channel.send(image, {embed: {
-            fields: [
-                {
-                    name: "Người gủi",
-                    value: sniper,
-                    inlnie: false
-                },
-                {
-                    name: "Nội dung gửi",
-                    value: content,
-                    inline: false
-                },
-                {
-                    name: "Thời gian",
-                    value: formatTime + " (" + api.ageCalc(time) + " trước)",
-                    inline: false
-                }
-            ],
-            color: client.config.DEF_COLOR
-        }}).then(msg => msg.delete({timeout: 60000}));
-
+        try {
+            message.channel.send(image, {embed: {
+                fields: [
+                    {
+                        name: "Người gủi",
+                        value: sniper,
+                        inlnie: false
+                    },
+                    {
+                        name: "Nội dung gửi",
+                        value: content,
+                        inline: false
+                    },
+                    {
+                        name: "Thời gian",
+                        value: formatTime + " (" + api.ageCalc(time) + " trước)",
+                        inline: false
+                    }
+                ],
+                color: client.config.DEF_COLOR
+            }}).then(msg => msg.delete({timeout: 60000}));
+        }catch(e) {
+            message.lineReplyNoMention({embed: {
+                fields: [
+                    {
+                        name: "Thông tin Lỗi",
+                        value: e.toString()
+                    },
+                ],
+                color: client.config.ERR_COLOR
+            }}).thenm(msg => msg.delete({timeout: 60000}));
+        }
     }
 }

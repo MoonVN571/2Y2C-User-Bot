@@ -48,8 +48,6 @@ module.exports = {
 
         if(!cmd) return;
 
-        if(cmd.disabled) return;
-
         client.userNotFound = new MessageEmbed()
                         .setDescription('Không tìm thấy người chơi.')
                         .setColor(0xC51515);
@@ -68,13 +66,20 @@ module.exports = {
 
         let checkVote = new Database({path: process.env.disk + '/voted.json'}).get('users-' + new Date().getUTCDate() + (new Date().getUTCMonth()+1) + new Date().getUTCFullYear());
 
-        let admins = new Database({path: "./config.json"});
-
-        /*
-        if(!checkVote || checkVote.split(" ").indexOf(message.author.id) < 0 && admins.get("ADMINS").indexOf(message.author.id) == -1) return message.lineReplyNoMention("Bạn phải vote bot để sử dụng lệnh này.\n\nVote tại: https://top.gg/bot/768448728125407242/vote").then(msg => {
+        if(config.ADMINS.indexOf(message.author.id) == -1 && cmd.vote && (!checkVote || checkVote.split(" ").indexOf(message.author.id) < 0)) return message.lineReplyNoMention("Bạn phải vote bot để sử dụng lệnh này.\n\nVote tại: https://top.gg/bot/768448728125407242/vote").then(msg => {
             message.channel.stopTyping();
             msg.delete({timeout: 60000});
-        }); */
+        });
+        
+        if(cmd.disabled && admins.indexOf(message.author.id) == -1) return message.lineReplyNoMention({embed: {
+            description: "Lệnh đã bị tắt, chỉ nhà phát triển mới có thể dùng được.", color: config.ERR_COLOR
+        }}).then(msg => msg.delete({timeout: 60000}));
+
+        if(cmd.admin && data.get("ADMINS").indexOf(message.author.id) == -1)
+            return message.lineReplyNoMention({embed: {
+                description: "Bạn phải là nhà phát triển để sử dụng lệnh này.",
+                color: client.config.ERR_COLOR
+            }}).then(msg => msg.delete({timeout: 60000}));
 
         if(cmd.delay) {
             let cmdDelay = client.commands.get(cmdName);
@@ -98,7 +103,7 @@ module.exports = {
 
         var blacklistData = new Database({path:'./blacklist.json'}).get('users');
  
-        if(blacklistData.indexOf(message.author.id) == 0 && admins.indexOf(message.author.id) < 0) return message.lineReplyNoMention({embed: {
+        if(blacklistData.indexOf(message.author.id) == 0 && admins.indexOf(message.author.id) == -1) return message.lineReplyNoMention({embed: {
             description: "Bạn có trong danh sách đen nên không thể dùng bot.", color: config.ERR_COLOR
         }}).then(msg => {
             message.channel.stopTyping();

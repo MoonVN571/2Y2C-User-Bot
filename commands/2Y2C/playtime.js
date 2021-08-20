@@ -8,6 +8,7 @@ module.exports = {
 	description: "Xem thời gian chơi",
     aliases: ['pt'],
 	delay: 10,
+	vote: true,
     
     async execute(client, message, args) {
         if (!args[0]) return message.channel.send(client.inputUsername).then(msg => msg.delete({timeout: 60000}));

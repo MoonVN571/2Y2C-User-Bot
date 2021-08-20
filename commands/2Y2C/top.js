@@ -4,6 +4,9 @@ const API = require('../../api');
 
 module.exports = {
     name: "top",
+    description: "Xem top 10 người chơi",
+    delay: 10,
+    vote: true,
     
     async execute(client, message, args) {
         if(!args[0]) return message.lineReplyNoMention("Không đủ dữ liệu. " + client.prefix + "top " + "<kills/deaths/kd/playtime>");

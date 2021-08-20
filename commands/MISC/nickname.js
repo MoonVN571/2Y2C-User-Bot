@@ -2,11 +2,10 @@ module.exports = {
     name: "nickname",
     description: "Đổi nickname của bot",
     aliases: ['nick'],
+    admin: true,
 
     execute(client, message, args) {
-        if(client.config.ADMINS.indexOf(message.author.id) == -1) return;
-
-        if(!args.length) message.lineReplyNoMention({embed: {
+        if(!args.length) return message.lineReplyNoMention({embed: {
             description: "Hãy nhập biệt danh cần thay đổi",
             color: client.config.DEF_COLOR
         }});

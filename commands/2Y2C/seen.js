@@ -7,6 +7,7 @@ module.exports = {
     name: "seen",
     description: "Xem lần cuối bot nhìn thấy người chơi",
     aliases: ['see'],
+    vote: true,
     
     async execute(client, message, args) {
         if (!args[0]) return message.lineReplyNoMention(client.inputUsername).then(msg => msg.delete({timeout: 60000}));

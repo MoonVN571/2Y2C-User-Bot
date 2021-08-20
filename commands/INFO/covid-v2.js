@@ -10,6 +10,7 @@ module.exports = {
     name: "covid-v2",
     description: "Covid API ở Việt Nam",
     delay: 10,
+    vote: true,
 
     execute(client, message, args) {
         axios.get(link).then(function (response) {

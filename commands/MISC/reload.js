@@ -10,16 +10,11 @@ module.exports = {
     name: "reload",
     description: "Tải lại tất cả lệnh bot",
     aliases: ['rl'],
-    
+    admin: true,
+
     async execute(client, message, args) {
         let data = new Database({path: "./config.json"});
         
-        if(data.get("ADMINS").indexOf(message.author.id) < 0)
-            return message.lineReplyNoMention({embed: {
-                description: "Bạn phải là nhà phát triển để sử dụng lệnh này.",
-                color: client.config.ERR_COLOR
-            }}).then(msg => msg.delete({timeout: 60000}));
-
         if(!args[0]) return message.lineReplyNoMention({embed: {
             description: "Hãy nhập 1 hoặc nhiều lệnh để reload.",
             color: client.config.ERR_COLOR

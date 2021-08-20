@@ -4,6 +4,7 @@
         name: "help",
         description: "Xem lệnh hướng dẫn",
         delay: 7,
+        vote: true,
 
         execute(client, message, args) {
             if(args[0]) {
@@ -13,6 +14,15 @@
                         
                         if(files.find(f => f.split('.')[0] == args[0])) {
                             const cmd = require(`../../commands/${dir}/${args[0]}`);
+                            if(cmd.disabled) return message.lineReplyNoMention({embed: {
+                                    description: "Lệnh này đã bị tắt.",
+                                    color: client.config.DEF_COLOR  
+                                }}).then(msg => msg.delete({timeout: 60000}));
+
+                            if(cmd.admin && admins.indexOf(message.author.id) == -1) return message.lineReplyNoMention({embed: {
+                                    description: "Bạn phải là nhà phát triển để xem hướng dẫn sử dụng lệnh này.",
+                                    color: client.config.DEF_COLOR  
+                                }}).then(msg => msg.delete({timeout: 60000}));
 
                             if(cmd.aliases) {
                                 message.lineReplyNoMention({embed: {
