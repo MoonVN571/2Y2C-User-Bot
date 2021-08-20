@@ -21,9 +21,9 @@ module.exports = {
 
         const prefix = dataPrefix || config.PREFIX;
         
-        if(message.content == "<@" + client.user.id + ">") return message.lineReplyNoMention({embed: {
+        if(message.content == "<@" + client.user.id + ">" || message.content == "<@!" + client.user.id + ">") return message.lineReplyNoMention({embed: {
             description: "Prefix của bạn là ``" + prefix + "``.",
-            color: client.config.DEF_COLOR
+            color: config.DEF_COLOR
         }});
 
         let regex = /[a-z]|[A-Z]/i;
@@ -65,20 +65,21 @@ module.exports = {
         message.channel.startTyping();
 
         let checkVote = new Database({path: process.env.disk + '/voted.json'}).get('users-' + new Date().getUTCDate() + (new Date().getUTCMonth()+1) + new Date().getUTCFullYear());
-
+	
+	/*
         if(config.ADMINS.indexOf(message.author.id) == -1 && cmd.vote && (!checkVote || checkVote.split(" ").indexOf(message.author.id) < 0)) return message.lineReplyNoMention("Bạn phải vote bot để sử dụng lệnh này.\n\nVote tại: https://top.gg/bot/768448728125407242/vote").then(msg => {
             message.channel.stopTyping();
             msg.delete({timeout: 60000});
-        });
+        });*/
         
         if(cmd.disabled && admins.indexOf(message.author.id) == -1) return message.lineReplyNoMention({embed: {
             description: "Lệnh đã bị tắt, chỉ nhà phát triển mới có thể dùng được.", color: config.ERR_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));
 
-        if(cmd.admin && data.get("ADMINS").indexOf(message.author.id) == -1)
+        if(cmd.admin && config.ADMINS.indexOf(message.author.id) == -1)
             return message.lineReplyNoMention({embed: {
                 description: "Bạn phải là nhà phát triển để sử dụng lệnh này.",
-                color: client.config.ERR_COLOR
+                color: config.ERR_COLOR
             }}).then(msg => msg.delete({timeout: 60000}));
 
         if(cmd.delay) {
