@@ -39,7 +39,7 @@ module.exports = {
 
         let formatTime = `${date}/${month}/${years} ${hours}:${minutes}:${seconds}`;
         
-        message.channel.send(image, {embed: {
+        message.channel.send({embed: {
             fields: [
                 {
                     name: "Người gủi",
@@ -48,8 +48,12 @@ module.exports = {
                 },
                 {
                     name: "Nội dung gửi",
-                    value: content,
+                    value: content ? content : "Không có",
                     inline: false
+                },
+                {
+                    name: "Link ảnh",
+                    value: image ? image : "Không có"
                 },
                 {
                     name: "Thời gian",
