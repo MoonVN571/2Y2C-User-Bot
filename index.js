@@ -8,8 +8,10 @@
  */
 const { Client, Collection } = require("discord.js");
 const config = require("./config.json");
+require('dotenv').config();
 
 require('discord-reply');
+
 const client = new Client({ _tokenType: ""});
 
 client.interaction = {}; 
@@ -54,8 +56,6 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(client, ...args));
     }
 }
-
-require('dotenv').config();
 
 client.login(process.env.token).catch((e) => { console.log(e); });
 client.on("error", (e) => { console.error(e) });

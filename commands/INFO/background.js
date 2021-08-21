@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 require('dotenv').config();
+const fetch = require('node-fetch')
 
 module.exports = {
     name: "background",
@@ -28,7 +29,7 @@ module.exports = {
         }}).then(msg => msg.delete({timeout: 60000}));
 
         client.users.fetch(user).then(async user => {
-            let banner = await getUserBannerUrl(user.id, { size: 4096 });
+            let banner = await getUserBannerUrl(user.id);
 
             if(!banner) return message.lineReplyNoMention({embed: {
                 description: "Không tìm thấy ảnh nền của người này.",
@@ -36,39 +37,17 @@ module.exports = {
             }}).then(msg => msg.delete({timeout: 60000}));
             
 
-            message.lineReplyNoMention({embed: {
-                title: "Ảnh nền của " + user.tag + "'s",
+            await message.lineReplyNoMention({embed: {
+                title: "Ảnh nền của " + user.username + "'s",
                 description: "so cuteeee",
                 image: { url: banner },
                 color: client.config.DEF_COLOR
             }}).then(msg => msg.delete({timeout: 60000}));
         });
 
-        /**
-         * https://stackoverflow.com/questions/68334431/get-user-banner-in-discord-js
-         */
-        async function getUserBannerUrl(userId, { dynamicFormat = true, defaultFormat = "webp", size = 512 } = {}) {
-            if (![16, 32, 64, 128, 256, 512, 1024, 2048, 4096].includes(size)) {
-                throw new Error(`The size '${size}' is not supported!`);
-            }
-
-            if (!["webp", "png", "jpg", "jpeg"].includes(defaultFormat)) {
-                throw new Error(`The format '${defaultFormat}' is not supported as a default format!`);
-            }
-            
+        async function getUserBannerUrl(userId) {
             const user = await client.api.users(userId).get();
-            if (!user.banner) return null;
-        
-            const query = `?size=${size}`;
-            const baseUrl = `https://cdn.discordapp.com/banners/${userId}/${user.banner}`;
-
-            if (dynamicFormat) {
-                const { headers } = await axios.head(baseUrl);
-                if (headers && headers.hasOwnProperty("content-type")) {
-                    return baseUrl + (headers["content-type"] == "image/gif" ? ".gif" : `.${defaultFormat}`) + query;
-                }
-            }
-            return baseUrl + `.${defaultFormat}` + query;
+            return user.banner ? `https://cdn.discordapp.com/banners/${userId}/${user.banner}?size=4096` : null;
         }
 
     }

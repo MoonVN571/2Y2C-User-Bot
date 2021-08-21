@@ -39,8 +39,8 @@ module.exports = {
                             .addField('Players', player + " players", true)
                             .addField('Hàng chờ', dataq, true)
                             .addField('Ưu tiên', datap, true)
-                            .addField('Ước tính', datat + " (" + api.ageCalc(+datalc) +" ago)", true)
-                            .setFooter("API by LoLRiTTeR Bot", 'https://images-ext-2.discordapp.net/external/OWsrCus2cCb9txmasSQQ8UqxrkbIxM2f1VotLB8aX14/https/cdn.discordapp.com/avatars/521791765989031957/6e34a1a33d255339aa45c731637a51f8.png')
+                            .addField('Ước tính', datat + " (" + api.ageCalc(+datalc) +" trước)", true)
+                            // .setFooter("API by LoLRiTTeR Bot", 'https://images-ext-2.discordapp.net/external/OWsrCus2cCb9txmasSQQ8UqxrkbIxM2f1VotLB8aX14/https/cdn.discordapp.com/avatars/521791765989031957/6e34a1a33d255339aa45c731637a51f8.png')
                             .setColor(0x000DFF)
                             .setTimestamp();
 

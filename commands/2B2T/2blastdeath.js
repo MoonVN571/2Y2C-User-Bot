@@ -31,7 +31,7 @@ module.exports = {
             var tick = new Date(datee).getTime();
 
             message.lineReplyNoMention({embed: {
-                description: `**${api.ageCalc(tick)} trước:** + ${data.message}`,
+                description: `**${api.ageCalc(tick)} trước:** ${data.message}`,
                 color: 0x2EA711
             }}).then(msg => msg.delete({timeout: 60000}));
         });

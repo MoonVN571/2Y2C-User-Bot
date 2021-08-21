@@ -1,5 +1,5 @@
 const request = require('request');
-var { RichEmbed } = require('discord.js');
+var { MessageEmbed } = require('discord.js');
 
 var a = require('../../api');
 var api = new a();
@@ -24,7 +24,7 @@ module.exports = {
 
             var age = api.ageCalc(toTime);
 
-		    var embed = new RichEmbed()
+		    var embed = new MessageEmbed()
                         .setDescription(`2B2T: Đã thấy ${args[0]} từ ${age} trước.`)
                         .setColor(0x2EA711);
 
