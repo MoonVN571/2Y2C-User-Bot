@@ -1,5 +1,3 @@
-const Database = require('simplest.db');
-
 const { readdirSync, readdir } = require('fs');
 
 /**
@@ -12,9 +10,7 @@ module.exports = {
     aliases: ['rl'],
     admin: true,
 
-    async execute(client, message, args) {
-        let data = new Database({path: "./config.json"});
-        
+    async execute(client, message, args) {        
         if(!args[0]) return message.lineReplyNoMention({embed: {
             description: "Hãy nhập 1 hoặc nhiều lệnh để reload.",
             color: client.config.ERR_COLOR

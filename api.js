@@ -181,8 +181,8 @@ function API() {
     this.calculate = temp => {
         var day = 0, hour = 0, minutes = 0, seconds = 0;
         days = parseInt(temp / 86400);
-        hours = parseInt(((temp - days * 86400) / 3600))
-        minutes = parseInt(((temp - days * 86400 - hours * 3600)) / 60)
+        hour = parseInt(((temp - days * 86400) / 3600))
+        minutes = parseInt(((temp - days * 86400 - hour * 3600)) / 60)
         seconds = parseInt(temp % 60)
     
         var string;
