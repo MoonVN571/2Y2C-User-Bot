@@ -29,11 +29,11 @@ module.exports = {
         }}).then(msg => msg.delete({timeout: 60000}));
 
         message.lineReplyNoMention({embed: {
-            description: "Đã đặt prefix cho bạn là **" + args[0] + "**.",
+            description: "Đã đặt prefix cho bạn là **" + args[0].toLowerCase() + "**.",
             color: client.config.DEF_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));
 
-        data.set(message.author.id + ".prefix", args[0]);
+        data.set(message.author.id + ".prefix", args[0].toLowerCase());
 
     }
 }

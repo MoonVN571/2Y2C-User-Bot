@@ -24,9 +24,9 @@ module.exports = {
         if(message.content == "<@" + client.user.id + ">" || message.content == "<@!" + client.user.id + ">") return message.lineReplyNoMention({embed: {
             description: "Prefix của bạn là ``" + prefix + "``.",
             color: config.DEF_COLOR
-        }});
+        }}).then(msg => msg.delete({timeout:60000}));
 
-        let regex = /[a-z]|[A-Z]/i;
+        let regex = /[a-z]|[A-Z]/ig;
 
         if(message.content.split(" ")[0].match(regex)) {
             if(!message.content.toLowerCase().startsWith(prefix) || !message.content.toLowerCase().startsWith(prefix)) return;

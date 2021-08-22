@@ -52,15 +52,14 @@ module.exports = {
                     inline: false
                 },
                 {
-                    name: "Link ảnh",
-                    value: image ? image : "Không có"
-                },
-                {
                     name: "Thời gian",
                     value: formatTime + " (" + api.ageCalc(time) + " trước)",
                     inline: false
                 }
             ],
+            image: {
+                url: image
+            },
             color: client.config.DEF_COLOR
         }}).then(msg => msg.delete({timeout: 60000})).catch(e => {
             console.log(e);

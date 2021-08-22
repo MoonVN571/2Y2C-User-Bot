@@ -34,13 +34,15 @@ module.exports = {
                 color: client.config.ERR_COLOR
             }}).then(msg => msg.delete({timeout: 60000}));
             
-            message.channel.send({embed: {
+            message.lineReplyNoMention({embed: {
                 title: "Ảnh của " + user.username + "'s",
-                description: "cute nhó",
+                description: "Nhỏ nhưng chất lượng hehe",
                 image: {
-                    url: user.avatarURL({ format: 'png', dynamic: true, size: 1024 }) 
+                    url: user.avatarURL({ format: "png", dynamic: true, size: 64 }) 
                 },
-                footer: "Yêu cầu bởi " + message.author.tag + ".",
+                footer: {
+                    text: "Yêu cầu bởi " + message.author.tag + ".",
+                },
                 color: client.config.DEF_COLOR
             }}).then(msg => msg.delete({timeout: 60000}));
         });

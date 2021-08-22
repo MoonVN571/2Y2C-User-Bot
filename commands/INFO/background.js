@@ -38,16 +38,19 @@ module.exports = {
             
 
             await message.lineReplyNoMention({embed: {
-                title: "Ảnh nền của " + user.username + "'s",
-                description: "so cuteeee",
+                title: "Banner của " + user.username + "'s",
+                description: "Nhỏ nhưng chất lượng nhe",
                 image: { url: banner },
+                footer: {
+                    text: "Yêu cầu bởi " + message.author.tag + ".",
+                },
                 color: client.config.DEF_COLOR
             }}).then(msg => msg.delete({timeout: 60000}));
         });
 
         async function getUserBannerUrl(userId) {
             const user = await client.api.users(userId).get();
-            return user.banner ? `https://cdn.discordapp.com/banners/${userId}/${user.banner}?size=4096` : null;
+            return user.banner ? `https://cdn.discordapp.com/banners/${userId}/${user.banner}` : null;
         }
 
     }
