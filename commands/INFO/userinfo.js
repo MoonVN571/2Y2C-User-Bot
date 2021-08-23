@@ -29,27 +29,33 @@ module.exports = {
             }}).then(msg => msg.delete({timeout: 60000}));
 
             const member = message.guild.member(user);
-            var stt = user.presence.status;
+            var stt = user.presence.status ? user.presence.status : "đéo biết";
 
             if(stt == "idle") stt = "Đang chờ";
             if(stt == "offline") stt = "Không hoạt động";
             if(stt == "online") stt = "Đang hoạt động";
             if(stt == "dnd") stt = "Không làm phiền";
 
+            let role = member ? member.roles.cache.map(roles => `${roles}`).join(', ').replace(", @everyone", "").replace("@everyone", "None") : "Không có";
+            let nickname = member ? (member.user.nickname !== null ? `${member.user.nickname}` : 'Không có') : "Không có";
+            let joinServer = member ? `${new Api().getTimestamp(member.joinedAt)} \n(${new Api().ageCalc(member.joinedAt)} trước)` : "Không rõ";
+
+            let color = user.displayHexColor ? user.displayHexColor : client.config.DEF_COLOR;
+
             const embed = new MessageEmbed()
                 // .setColor(client.config.DEF_COLOR)
-                .setColor(member.displayHexColor)
+                .setColor(color)
                 .setAuthor("Thông tin của " + user.username + "'s", user.avatarURL({ format: 'png', dynamic: true, size: 1024 }))
                 .setDescription("ok đó")
                 .setFooter("Yêu cầu bởi " + message.author.tag)
                 .setThumbnail(user.avatarURL({ format: 'png', dynamic: true, size: 1024 }))
                 .addField("Username:", `${user.tag}`, true)
                 .addField("ID:", `${user.id}`, true)
-                .addField("Biệt danh:", `${member.nickname !== null ? `${member.nickname}` : 'Không có'}`, true)
+                .addField("Biệt danh:", `${nickname}`, true)
                 .addField("Trạng thái:", `${stt}`, true)
-                .addField("Ngày vào server:", `${new Api().getTimestamp(member.joinedAt)} \n(${new Api().ageCalc(member.joinedAt)} trước)`, true)
+                .addField("Ngày vào server:", `${joinServer}`, true)
                 .addField("Ngày tạo tài khoản:", `${new Api().getTimestamp(user.createdAt)} \n(${new Api().ageCalc(user.createdAt)} trước)`, true) 
-                .addField("Roles:", member.roles.cache.map(roles => `${roles}`).join(', ').replace(", @everyone", "").replace("@everyone", "None"), true)
+                .addField("Roles:", role, true)
 
             message.channel.send(embed).then(msg => msg.delete({timeout: 60000}));
         });

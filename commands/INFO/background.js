@@ -1,7 +1,4 @@
-const axios = require('axios');
-
 require('dotenv').config();
-const fetch = require('node-fetch')
 
 module.exports = {
     name: "background",
@@ -42,7 +39,7 @@ module.exports = {
                 description: "Nhỏ nhưng chất lượng nhe",
                 image: { url: banner },
                 footer: {
-                    text: "Yêu cầu bởi " + message.author.tag + ".",
+                    text: "Yêu cầu bởi " + message.author.tag,
                 },
                 color: client.config.DEF_COLOR
             }}).then(msg => msg.delete({timeout: 60000}));
