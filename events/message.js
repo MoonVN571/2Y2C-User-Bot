@@ -88,12 +88,12 @@ module.exports = {
 
             if(timeout.get(`${message.author.id}.${cmdDelay.name}`) - Date.now() < 0 || !timeout.get(`${message.author.id}.${cmdDelay.name}`)) timeout.delete(`${message.author.id}.${cmdDelay.name}`); 
 
-            let calc = api.calculate(timeout.get(`${message.author.id}${cmdDelay.name}`) - Date.now());
+            let calc = api.calculate(timeout.get(`${message.author.id}.${cmdDelay.name}`) - Date.now());
             
-            if(timeout.get(`${message.author.id}${cmdDelay.name}`) && calc) return message.lineReplyNoMention({embeds: [{
+            if(timeout.get(`${message.author.id}.${cmdDelay.name}`) && calc) return message.lineReplyNoMention({embed: {
                 description: `Hãy chờ \`\`${calc}\`\` để tiếp tục dùng lệnh này.`,
                 color: config.ERR_COLOR
-            }]}).then(msg => {
+            }}).then(msg => {
                 message.channel.stopTyping();
                 msg.delete({timeout: 60000});
             });
