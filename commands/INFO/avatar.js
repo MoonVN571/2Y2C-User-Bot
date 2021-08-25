@@ -10,9 +10,9 @@ module.exports = {
         if(isNaN(user) && !tag) user = message.author.id; 
         if(tag) user = tag.id;
 
-        let check_name = client.users.cache.find(user => user.username == args.join(" "));
+        let check_name = client.users.cache.find(user => user.username.toLowerCase() == args.join(" ").toLowerCase());
         if(check_name) user = check_name.id;
-
+        
         if(!check_name && !tag && isNaN(user)) return message.lineReplyNoMention({embed: {
             description: "Bạn phải cung cấp ID hoặc tag người dùng.",
             color: client.config.ERR_COLOR
@@ -36,9 +36,9 @@ module.exports = {
             
             message.lineReplyNoMention({embed: {
                 title: "Ảnh của " + user.username + "'s",
-                description: "Nhỏ nhưng chất lượng hehe",
+                description: "[Link ảnh](" + user.displayAvatarURL({ format:"png", dynamic: true, size: 1024 }) + ")" ,
                 image: {
-                    url: user.avatarURL({ format: "png", dynamic: true, size: 128 }) 
+                    url: user.avatarURL({ format: 'png', dynamic: true, size: 1024 })
                 },
                 footer: {
                     text: "Yêu cầu bởi " + message.author.tag,

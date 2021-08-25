@@ -46,7 +46,7 @@ module.exports = {
     
         
         message.lineReplyNoMention({embed: {
-            description: "Đã tải lại các lệnh " + reloaded.join(", ") + " thành công!",
+            description: "Đã tải lại (các) lệnh " + reloaded.join(", ") + " thành công!",
             color: client.config.DEF_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));
     }

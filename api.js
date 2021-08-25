@@ -1,7 +1,7 @@
 require('dotenv');
 
 function API() {
-    this.ageCalc = (time) => {
+    this.ageCalc = (time, Quoc_te) => {
         let log = (str) => {};
         log(new Date(+time).toLocaleString());
         log(new Date().toLocaleString());
@@ -18,9 +18,15 @@ function API() {
         log(t +"time");
         log(d +"d");
 
-        var dstr = d.split("/")[1];
-        var mstr = d.split("/")[0];
-        var ystr = d.split("/")[2];
+        if(Quoc_te) {
+            var dstr = d.split("/")[0];
+            var mstr = d.split("/")[1];
+            var ystr = d.split("/")[2];
+        } else {
+            var dstr = d.split("/")[1];
+            var mstr = d.split("/")[0];
+            var ystr = d.split("/")[2];
+        }
 
         if(dstr >= 1) dstr = dstr - 1;
         if(mstr >= 1) mstr = mstr - 1;
@@ -200,7 +206,7 @@ function API() {
                 if(seconds > 0) string = minutes + " phút " +  seconds + " giây";
             }
 
-            if(minutes == 0 && hours == 0) string = seconds + " giây";
+            if(minutes == 0 && hour == 0) string = seconds + " giây";
         } else {
             if(minutes > 0 && hour > 0 ) {
                 string = day + " ngày " + hour + " giờ " + minutes + " phút";		

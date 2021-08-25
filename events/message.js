@@ -72,7 +72,7 @@ module.exports = {
             msg.delete({timeout: 60000});
         });*/
         
-        if(cmd.disabled && admins.indexOf(message.author.id) == -1) return message.lineReplyNoMention({embed: {
+        if(cmd.disabled && config.ADMINS.indexOf(message.author.id) == -1) return message.lineReplyNoMention({embed: {
             description: "Lệnh đã bị tắt, chỉ nhà phát triển mới có thể dùng được.", color: config.ERR_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));
 
@@ -113,7 +113,9 @@ module.exports = {
 
         try{
             cmd.execute(client, message, args);
-            message.channel.stopTyping();
+            setTimeout(() => {
+                message.channel.stopTyping();
+            }, 2000);
         }catch(err) {
             console.log(err);
             message.channel.stopTyping();

@@ -14,9 +14,9 @@ module.exports = {
         if(isNaN(user) && !tag) user = message.author.id; 
         if(tag) user = tag.id;
 
-        let check_name = client.users.cache.find(user => user.username == args.join(" "));
+        let check_name = client.users.cache.find(user => user.username.toLowerCase() == args.join(" ").toLowerCase());
         if(check_name) user = check_name.id;
-
+        
         if(!check_name && !tag && isNaN(user)) return message.lineReplyNoMention({embed: {
             description: "Bạn phải cung cấp ID hoặc tag người dùng.",
             color: client.config.ERR_COLOR
@@ -37,7 +37,7 @@ module.exports = {
             if(stt == "dnd") stt = "Không làm phiền";
 
             let role = member ? member.roles.cache.map(roles => `${roles}`).join(', ').replace(", @everyone", "").replace("@everyone", "None") : "Không có";
-            let nickname = member ? (member.user.nickname !== null ? `${member.user.nickname}` : 'Không có') : "Không có";
+            let nickname = member ? (member.user.nickname ? `${member.user.nickname}` : 'Không có') : "Không có";
             let joinServer = member ? `${new Api().getTimestamp(member.joinedAt)} \n(${new Api().ageCalc(member.joinedAt)} trước)` : "Không rõ";
 
             let color = user.displayHexColor ? user.displayHexColor : client.config.DEF_COLOR;
