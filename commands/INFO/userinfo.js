@@ -14,7 +14,7 @@ module.exports = {
         if(isNaN(user) && !tag) user = message.author.id; 
         if(tag) user = tag.id;
 
-        let check_name = client.users.cache.find(user => user.username.toLowerCase() == args.join(" ").toLowerCase());
+        let check_name = client.users.cache.find(user => user.username.toLowerCase() == args.join(" ").toLowerCase()) || client.users.cache.find(user => user.username == args.join(" "));
         if(check_name) user = check_name.id;
         
         if(!check_name && !tag && isNaN(user)) return message.lineReplyNoMention({embed: {
@@ -32,8 +32,8 @@ module.exports = {
             var stt = user.presence.status ? user.presence.status : "đéo biết";
 
             if(stt == "idle") stt = "Đang chờ";
-            if(stt == "offline") stt = "Không hoạt động";
-            if(stt == "online") stt = "Đang hoạt động";
+            if(stt == "offline") stt = "Không hoạt động (đéo biết)";
+            if(stt == "online") stt = "Đang hoạt động (đéo biết)";
             if(stt == "dnd") stt = "Không làm phiền";
 
             let role = member ? member.roles.cache.map(roles => `${roles}`).join(', ').replace(", @everyone", "").replace("@everyone", "None") : "Không có";
@@ -57,7 +57,7 @@ module.exports = {
                 .addField("Ngày tạo tài khoản:", `${new Api().getTimestamp(user.createdAt)} \n(${new Api().ageCalc(user.createdAt)} trước)`, true) 
                 .addField("Roles:", role, true)
 
-            message.channel.send(embed).then(msg => msg.delete({timeout: 60000}));
+            message.lineReplyNoMention(embed).then(msg => msg.delete({timeout: 60000}));
         });
     },
 };

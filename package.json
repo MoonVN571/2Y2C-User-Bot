@@ -1,6 +1,6 @@
 {
   "name": "2y2c-discordserver-bot",
-  "version": "2.6.5",
+  "version": "2.6.6",
   "description": "Stats of user on 2Y2C discord...",
   "main": "index.js",
   "dependencies": {
@@ -13,6 +13,7 @@
     "discord.js": "^12.5.3",
     "dotenv": "^8.6.0",
     "minecraft-protocol": "^1.25.0",
+    "ms": "^2.1.3",
     "request": "^2.88.2",
     "script.db": "^3.0.0",
     "simplest.db": "^1.0.1-2"

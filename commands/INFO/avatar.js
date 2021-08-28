@@ -10,7 +10,7 @@ module.exports = {
         if(isNaN(user) && !tag) user = message.author.id; 
         if(tag) user = tag.id;
 
-        let check_name = client.users.cache.find(user => user.username.toLowerCase() == args.join(" ").toLowerCase());
+        let check_name = client.users.cache.find(user => user.username.toLowerCase() == args.join(" ").toLowerCase()) || client.users.cache.find(user => user.username == args.join(" "));
         if(check_name) user = check_name.id;
         
         if(!check_name && !tag && isNaN(user)) return message.lineReplyNoMention({embed: {

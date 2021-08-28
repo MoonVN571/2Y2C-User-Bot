@@ -36,7 +36,7 @@ module.exports = {
         let botAdmin = new Database({path: "./config.json"}).get("ADMINS");
 
         // check commands args & admin
-        if(botAdmin.indexOf(message.author.id) < 0 && (arg[0] == "add" | args[0] == "remove")) return message.lineReplyNoMention({embed: {
+        if(botAdmin.indexOf(message.author.id) < 0 && (args[0] == "add" | args[0] == "remove")) return message.lineReplyNoMention({embed: {
             description: "Đã bảo là lệnh dành cho ADMIN rồi.",
             color: client.config.ERR_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));

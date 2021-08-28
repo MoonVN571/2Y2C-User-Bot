@@ -6,6 +6,7 @@ var a = require('../api');
 var api = new a();
 
 const Database = require('simplest.db');
+const ms = require("ms");
 
 const timeout = new Collection();
 
@@ -63,24 +64,22 @@ module.exports = {
         client.footer = config.FOOTER;
 
         message.channel.startTyping();
-
-        let checkVote = new Database({path: process.env.disk + '/voted.json'}).get('users-' + new Date().getUTCDate() + (new Date().getUTCMonth()+1) + new Date().getUTCFullYear());
 	
-	/*
+        if(cmd.vote) {
+            let checkVote = new Database({path: process.env.disk + '/voted.json'}).get(message.author.id);
+
+            if(!checkVote && message.author.id != config.ADMINS.indexOf(message.author.id) == -1 || Date.now() - checkVote > ms("2d") && config.ADMINS.indexOf(message.author.id) == -1) 
+                return message.channel.send("Bạn phải vote bot để sử dụng lệnh này.\n\nVote tại: https://top.gg/bot/768448728125407242/vote");
+        }
+
         if(config.ADMINS.indexOf(message.author.id) == -1 && cmd.vote && (!checkVote || checkVote.split(" ").indexOf(message.author.id) < 0)) return message.lineReplyNoMention("Bạn phải vote bot để sử dụng lệnh này.\n\nVote tại: https://top.gg/bot/768448728125407242/vote").then(msg => {
             message.channel.stopTyping();
             msg.delete({timeout: 60000});
-        });*/
+        });
         
-        if(cmd.disabled && config.ADMINS.indexOf(message.author.id) == -1) return message.lineReplyNoMention({embed: {
-            description: "Lệnh đã bị tắt, chỉ nhà phát triển mới có thể dùng được.", color: config.ERR_COLOR
-        }}).then(msg => msg.delete({timeout: 60000}));
+        if(cmd.disabled && config.ADMINS.indexOf(message.author.id) == -1) return;
 
-        if(cmd.admin && config.ADMINS.indexOf(message.author.id) == -1)
-            return message.lineReplyNoMention({embed: {
-                description: "Bạn phải là nhà phát triển để sử dụng lệnh này.",
-                color: config.ERR_COLOR
-            }}).then(msg => msg.delete({timeout: 60000}));
+        if(cmd.admin && config.ADMINS.indexOf(message.author.id) < 0) return;
 
         if(cmd.delay) {
             let cmdDelay = client.commands.get(cmdName);
@@ -102,14 +101,15 @@ module.exports = {
             timeout.set(`${message.author.id}.${cmdDelay.name}`, Date.now() + cmdDelay.delay * 1000);
         }
 
-        var blacklistData = new Database({path:'./blacklist.json'}).get('users');
+        var blacklistData = new Database({path:'./blacklist.json'});
  
-        if(blacklistData.indexOf(message.author.id) == 0 && admins.indexOf(message.author.id) == -1) return message.lineReplyNoMention({embed: {
+        if(cmd.name !== "blacklist" && blacklistData.get('users').indexOf(message.author.id) > -1 && config.ADMINS.indexOf(message.author.id) < 0) return message.lineReplyNoMention({embed: {
             description: "Bạn có trong danh sách đen nên không thể dùng bot.", color: config.ERR_COLOR
         }}).then(msg => {
             message.channel.stopTyping();
             msg.delete({timeout: 60000});
         });
+        
 
         try{
             cmd.execute(client, message, args);
