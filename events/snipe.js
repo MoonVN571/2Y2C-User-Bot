@@ -10,9 +10,11 @@ module.exports = {
 
         let data = new Database({path: "./snipe.json"});
         
-        data.set(message.channel.id + ".content", message.content);
-        data.set(message.channel.id + ".author", message.author.tag);
-        data.set(message.channel.id + ".time", new Date().getTime());
-        data.set(message.channel.id + '.image', message.attachments.first() ? message.attachments.first().proxyURL : "");
+        data.array.push(message.channel.id, {
+            content: message.content,
+            author: message.author.tag,
+            time: Date.now(),
+            image: message.attachments.first() ? message.attachments.first().proxyURL : ""
+        });
     }
 }

@@ -8,7 +8,7 @@ module.exports = {
     delay: 10,
     
     async execute(client, message, args) {
-        var temp = parseInt(process.uptime());
+        var temp = parseInt(process.uptime() * 1000);
 
         message.lineReplyNoMention({embed: {
             description: "Thời gian đã hoạt động: **" + api.calculate(temp) + "**.",

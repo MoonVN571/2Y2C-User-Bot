@@ -9,25 +9,30 @@ module.exports = {
     delay: 10,
     
     execute(client, message, args) {
-        
         if(message.channel.id == "748529588136837191") return message.channel.send({embed: {
             description: "Kênh này đã bị tắt snipe.",
             color: client.config.ERR_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));
 
+
         let data = new Database({path: "./snipe.json"});
 
-        let sniper = data.get(message.channel.id + ".author");
-        
-        if(!sniper) return message.channel.send({embed: {
-            description: "Không tìm thấy tin nhắn đã xoá nào trong kênh này cả.",
-            color: client.config.ERR_COLOR
-        }}).then(msg => msg.delete({timeout: 60000}));
+        let snipe = data.get(message.channel.id);
 
-        let image = data.get(message.channel.id + ".image");
-        let content = data.get(message.channel.id + ".content");
+        let correctLength = args[0] ? args[0] - 1 : 0;
+
+        if(!snipe || correctLength < 0 || !snipe[correctLength]) return message.lineReplyNoMention({embed: {
+            description: "Không tìm thấy tin nhắn này.",
+            color: client.config.ERR_COLOR
+        }}).then(msg => msg.delete({timeout:60000}));
+
         
-        let time = data.get(message.channel.id + ".time");
+        let author = snipe[correctLength].author;
+
+        let image = snipe[correctLength].image;
+        let content = snipe[correctLength].content;
+
+        let time = snipe[correctLength].time;
 
         let date = api.soDep(new Date(time).getDate(), 2);
         let month = api.soDep(new Date(time).getMonth() + 1, 2);
@@ -43,7 +48,7 @@ module.exports = {
             fields: [
                 {
                     name: "Người gủi",
-                    value: sniper,
+                    value: author,
                     inlnie: false
                 },
                 {

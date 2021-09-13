@@ -1,20 +1,21 @@
-const { MessageEmbed, Collection } = require('discord.js');
-
-const config = require("../config.json");
-
-var a = require('../api');
-var api = new a();
-
+const { Client, Message, MessageEmbed, Collection } = require('discord.js');
 const Database = require('simplest.db');
 const ms = require("ms");
-
+const config = require("../config.json");
+const a = require('../api');
+const api = new a();
 const timeout = new Collection();
-
-
 require('dotenv');
+
 module.exports = {
     name: "message",
 
+    /**
+     * 
+     * @param {Client} client 
+     * @param {Message} message 
+     * @returns 
+     */
     execute(client, message) {
         if(message.author.bot || message.channel.type == "dm") return;
 
@@ -65,20 +66,15 @@ module.exports = {
 
         message.channel.startTyping();
 	
-        if(cmd.vote) {
-            let checkVote = new Database({path: process.env.disk + '/voted.json'}).get(message.author.id);
+        if (cmd.vote) {
+            let checkVote = new Database({path:process.env.disk + '/voted.json'}).get(message.author.id);
 
-            if(!checkVote && message.author.id != config.ADMINS.indexOf(message.author.id) == -1 || Date.now() - checkVote > ms("2d") && config.ADMINS.indexOf(message.author.id) == -1) 
-                return message.channel.send("Bạn phải vote bot để sử dụng lệnh này.\n\nVote tại: https://top.gg/bot/768448728125407242/vote");
+            if ((!checkVote || Date.now() - checkVote > ms("2d")) && config.ADMINS.indexOf(message.author.id) < 0)
+                return message.lineReplyNoMention( "Bạn phải vote bot để sử dụng lệnh này.\n\nVote tại: https://top.gg/bot/768448728125407242/vote")
+                    .then(msg => { msg.delete({timeout: 60000}); message.channel.stopTyping() });
         }
-
-        if(config.ADMINS.indexOf(message.author.id) == -1 && cmd.vote && (!checkVote || checkVote.split(" ").indexOf(message.author.id) < 0)) return message.lineReplyNoMention("Bạn phải vote bot để sử dụng lệnh này.\n\nVote tại: https://top.gg/bot/768448728125407242/vote").then(msg => {
-            message.channel.stopTyping();
-            msg.delete({timeout: 60000});
-        });
         
         if(cmd.disabled && config.ADMINS.indexOf(message.author.id) == -1) return;
-
         if(cmd.admin && config.ADMINS.indexOf(message.author.id) < 0) return;
 
         if(cmd.delay) {

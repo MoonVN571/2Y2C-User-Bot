@@ -17,8 +17,8 @@ module.exports = {
         let check_name = client.users.cache.find(user => user.username.toLowerCase() == args.join(" ").toLowerCase()) || client.users.cache.find(user => user.username == args.join(" "));
         if(check_name) user = check_name.id;
         
-        if(!check_name && !tag && isNaN(user)) return message.lineReplyNoMention({embed: {
-            description: "Bạn phải cung cấp ID hoặc tag người dùng.",
+        if(!check_name && !tag && isNaN(user) || user.length != 18) return message.lineReplyNoMention({embed: {
+            description: "Bạn phải cung cấp ID hoặc tag người dùng hợp lệ.",
             color: client.config.ERR_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));
 
@@ -58,6 +58,9 @@ module.exports = {
                 .addField("Roles:", role, true)
 
             message.lineReplyNoMention(embed).then(msg => msg.delete({timeout: 60000}));
-        });
+        }).catch(err => {
+            console.log(err);
+            message.lineReplyNoMention("Có lỗi sảy ra, thử lại sau!").then(msg => msg.delete({timeout: 60000}));
+        })
     },
 };

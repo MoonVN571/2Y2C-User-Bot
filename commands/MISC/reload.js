@@ -15,7 +15,7 @@ module.exports = {
             description: "Hãy nhập 1 hoặc nhiều lệnh để reload.",
             color: client.config.ERR_COLOR
         }}).then(msg => msg.delete({timeout: 60000}));
-            
+        
         var reloaded = [];
         try {
             args.forEach(cmdReload => {
@@ -29,10 +29,10 @@ module.exports = {
                             const cmd = require(`../../commands/${dir}/${cmdReload.split('.')[0]}`);
                             
                             client.commands.set(cmd.name, cmd);
+                            reloaded.push(cmdReload);
                         }
                     });
                 });
-                reloaded.push(cmdReload);
             })
         
         } catch(err) {
@@ -43,8 +43,12 @@ module.exports = {
                 color: client.config.ERR_COLOR
             }}).then(msg => msg.delete({timeout: 60000}));
         }
-    
         
+        if(!reloaded) return message.lineReplyNoMention({embed: {
+            description: "Không thể tải lại lệnh này.",
+            color: client.config.ERR_COLOR
+        }}).then(msg => msg.delete({timeout:60000}));
+
         message.lineReplyNoMention({embed: {
             description: "Đã tải lại (các) lệnh " + reloaded.join(", ") + " thành công!",
             color: client.config.DEF_COLOR
