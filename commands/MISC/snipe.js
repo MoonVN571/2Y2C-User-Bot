@@ -16,10 +16,9 @@ module.exports = {
 
 
         let data = new Database({path: "./snipe.json"});
-
         let snipe = data.get(message.channel.id);
 
-        let correctLength = args[0] ? args[0] - 1 : 0;
+        let correctLength = args[0] ? snipe.length - parseInt(args[0]) : snipe.length - 1;
 
         if(!snipe || correctLength < 0 || !snipe[correctLength]) return message.lineReplyNoMention({embed: {
             description: "Không tìm thấy tin nhắn này.",
@@ -44,6 +43,20 @@ module.exports = {
 
         let formatTime = `${date}/${month}/${years} ${hours}:${minutes}:${seconds}`;
         
+        let betterContent = content ? content : "Không có";
+
+        if(betterContent.length > 900) betterContent = trimText(betterContent.split(""), 900).join("");
+        
+        
+        function trimText(arr, maxLen) {
+            if (arr.length > maxLen) {
+                const len = arr.length - maxLen;
+                arr = arr.slice(0, maxLen);
+                arr.push(`\nVà còn ${len} kí tự khác`);
+            }
+            return arr;
+        }
+
         message.channel.send({embed: {
             fields: [
                 {
@@ -53,7 +66,7 @@ module.exports = {
                 },
                 {
                     name: "Nội dung gửi",
-                    value: content ? content : "Không có",
+                    value: betterContent,
                     inline: false
                 },
                 {
