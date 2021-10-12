@@ -4,7 +4,7 @@
   "description": "Stats of user on 2Y2C discord...",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.22.0",
+    "axios": "^0.23.0",
     "canvas": "^2.8.0",
     "covid19-stats": "^1.1.1",
     "csvtojson": "^2.0.10",
