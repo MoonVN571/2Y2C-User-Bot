@@ -10,7 +10,7 @@
     "csvtojson": "^2.0.10",
     "discord-pages": "^1.0.2",
     "discord-reply": "^0.1.2",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
     "minecraft-protocol": "^1.25.0",
     "ms": "^2.1.3",
